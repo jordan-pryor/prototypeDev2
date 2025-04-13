@@ -1,6 +1,8 @@
 using UnityEngine;
 
+/// Interface for damageable objects
 public interface iDamage
 {
-	void takeDamage(int amount);
+    /// Applies damage to the object
+    void takeDamage(int amount);
 }

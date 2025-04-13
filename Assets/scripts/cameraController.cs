@@ -2,35 +2,37 @@ using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
-	[SerializeField] int sens;
-	[SerializeField] int lockVertMin, lockVertMax;
-	[SerializeField] bool invertY;
+    // === Settings (Serialized) ===
+    [SerializeField] int sens = 100;            // Mouse sensitivity
+    [SerializeField] int lockVertMin = -60;     // Min vertical angle
+    [SerializeField] int lockVertMax = 60;      // Max vertical angle
+    [SerializeField] bool invertY = false;      // Invert Y-axis?
 
-	float rotX;
+    // === Internals ===
+    float rotX = 0f;                             // Rotation around X axis
 
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
-	{
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
-	}
+    // === Init ===
+    void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;  // Lock and hide cursor
+    }
 
-	// Update is called once per frame
-	void Update()
-	{
-		float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
-		float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
+    // === Camera Look Logic ===
+    void Update()
+    {
+        // Get mouse input
+        float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
 
-		if (invertY)
-			rotX += mouseY;
-		else
-			rotX -= mouseY;
+        // Adjust vertical rotation
+        rotX += invertY ? mouseY : -mouseY;
+        rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
-		rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
+        // Apply vertical look
+        transform.localRotation = Quaternion.Euler(rotX, 0f, 0f);
 
-		transform.localRotation = Quaternion.Euler(rotX, 0, 0);
-
-		transform.parent.Rotate(Vector3.up * mouseX);
-
-	}
+        // Apply horizontal look to parent (usually player body)
+        transform.parent.Rotate(Vector3.up * mouseX);
+    }
 }

@@ -1159,11 +1159,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 775136738890241787}
-  range: 3
+  range: 5
   mask:
     serializedVersion: 2
     m_Bits: 8
-  prompt: {fileID: 0}
+  promptInteract: {fileID: 0}
 --- !u!54 &2520933888323176275
 Rigidbody:
   m_ObjectHideFlags: 0

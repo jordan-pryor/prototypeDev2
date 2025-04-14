@@ -5,7 +5,7 @@ public class playerInteract : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] float range = 3f;
     [SerializeField] LayerMask mask;
-    [SerializeField] GameObject prompt;
+    [SerializeField] GameObject promptInteract;
 
     IInteract target;
 
@@ -29,12 +29,12 @@ public class playerInteract : MonoBehaviour
                 if (target != interactable)
                 {
                     target = interactable;
-                    prompt.SetActive(true);
+                    promptInteract.SetActive(true);
                 }
                 return;
             }
         }
         target = null;
-        prompt.SetActive(false);
+        promptInteract.SetActive(false);
     }
 }

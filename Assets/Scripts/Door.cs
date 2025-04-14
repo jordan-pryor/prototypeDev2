@@ -7,6 +7,7 @@ public class Door : MonoBehaviour, IInteract
     [SerializeField] GameObject doorMin;
     [SerializeField] GameObject doorMax;
     [SerializeField] float openSpeed = 1f;
+    [SerializeField] bool isLocked = false;
 
     bool isOpening = false;
     bool isClosing = false;
@@ -61,12 +62,15 @@ public class Door : MonoBehaviour, IInteract
     }
     public void Interact()
     {
-        if (!isOpening && !isClosing)
+        if (!isOpening && !isClosing && ( !isLocked /* && key code*/) )
         {
             if (Mathf.Approximately(openPercent, 0f))
                 Open();
             else
                 Close();
+        }
+        else if(isLocked /* && key code*/)
+        {
         }
     }
 }

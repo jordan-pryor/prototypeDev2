@@ -1055,6 +1055,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9020301293314140630}
   - component: {fileID: 489391919726206516}
+  - component: {fileID: 8808821351965550876}
   - component: {fileID: 2520933888323176275}
   - component: {fileID: 71140654948600729}
   m_Layer: 0
@@ -1145,6 +1146,24 @@ MonoBehaviour:
   hasJumped: 0
   vaulting: 0
   sprintToggled: 0
+--- !u!114 &8808821351965550876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3150235714031651022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 490a5083c7017d74ab9924ee033f227c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 775136738890241787}
+  range: 3
+  mask:
+    serializedVersion: 2
+    m_Bits: 8
+  prompt: {fileID: 0}
 --- !u!54 &2520933888323176275
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5005987950256436680}
   - component: {fileID: 3887271507329569326}
-  - component: {fileID: 5489473795481376141}
+  - component: {fileID: 5788683142803621245}
   m_Layer: 0
   m_Name: playerModel
   m_TagString: Untagged
@@ -63,7 +63,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &5489473795481376141
+--- !u!114 &5788683142803621245
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,27 +80,28 @@ MonoBehaviour:
   cam: {fileID: 6746592873804807457}
   groundMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   playerHeight: 2
   crouchHeight: 1
   crouchTransitionSpeed: 10
-  moveForce: 0
-  maxSpeed: 0
-  acceleration: 0
-  deceleration: 0
-  airControlMultiplier: 0
-  jumpForce: 0
+  HP: 100
+  moveForce: 40
+  maxSpeed: 10
+  acceleration: 10
+  deceleration: 12
+  airControlMultiplier: 0.4
+  jumpForce: 8
   coyoteTime: 0.2
   jumpBufferTime: 0.15
-  walkSpeed: 0
-  runSpeed: 0
-  sprintSpeed: 0
-  crouchSpeed: 0
-  slideSpeed: 0
-  slideForce: 0
+  walkSpeed: 3
+  runSpeed: 5
+  sprintSpeed: 8
+  crouchSpeed: 2.5
+  slideSpeed: 10
+  slideForce: 20
   slideDuration: 0.75
-  slideCooldown: 1
-  slideFriction: 1
+  slideCooldown: 1.2
+  slideFriction: 3
   slideAngleThreshold: 30
   gravity: 0
   gravityMultiplier: 0

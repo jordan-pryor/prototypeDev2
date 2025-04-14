@@ -4,105 +4,194 @@ public class playerController : MonoBehaviour
 {
 	// === System References ===
 	[Header("System References")]
-	[SerializeField] Rigidbody rb;                        // Our physics-powered body – the meat mech
+	[SerializeField] Rigidbody rb;                        // Our physics-powered body ï¿½ the meat mech
 	[SerializeField] CapsuleCollider capsule;             // The collision jellybean we live in
-	[SerializeField] Transform cam;                       // Our eyeballs – aka the camera
+	[SerializeField] Transform cam;                       // Our eyeballs ï¿½ aka the camera
 	[SerializeField] LayerMask groundMask;                // What counts as "floor" to us
-	[SerializeField] float playerHeight = 2f;             // Tall mode – regular standing height
-	[SerializeField] float crouchHeight = 1f;             // Short king mode – crouch collider height
+	[SerializeField] float playerHeight = 2f;             // Tall mode ï¿½ regular standing height
+	[SerializeField] float crouchHeight = 1f;             // Short king mode ï¿½ crouch collider height
 	[SerializeField] float crouchTransitionSpeed = 10f;   // How fast we go from tall to small
+	[SerializeField] int HP = 100;             // How much life we got left ï¿½ donï¿½t let it hit 0!
+	int origHP;
 
 	// === Player Movement & Control ===
 	[Header("Player Movement & Control")]
-	[SerializeField] float moveForce;                     // How hard we push ourselves when moving
-	[SerializeField] float maxSpeed;                      // Speed cap – no going full Sonic
-	[SerializeField] float acceleration;                  // How quick we ramp up to speed
-	[SerializeField] float deceleration;                  // How quick we chill back down
-	[SerializeField] float airControlMultiplier;          // Air steering power – less rocket, more bird
+	[SerializeField] float moveForce = 40f;                   // Strong enough for responsive force-based movement
+	[SerializeField] float maxSpeed = 7f;                     // General cap â€“ tweak if you want sprint to go over this
 
-	[SerializeField] float jumpForce;                     // The yeet power – how high we bounce
-	[SerializeField] float coyoteTime = 0.2f;             // Forgiveness window after leaving ground – classic cartoon logic
-	[SerializeField] float jumpBufferTime = 0.15f;        // Buffer for jump input – we’re generous like that
+	[SerializeField] float acceleration = 10f;                // How fast we ramp to speed on ground
+	[SerializeField] float deceleration = 12f;                // Slightly stronger than accel to help stop cleanly
+	[SerializeField] float airControlMultiplier = 0.4f;       // Less control mid-air, but still maneuverable
 
-	[SerializeField] float walkSpeed;                     // Casual stroll pace – just vibes
-	[SerializeField] float runSpeed;                      // Hustle mode – not too fast, not too slow
-	[SerializeField] float sprintSpeed;                   // Full send – speed demon time
-	[SerializeField] float crouchSpeed;                   // Sneaky sneak pace – quiet but slow
-	[SerializeField] float slideSpeed;                    // Initial speed burst when we slide
-	[SerializeField] float slideForce;                    // The shove we get when we dive into a slide
-	[SerializeField] float slideDuration = 0.75f;         // How long we keep sliding before giving up
-	[SerializeField] float slideCooldown = 1f;            // Gotta rest after sliding – no spam zone
-	[SerializeField] float slideFriction = 1f;            // How much we slow down mid-slide
-	[SerializeField] float slideAngleThreshold = 30f;     // Minimum slope angle for a slide to go turbo
+	[SerializeField] float jumpForce = 8f;                    // Height of jump â€“ feels snappy but not floaty
+	[SerializeField] float coyoteTime = 0.2f;                 // Common value, very forgiving
+	[SerializeField] float jumpBufferTime = 0.15f;            // Helps you land consistent jumps
 
-	//[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion – parkour vibes incoming
+	[SerializeField] float walkSpeed = 3f;                    // Slow pace, immersive movement
+	[SerializeField] float runSpeed = 5f;                     // Standard movement speed
+	[SerializeField] float sprintSpeed = 8f;                  // Fast and flowy
+	[SerializeField] float crouchSpeed = 2.5f;                // Slow but not crawling
+	[SerializeField] float slideSpeed = 10f;                  // Initial burst when initiating a slide
+	[SerializeField] float slideForce = 20f;                  // Push into the slide â€“ lower = stickier, higher = zippier
+	[SerializeField] float slideDuration = 0.75f;             // Long enough for fun movement, short enough to not abuse
+	[SerializeField] float slideCooldown = 1.2f;              // Prevents chaining slides unrealistically
+	[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
+	[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
+
+
+	//[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion ï¿½ parkour vibes incoming
 
 	// === Gravity & Physics ===
 	[Header("Gravity & Physics")]
-	[SerializeField] float gravity;                       // The pull of the void – always down
+	[SerializeField] float gravity;                       // The pull of the void ï¿½ always down
 	[SerializeField] float gravityMultiplier;             // How much harder we get yoinked down
-	[SerializeField] float dragGround;                    // Sticky shoes – resistance on the ground
-	[SerializeField] float dragAir;                       // Floating resistance – like pushing through soup
-	[SerializeField] float slopeLimit = 45f;              // Max slope we can climb – beyond this, it’s a slidey slope
+	[SerializeField] float dragGround;                    // Sticky shoes ï¿½ resistance on the ground
+	[SerializeField] float dragAir;                       // Floating resistance ï¿½ like pushing through soup
+	[SerializeField] float slopeLimit = 45f;              // Max slope we can climb ï¿½ beyond this, itï¿½s a slidey slope
 	[SerializeField] float slopeForceMultiplier = 2f;     // Extra push when fighting or sliding down slopes
 
 	// === State Check / Flags ===
 	[Header("State Check / Flags")]
-	[SerializeField] bool isGrounded;                     // Feet on the floor? Let’s find out
+	[SerializeField] bool isGrounded;                     // Feet on the floor? Letï¿½s find out
 	[SerializeField] bool isSprinting;                    // Are we zooming?
 	[SerializeField] bool isCrouching;                    // Tiny mode active?
 	[SerializeField] bool isSliding;                      // Currently surfing the floor?
 	[SerializeField] bool canVault;                       // Ready to hop over something?
 	[SerializeField] bool wasGroundedLastFrame;           // Were we grounded a moment ago?
-	[SerializeField] bool jumpQueued;                     // Jump was pressed – just waiting for the perfect moment
+	[SerializeField] bool jumpQueued;                     // Jump was pressed ï¿½ just waiting for the perfect moment
 	[SerializeField] bool isMoving;                       // Are we actually going somewhere?
-	[SerializeField] bool hasJumped;                      // Already jumped? Can’t double up unless allowed
+	[SerializeField] bool hasJumped;                      // Already jumped? Canï¿½t double up unless allowed
 	[SerializeField] bool vaulting;                       // Mid-vault animation/action?
 
 	// === Movement Vectors ===
 	[Header("Movement Vectors")]
-	Vector3 moveInput;                                    // Raw input from player – where we wanna go
-	Vector3 moveDirection;                                // Where we’re *actually* headed
+	Vector3 moveInput;                                    // Raw input from player ï¿½ where we wanna go
+	Vector3 moveDirection;                                // Where weï¿½re *actually* headed
 	Vector3 desiredVelocity;                              // Our dream velocity
 	Vector3 currentVelocity;                              // Current real-world velocity
 	Vector3 velocityChange;                               // Delta between desired and current
 	Vector3 forceToApply;                                 // Final force we give to physics
 	Vector3 momentum;                                     // Built-up speed from past movement
-	Vector3 externalForces;                               // Any outside shoves – wind? explosions? ghosts?
+	Vector3 externalForces;                               // Any outside shoves ï¿½ wind? explosions? ghosts?
 
-	Vector3 groundNormal;                                 // What's “up” from the ground beneath us
+	Vector3 groundNormal;                                 // What's ï¿½upï¿½ from the ground beneath us
 	Vector3 slopeDirection;                               // Which way the hill is tilting
-	Vector3 slideDirection;                               // Where we go when we start slippin’
+	Vector3 slideDirection;                               // Where we go when we start slippinï¿½
 
-	Vector3 vaultTargetPosition;                          // Where we’re headed when vaulting
+	Vector3 vaultTargetPosition;                          // Where weï¿½re headed when vaulting
 	Vector3 ledgeCheckOrigin;                             // Where we start looking for a ledge
 	Vector3 ledgeHitNormal;                               // The angle of the ledge we found
 
-	Vector3 raycastOrigin;                                // Ray start point – detective work begins here
-	Vector3 raycastDirection;                             // Ray direction – where we’re looking
+	Vector3 raycastOrigin;                                // Ray start point ï¿½ detective work begins here
+	Vector3 raycastDirection;                             // Ray direction ï¿½ where weï¿½re looking
 
 	// === Timers ===
 	[Header("Timers")]
-	float lastGroundedTime;                               // Last time we touched the ground – for coyote logic
-	float lastJumpPressedTime;                            // Last jump input time – for buffering
-	float lastVaultTime;                                  // Last time we vaulted – cooldown tracking?
-	float slideTimer;                                     // How long we’ve been sliding
-	float slideCooldownTimer;                             // Cooldown between slides – chill out
+	float lastGroundedTime;                               // Last time we touched the ground ï¿½ for coyote logic
+	float lastJumpPressedTime;                            // Last jump input time ï¿½ for buffering
+	float lastVaultTime;                                  // Last time we vaulted ï¿½ cooldown tracking?
+	float slideTimer;                                     // How long weï¿½ve been sliding
+	float slideCooldownTimer;                             // Cooldown between slides ï¿½ chill out
 
 	// === Player State Machine ===
 	public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
-	MovementState currentState;                      
+	MovementState currentState;
 
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
-    {
-        
-    }
+	{
+		origHP = HP;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	// Update is called once per frame
+	void FixedUpdate()
+	{
+		movement();
+		sprint();
+		crouch();
+	}
+
+	void movement()
+	{
+		// === 1. Get Input ===
+		float horizontal = Input.GetAxisRaw("Horizontal");
+		float vertical = Input.GetAxisRaw("Vertical");
+		moveInput = new Vector3(horizontal, 0f, vertical).normalized;
+
+		// === 2. Translate Input to World Space ===
+		moveDirection = cam.forward * moveInput.z + cam.right * moveInput.x;
+		moveDirection.y = 0f;
+		moveDirection.Normalize();
+
+		// === 3. Choose Target Speed Based on State ===
+		float targetSpeed = walkSpeed;
+		if (isSprinting) targetSpeed = sprintSpeed;
+		if (isCrouching) targetSpeed = crouchSpeed;
+
+		// === 4. Calculate Desired Velocity ===
+		desiredVelocity = moveDirection * targetSpeed;
+
+		// === 5. Get Current Horizontal Velocity ===
+		currentVelocity = rb.linearVelocity;
+		Vector3 horizontalVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+
+		// === 6. Figure Out the Difference ===
+		velocityChange = desiredVelocity - horizontalVelocity;
+
+		// === 7. Clamp Velocity Change Based on Acceleration ===
+		float controlFactor = isGrounded ? 1f : airControlMultiplier;
+		velocityChange = Vector3.ClampMagnitude(velocityChange, acceleration * controlFactor);
+
+		// === 8. Apply That Force to the Meat Mech ===
+		forceToApply = velocityChange * moveForce;
+		rb.AddForce(forceToApply, ForceMode.Force);
+
+		// === 9. Update Movement Flag ===
+		isMoving = moveInput.magnitude > 0f;
+	}
+
+	void sprint()
+	{
+		if (Input.GetButtonDown("Sprint"))
+		{
+			if (isGrounded && isMoving && !isCrouching && !isSliding)
+			{
+				isSprinting = true;
+				currentState = MovementState.Sprint;
+			}
+		}
+		else if (Input.GetButtonDown("Sprint"))
+		{
+			isSprinting = false;
+
+			if (isMoving)
+			{
+				currentState = MovementState.Run;
+			}
+			else
+			{
+				currentState = MovementState.Idle;
+			}
+		}
+
+		if (isSprinting && (!isGrounded || !isMoving || isCrouching || isSliding))
+		{
+			isSprinting = false;
+
+			if (isMoving)
+			{
+				currentState = MovementState.Run;
+			}
+			else
+			{
+				currentState = MovementState.Idle;
+			}
+		}
+	}
+
+	void crouch()
+	{
+
+	}
 }

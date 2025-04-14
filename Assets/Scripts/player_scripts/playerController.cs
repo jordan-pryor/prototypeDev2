@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerController : MonoBehaviour
@@ -38,11 +39,18 @@ public class playerController : MonoBehaviour
 	[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
 	[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
 
+    [SerializeField] bool toggleSprint = false;               // Players choose whether they hold to sprint or toggle
+	public float sensX = 100;								  // Horizontal Sensitivity
+	public float sensY = 50;								  // Vertical Sensitivity
+	public float pitchClamp = 90f;							  // Max head turn up/down
+	public float yawClamp = 90f;                              // Max head turn left/right
+	public float turnSpeed = 0.5f;                            // How fast the body turns when the head reaches max
+	public float turnThreshold = 0.8f;						  // Absorbs some of the turn so the turn isnt as harsh
 
-	//[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion � parkour vibes incoming
+    //[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion � parkour vibes incoming
 
-	// === Gravity & Physics ===
-	[Header("Gravity & Physics")]
+    // === Gravity & Physics ===
+    [Header("Gravity & Physics")]
 	[SerializeField] float gravity;                       // The pull of the void � always down
 	[SerializeField] float gravityMultiplier;             // How much harder we get yoinked down
 	[SerializeField] float dragGround;                    // Sticky shoes � resistance on the ground
@@ -62,6 +70,7 @@ public class playerController : MonoBehaviour
 	[SerializeField] bool isMoving;                       // Are we actually going somewhere?
 	[SerializeField] bool hasJumped;                      // Already jumped? Can�t double up unless allowed
 	[SerializeField] bool vaulting;                       // Mid-vault animation/action?
+	[SerializeField] bool sprintToggled;				  // If sprinting has been toggled
 
 	// === Movement Vectors ===
 	[Header("Movement Vectors")]
@@ -107,7 +116,8 @@ public class playerController : MonoBehaviour
 	// Update is called once per frame
 	void FixedUpdate()
 	{
-		movement();
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight / 2 + 0.2f, groundMask);
+        movement();
 		sprint();
 		crouch();
 	}
@@ -149,44 +159,40 @@ public class playerController : MonoBehaviour
 
 		// === 9. Update Movement Flag ===
 		isMoving = moveInput.magnitude > 0f;
+		if (!isMoving && toggleSprint) { sprintToggled = false; }
 	}
 
 	void sprint()
 	{
-		if (Input.GetButtonDown("Sprint"))
+		if(toggleSprint)
 		{
-			if (isGrounded && isMoving && !isCrouching && !isSliding)
+			if (Input.GetButtonDown("Sprint"))
+			{
+				sprintToggled = !sprintToggled;
+			}
+			if(sprintToggled && isGrounded && isMoving && !isCrouching && !isSliding)
 			{
 				isSprinting = true;
 				currentState = MovementState.Sprint;
 			}
-		}
-		else if (Input.GetButtonDown("Sprint"))
-		{
-			isSprinting = false;
-
-			if (isMoving)
+			else
 			{
-				currentState = MovementState.Run;
+				isSprinting = false;
+				currentState = isMoving ? MovementState.Run : MovementState.Idle;
+            }
+		}
+		else
+		{
+			if(Input.GetButton("Sprint") && isGrounded && isMoving && !isCrouching && !isSliding)
+			{
+				isSprinting = true;
+				currentState = MovementState.Sprint;
 			}
 			else
 			{
-				currentState = MovementState.Idle;
-			}
-		}
-
-		if (isSprinting && (!isGrounded || !isMoving || isCrouching || isSliding))
-		{
-			isSprinting = false;
-
-			if (isMoving)
-			{
-				currentState = MovementState.Run;
-			}
-			else
-			{
-				currentState = MovementState.Idle;
-			}
+				isSprinting = false;
+                currentState = isMoving ? MovementState.Run : MovementState.Idle;
+            }
 		}
 	}
 

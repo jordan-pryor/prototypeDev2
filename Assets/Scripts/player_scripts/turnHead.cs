@@ -15,33 +15,18 @@ public class turnHead : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * player.sensX * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * player.sensY * Time.deltaTime;
-
-        // Handle vertical head turning
-        pitch -= mouseY;
-        pitch = Mathf.Clamp(pitch, -player.pitchClamp, player.pitchClamp);
+        float mouseX = Input.GetAxis("Mouse X") * player.sens * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * player.sens * Time.deltaTime;
 
         // Handle horizontal head turning
-        yaw += mouseX;
-        yaw = Mathf.Clamp(yaw, -player.yawClamp, player.yawClamp);
+        yaw -= mouseY;
+        // clamp cam on x-axis
+        yaw = Mathf.Clamp(yaw, -player.pitchClamp, player.pitchClamp);
 
         // Apply rotations
-        transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+        transform.localRotation = Quaternion.Euler(yaw, 0, 0);
 
-        // turning the body
-        float turnThresh = player.yawClamp * player.turnThreshold;
-
-        // If at max yaw then rotate the body
-        if (Mathf.Abs(yaw) >= turnThresh)
-        {
-            float excess = yaw - Mathf.Sign(yaw) * turnThresh;
-            // limit turn using turn speed
-            float maxTurn = player.turnSpeed * Time.deltaTime;
-            float turnStep = Mathf.Clamp(excess, -maxTurn, maxTurn);
-            player.transform.Rotate(Vector3.up * turnStep);
-            yaw -= turnStep;
-            transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
-        }
+        // rotate the player on the y-axis to look left and right
+        transform.parent.Rotate(Vector3.up * mouseX);
     }
 }

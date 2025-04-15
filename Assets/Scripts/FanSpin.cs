@@ -11,7 +11,7 @@ public class FanSpin : MonoBehaviour
     {
         if(isOn)
         {
-            blades.transform.Rotate(Vector3.up, fanSpeed * Time.deltaTime, Space.Self);
+            blades.transform.Rotate(Vector3.forward, fanSpeed * Time.deltaTime, Space.Self);
         }
     }
 }

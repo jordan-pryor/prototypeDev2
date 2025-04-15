@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class Flashlight : MonoBehaviour
+public class Flashlight : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject lightRef;
-    [SerializeField] Renderer rendererRef;
     [SerializeField] Material baseMat;
     [SerializeField] Material emissMat;
     [SerializeField] bool isOn = false;
+    [SerializeField] int matIndex;
 
     // Update is called once per frame
     void Update()
@@ -20,17 +21,23 @@ public class Flashlight : MonoBehaviour
 
     void CheckLight()
     {
-        Material[] mats = rendererRef.materials;
+        Renderer rendererRef = GetComponent<Renderer>();
+        Material[] mats = rendererRef.sharedMaterials;
         if (isOn)
         {
             lightRef.SetActive(true);
-            mats[1] = emissMat;
+            mats[matIndex] = emissMat;
         }
         else
         {
             lightRef.SetActive(false);
-            mats[1] = baseMat;
+            mats[matIndex] = baseMat;
         }
-        rendererRef.materials = mats;
+        rendererRef.sharedMaterials = mats;
+    }
+
+    public void Interact()
+    {
+        isOn = !isOn;
     }
 }

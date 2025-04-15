@@ -1126,9 +1126,9 @@ MonoBehaviour:
   sensX: 50
   sensY: 40
   pitchClamp: 50
-  yawClamp: 90
-  turnSpeed: 10
-  turnThreshold: 0.75
+  yawClamp: 80
+  turnSpeed: 90
+  turnThreshold: 0.9
   gravity: 0
   gravityMultiplier: 0
   dragGround: 0

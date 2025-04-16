@@ -649,7 +649,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255828004856057733}
-  - component: {fileID: 629816278180699259}
   - component: {fileID: 775136738890241787}
   - component: {fileID: 3550388815454538310}
   - component: {fileID: 1964590536153850546}
@@ -675,20 +674,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6885264953538023935}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &629816278180699259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2469219733416151197}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcb93dd0e9d2ac64ea964bf485f02aeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 6885264953538023935}
-  player: {fileID: 489391919726206516}
 --- !u!20 &775136738890241787
 Camera:
   m_ObjectHideFlags: 0
@@ -1123,12 +1108,13 @@ MonoBehaviour:
   slideFriction: 3
   slideAngleThreshold: 30
   toggleSprint: 0
-  sensX: 50
-  sensY: 40
-  pitchClamp: 50
+  sensX: 75
+  sensY: 75
+  pitchClamp: 55
   yawClamp: 80
-  turnSpeed: 90
   turnThreshold: 0.9
+  turnSpeed: 90
+  isFPS: 0
   gravity: 0
   gravityMultiplier: 0
   dragGround: 0
@@ -2650,7 +2636,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6885264953538023935}
-  - component: {fileID: 3904035926392938994}
+  - component: {fileID: 773294605633053332}
+  - component: {fileID: 7397783335411298601}
+  - component: {fileID: 5395111868246084999}
   m_Layer: 0
   m_Name: Orientation
   m_TagString: Untagged
@@ -2674,7 +2662,20 @@ Transform:
   - {fileID: 255828004856057733}
   m_Father: {fileID: 9020301293314140630}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3904035926392938994
+--- !u!114 &773294605633053332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917727810791377673}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034473a87b72d804e8f8f41443a429eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 489391919726206516}
+--- !u!114 &7397783335411298601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2683,9 +2684,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8917727810791377673}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 034473a87b72d804e8f8f41443a429eb, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c1ced98ba8154747abd271dffda5375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 489391919726206516}
+--- !u!114 &5395111868246084999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8917727810791377673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d12ae79c668194d826f7b1efc0d2cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camSwivel: {fileID: 7397783335411298601}
+  camFPS: {fileID: 773294605633053332}
   player: {fileID: 489391919726206516}
 --- !u!1 &8998384097896221661
 GameObject:

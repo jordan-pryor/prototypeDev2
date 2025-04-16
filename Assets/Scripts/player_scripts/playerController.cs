@@ -40,8 +40,13 @@ public class playerController : MonoBehaviour
 	[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
 
     [SerializeField] bool toggleSprint = false;               // Players choose whether they hold to sprint or toggle
-	public int sens = 75;
-	public int pitchClamp = 55;							  // Max head turn up/down
+    public int sensX = 75;
+    public int sensY = 75;
+    public int pitchClamp = 55;                           // Max head turn up/down
+    public int yawClamp = 80;
+	public float turnThreshold = 0.9f;
+	public int turnSpeed = 90;
+	public bool isFPS = false;
 
     //[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion � parkour vibes incoming
 
@@ -102,9 +107,8 @@ public class playerController : MonoBehaviour
 	public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
 	MovementState currentState;
 
-
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
 	{
 		origHP = HP;
 	}

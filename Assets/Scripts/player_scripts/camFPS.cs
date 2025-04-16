@@ -1,10 +1,9 @@
 using UnityEngine;
 
-public class turnHead : MonoBehaviour
+public class camFPS : MonoBehaviour
 {
     [SerializeField] playerController player;
     private float pitch = 0f;
-    private float yaw = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -15,18 +14,18 @@ public class turnHead : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * player.sens * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * player.sens * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * player.sensX * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * player.sensY * Time.deltaTime;
 
         // Handle horizontal head turning
-        yaw -= mouseY;
+        pitch -= mouseY;
         // clamp cam on x-axis
-        yaw = Mathf.Clamp(yaw, -player.pitchClamp, player.pitchClamp);
+        pitch = Mathf.Clamp(pitch, -player.pitchClamp, player.pitchClamp);
 
         // Apply rotations
-        transform.localRotation = Quaternion.Euler(yaw, 0, 0);
+        transform.localRotation = Quaternion.Euler(pitch, 0, 0);
 
         // rotate the player on the y-axis to look left and right
-        transform.parent.Rotate(Vector3.up * mouseX);
+        player.transform.Rotate(Vector3.up * mouseX);
     }
 }

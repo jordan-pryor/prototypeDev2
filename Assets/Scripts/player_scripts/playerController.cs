@@ -40,12 +40,8 @@ public class playerController : MonoBehaviour
 	[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
 
     [SerializeField] bool toggleSprint = false;               // Players choose whether they hold to sprint or toggle
-	public float sensX = 100;								  // Horizontal Sensitivity
-	public float sensY = 50;								  // Vertical Sensitivity
-	public float pitchClamp = 90f;							  // Max head turn up/down
-	public float yawClamp = 90f;                              // Max head turn left/right
-	public float turnSpeed = 0.5f;                            // How fast the body turns when the head reaches max
-	public float turnThreshold = 0.8f;						  // Absorbs some of the turn so the turn isnt as harsh
+	public int sens = 75;
+	public int pitchClamp = 55;							  // Max head turn up/down
 
     //[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion � parkour vibes incoming
 

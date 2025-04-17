@@ -5,46 +5,51 @@ public class Weapon : MonoBehaviour
 	[Header("Stats")]
 	[SerializeField] private int ammo = 12;
 	[SerializeField] private int maxAmmo = 12;
-	[SerializeField] private float fireRate = 0.5f;
+	[SerializeField] private float fireRate = 1f;
 	[SerializeField] private float range = 100f;
-	[SerializeField] private float damage = 10f;
+	[SerializeField] private int damage = 10;
+
 
 	[Header("References")]
 	[SerializeField] private Transform shootPoint; // Where the raycast will come from
+    [SerializeField] LayerMask ignoreLayer;
 
-	private float nextFireTime;
+    private float nextFireTime;
+    float shootTimer;
+    private void Update()
+    {
+        shootTimer += Time.deltaTime;
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * range, Color.red);
+    }
 
-	public void Shoot()
+    public void Shoot()
 	{
-		if (Time.time < nextFireTime) return;
+        if (Time.time < nextFireTime)
+            return;
 
-		if (ammo <= 0)
-		{
-			Debug.Log("Click! Out of ammo.");
-			return;
-		}
-
-		ammo--;
-		nextFireTime = Time.time + fireRate;
-
-		Debug.Log("Bang! Ammo left: " + ammo);
-
-        Camera cam = Camera.main;
-		if ( cam == null)
+        if (ammo <= 0)
         {
-            Debug.LogWarning("Cam null.");
+            Debug.Log("Click! Out of ammo.");
             return;
         }
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-		if (Physics.Raycast(ray, out RaycastHit hit, range))
-		{
-			Debug.Log("Hit: " + hit.collider.name);
-		}
-		else
-		{
-			Debug.Log("Missed!");
-		}
-	}
+
+        ammo--;
+        nextFireTime = Time.time + fireRate;
+
+        Debug.Log("Bang! Ammo left: " + ammo);
+
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer))
+        {
+            Debug.Log("Hit: " + hit.collider.name);
+
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+            if (dmg != null)
+            {
+                dmg.takeDamage(damage);
+            }
+        }
+    }
 
 	public void Reload()
 	{

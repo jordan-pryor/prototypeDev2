@@ -603,6 +603,9 @@ MonoBehaviour:
   range: 100
   damage: 10
   shootPoint: {fileID: 5955677062837691310}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 63
 --- !u!1 &9200710914558415335
 GameObject:
   m_ObjectHideFlags: 0

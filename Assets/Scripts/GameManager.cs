@@ -1,18 +1,19 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static gamemanager instance;
+    public static GameManager instance;
 
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text gameGoalCountText;
+    //[SerializeField] TMP_Text gameGoalCountText;
 
-    public Image playerHPBar;
+    //public Image playerHPBar;
     public GameObject playerDamageScreen;
 
     public GameObject player;
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     float timeScaleOrig;
 
     int gameGoalCount;
-    // possiable future use with enemies for tracking.
+    // possible future use with enemies for tracking.
     //public List<EnemyAI> allEnemies = new List<EnemyAI>();
 
     // Awake is called before start. 
@@ -32,7 +33,6 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
-
         timeScaleOrig = Time.timeScale;
     }
 
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
+       // gameGoalCountText.text = gameGoalCount.ToString("F0");
 
         if (gameGoalCount <= 0)
         {

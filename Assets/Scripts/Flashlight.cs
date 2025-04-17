@@ -22,6 +22,8 @@ public class Flashlight : MonoBehaviour, IInteract
     void CheckLight()
     {
         Renderer rendererRef = GetComponent<Renderer>();
+        if (rendererRef != null)
+        {
         Material[] mats = rendererRef.sharedMaterials;
         if (isOn)
         {
@@ -34,6 +36,7 @@ public class Flashlight : MonoBehaviour, IInteract
             mats[matIndex] = baseMat;
         }
         rendererRef.sharedMaterials = mats;
+    }
     }
 
     public void Interact()

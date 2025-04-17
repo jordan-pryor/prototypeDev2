@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
 	[Header("References")]
 	[SerializeField] private Transform shootPoint; // Where the raycast will come from
     [SerializeField] LayerMask ignoreLayer;
+    [SerializeField] private GameObject projectile;
 
     private float nextFireTime;
     float shootTimer;
@@ -43,12 +44,17 @@ public class Weapon : MonoBehaviour
         {
             Debug.Log("Hit: " + hit.collider.name);
 
+            /*
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
             }
+            */
+            Instantiate(projectile, shootPoint.position, transform.rotation);
         }
+
+        
     }
 
 	public void Reload()

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5585246724804164844
 Transform:
   m_ObjectHideFlags: 0
@@ -26,13 +26,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8589652481595308680}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.00704}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.00000032424927, y: 5.9604643e-10, z: -0.007039749}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 504355914035966320}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!108 &3828618960671182526
 Light:
   m_ObjectHideFlags: 0
@@ -42,12 +42,12 @@ Light:
   m_GameObject: {fileID: 8589652481595308680}
   m_Enabled: 1
   serializedVersion: 11
-  m_Type: 2
+  m_Type: 0
   m_Color: {r: 0.8612456, g: 0.8616352, b: 0.71261024, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_Intensity: 50
+  m_Range: 50
+  m_SpotAngle: 91.474754
+  m_InnerSpotAngle: 57.552284
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -86,7 +86,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 50
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -172,11 +172,11 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 1ce60ca74b340eb49b80674fa0533382, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2100000, guid: a9ccc1d28026006418436266413a1a00, type: 2}
     - target: {fileID: -7511558181221131132, guid: 1ce60ca74b340eb49b80674fa0533382, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 809b1f498ea18eb42a99efc0c12c5469, type: 2}
+      objectReference: {fileID: 2100000, guid: 6d5756d96894f4448a87974f6a0797b0, type: 2}
     - target: {fileID: 919132149155446097, guid: 1ce60ca74b340eb49b80674fa0533382, type: 3}
       propertyPath: m_Name
       value: FanFrame
@@ -230,7 +230,7 @@ MonoBehaviour:
   lightRef: {fileID: 8589652481595308680}
   baseMat: {fileID: 2100000, guid: 809b1f498ea18eb42a99efc0c12c5469, type: 2}
   emissMat: {fileID: 2100000, guid: 6d5756d96894f4448a87974f6a0797b0, type: 2}
-  isOn: 0
+  isOn: 1
   matIndex: 1
 --- !u!114 &4223446739784383132
 MonoBehaviour:

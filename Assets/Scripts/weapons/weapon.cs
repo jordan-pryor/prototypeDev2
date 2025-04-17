@@ -8,9 +8,10 @@ public class Weapon : MonoBehaviour
 	[SerializeField] private float fireRate = 1f;
 	[SerializeField] private float range = 100f;
 	[SerializeField] private int damage = 10;
+    [SerializeField] GameObject rangedProjectile;
+    [SerializeField] GameObject promptReload;
 
-
-	[Header("References")]
+    [Header("References")]
 	[SerializeField] private Transform shootPoint; // Where the raycast will come from
     [SerializeField] LayerMask ignoreLayer;
 
@@ -20,6 +21,14 @@ public class Weapon : MonoBehaviour
     {
         shootTimer += Time.deltaTime;
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * range, Color.red);
+        if(ammo <= 0)
+        {
+            promptReload.SetActive(true);
+        }
+        else
+        {
+            promptReload.SetActive(false);
+        }
     }
 
     public void Shoot()
@@ -37,18 +46,22 @@ public class Weapon : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         Debug.Log("Bang! Ammo left: " + ammo);
-
+        Instantiate(rangedProjectile, shootPoint.position + shootPoint.forward, GameManager.instance.player.transform.rotation);
+        /*
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer))
         {
             Debug.Log("Hit: " + hit.collider.name);
-
+            
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
             }
+            
+            Instantiate(rangedProjectile, shootPoint.position, transform.rotation);
         }
+        */
     }
 
 	public void Reload()

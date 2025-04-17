@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamage
 {
 	// === System References ===
 	[Header("System References")]

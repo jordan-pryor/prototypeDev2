@@ -98,8 +98,8 @@ public class playerController : MonoBehaviour
 	// === Player Interaction(Weapons) ===
 	[SerializeField] private GameObject startingWeaponPrefab;
 	[SerializeField] private Transform itemHolder;
-	GameObject equippedItem;
-	Weapon equippedWeapon;
+	[SerializeField] GameObject equippedItem;
+    [SerializeField] Weapon equippedWeapon;
 	
 
 	// === Timers ===
@@ -113,125 +113,127 @@ public class playerController : MonoBehaviour
 	// === Player State Machine ===
 	public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
 	MovementState currentState;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        origHP = HP;
+    }
 
-<<<<<<< Updated upstream
+    void Update()
+    {
+        if(equippedWeapon != null)
+        {
+            isFPS = true;
+            if (Input.GetButtonDown("Fire1"))
+            {
+                equippedWeapon.Shoot();
+            }
 
-=======
->>>>>>> Stashed changes
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
-	void Start()
-	{
-		origHP = HP;
-	}
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                equippedWeapon.Reload();
+            }
+        }
+        else
+        {
+            isFPS = false;
+        }
+    }
 
-	void Update()
-	{
-		// Help plz -_-
-		if (Input.GetButtonDown("Fire1") && equippedWeapon != null)
-		{
-			equippedWeapon.Shoot();
-		}
-
-		if (Input.GetKeyDown(KeyCode.R) && equippedWeapon != null)
-		{
-			equippedWeapon.Reload();
-		}
-	}
-
-	void FixedUpdate()
-	{
+    void FixedUpdate()
+    {
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight / 2 + 0.2f, groundMask);
         movement();
-		sprint();
-		crouch();
-	}
+        sprint();
+        crouch();
+    }
 
-	void movement()
-	{
-		// === 1. Get Input ===
-		float horizontal = Input.GetAxisRaw("Horizontal");
-		float vertical = Input.GetAxisRaw("Vertical");
-		moveInput = new Vector3(horizontal, 0f, vertical).normalized;
+    void movement()
+    {
+        // === 1. Get Input ===
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        moveInput = new Vector3(horizontal, 0f, vertical).normalized;
 
-		// === 2. Translate Input to World Space ===
-		moveDirection = cam.forward * moveInput.z + cam.right * moveInput.x;
-		moveDirection.y = 0f;
-		moveDirection.Normalize();
+        // === 2. Translate Input to World Space ===
+        moveDirection = cam.forward * moveInput.z + cam.right * moveInput.x;
+        moveDirection.y = 0f;
+        moveDirection.Normalize();
 
-		// === 3. Choose Target Speed Based on State ===
-		float targetSpeed = walkSpeed;
-		if (isSprinting) targetSpeed = sprintSpeed;
-		if (isCrouching) targetSpeed = crouchSpeed;
+        // === 3. Choose Target Speed Based on State ===
+        float targetSpeed = walkSpeed;
+        if (isSprinting) targetSpeed = sprintSpeed;
+        if (isCrouching) targetSpeed = crouchSpeed;
 
-		// === 4. Calculate Desired Velocity ===
-		desiredVelocity = moveDirection * targetSpeed;
+        // === 4. Calculate Desired Velocity ===
+        desiredVelocity = moveDirection * targetSpeed;
 
-		// === 5. Get Current Horizontal Velocity ===
-		currentVelocity = rb.linearVelocity;
-		Vector3 horizontalVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
+        // === 5. Get Current Horizontal Velocity ===
+        currentVelocity = rb.linearVelocity;
+        Vector3 horizontalVelocity = new Vector3(currentVelocity.x, 0f, currentVelocity.z);
 
-		// === 6. Figure Out the Difference ===
-		velocityChange = desiredVelocity - horizontalVelocity;
+        // === 6. Figure Out the Difference ===
+        velocityChange = desiredVelocity - horizontalVelocity;
 
-		// === 7. Clamp Velocity Change Based on Acceleration ===
-		float controlFactor = isGrounded ? 1f : airControlMultiplier;
-		velocityChange = Vector3.ClampMagnitude(velocityChange, acceleration * controlFactor);
+        // === 7. Clamp Velocity Change Based on Acceleration ===
+        float controlFactor = isGrounded ? 1f : airControlMultiplier;
+        velocityChange = Vector3.ClampMagnitude(velocityChange, acceleration * controlFactor);
 
-		// === 8. Apply That Force to the Meat Mech ===
-		forceToApply = velocityChange * moveForce;
-		rb.AddForce(forceToApply, ForceMode.Force);
+        // === 8. Apply That Force to the Meat Mech ===
+        forceToApply = velocityChange * moveForce;
+        rb.AddForce(forceToApply, ForceMode.Force);
 
-		// === 9. Update Movement Flag ===
-		isMoving = moveInput.magnitude > 0f;
-		if (!isMoving && toggleSprint) { sprintToggled = false; }
-	}
+        // === 9. Update Movement Flag ===
+        isMoving = moveInput.magnitude > 0f;
+        if (!isMoving && toggleSprint) { sprintToggled = false; }
+    }
 
-	void sprint()
-	{
-		if(toggleSprint)
-		{
-			if (Input.GetButtonDown("Sprint"))
-			{
-				sprintToggled = !sprintToggled;
-			}
-			if(sprintToggled && isGrounded && isMoving && !isCrouching && !isSliding)
-			{
-				isSprinting = true;
-				currentState = MovementState.Sprint;
-			}
-			else
-			{
-				isSprinting = false;
-				currentState = isMoving ? MovementState.Run : MovementState.Idle;
+    void sprint()
+    {
+        if (toggleSprint)
+        {
+            if (Input.GetButtonDown("Sprint"))
+            {
+                sprintToggled = !sprintToggled;
             }
-		}
-		else
-		{
-			if(Input.GetButton("Sprint") && isGrounded && isMoving && !isCrouching && !isSliding)
-			{
-				isSprinting = true;
-				currentState = MovementState.Sprint;
-			}
-			else
-			{
-				isSprinting = false;
+            if (sprintToggled && isGrounded && isMoving && !isCrouching && !isSliding)
+            {
+                isSprinting = true;
+                currentState = MovementState.Sprint;
+            }
+            else
+            {
+                isSprinting = false;
                 currentState = isMoving ? MovementState.Run : MovementState.Idle;
             }
-		}
-	}
+        }
+        else
+        {
+            if (Input.GetButton("Sprint") && isGrounded && isMoving && !isCrouching && !isSliding)
+            {
+                isSprinting = true;
+                currentState = MovementState.Sprint;
+            }
+            else
+            {
+                isSprinting = false;
+                currentState = isMoving ? MovementState.Run : MovementState.Idle;
+            }
+        }
+    }
 
-	void crouch()
-	{
+    void crouch()
+    {
 
-	}
+    }
 
-	public void takeDamage(int amount)
-	{
-		HP -= amount;
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
 
-		if (HP <= 0)
-		{
-			GameManager.instance.youLose();
-		}
-	}
+        if (HP <= 0)
+        {
+            GameManager.instance.youLose();
+        }
+    }
 }

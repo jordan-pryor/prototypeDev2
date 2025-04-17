@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
         instance = this;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<playerController>();
-
         timeScaleOrig = Time.timeScale;
     }
 

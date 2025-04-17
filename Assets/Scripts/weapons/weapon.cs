@@ -29,15 +29,13 @@ public class Weapon : MonoBehaviour
 
 		Debug.Log("Bang! Ammo left: " + ammo);
 
-		// === Raycast logic ===
-		if (shootPoint == null)
-		{
-			Debug.LogWarning("No shootPoint assigned on weapon.");
-			return;
-		}
-
-		Camera cam = Camera.main;
-		Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        Camera cam = Camera.main;
+		if ( cam == null)
+        {
+            Debug.LogWarning("Cam null.");
+            return;
+        }
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 		if (Physics.Raycast(ray, out RaycastHit hit, range))
 		{
 			Debug.Log("Hit: " + hit.collider.name);

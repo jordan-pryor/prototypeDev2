@@ -686,7 +686,7 @@ GameObject:
   - component: {fileID: 1964590536153850546}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1165,7 +1165,9 @@ MonoBehaviour:
   vaulting: 0
   sprintToggled: 0
   startingWeaponPrefab: {fileID: 9162539479358329946, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
-  itemHolder: {fileID: 0}
+  itemHolder: {fileID: 3148381845871212830}
+  equippedItem: {fileID: 0}
+  equippedWeapon: {fileID: 6866691368116723455}
 --- !u!114 &8808821351965550876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2905,6 +2907,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
+--- !u!114 &6866691368116723455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1800398502945985707, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
+  m_PrefabInstance: {fileID: 5167651381224082004}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec608ed28299d4544b1481eb35e61d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8774070699995332761 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4500482914819607245, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}

@@ -95,6 +95,13 @@ public class playerController : MonoBehaviour
 	Vector3 raycastOrigin;                                // Ray start point � detective work begins here
 	Vector3 raycastDirection;                             // Ray direction � where we�re looking
 
+	// === Player Interaction(Weapons) ===
+	[SerializeField] private GameObject startingWeaponPrefab;
+	[SerializeField] private Transform itemHolder;
+	GameObject equippedItem;
+	Weapon equippedWeapon;
+	
+
 	// === Timers ===
 	[Header("Timers")]
 	float lastGroundedTime;                               // Last time we touched the ground � for coyote logic
@@ -107,13 +114,30 @@ public class playerController : MonoBehaviour
 	public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
 	MovementState currentState;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+<<<<<<< Updated upstream
+
+=======
+>>>>>>> Stashed changes
+	// Start is called once before the first execution of Update after the MonoBehaviour is created
+	void Start()
 	{
 		origHP = HP;
 	}
 
-	// Update is called once per frame
+	void Update()
+	{
+		// Help plz -_-
+		if (Input.GetButtonDown("Fire1") && equippedWeapon != null)
+		{
+			equippedWeapon.Shoot();
+		}
+
+		if (Input.GetKeyDown(KeyCode.R) && equippedWeapon != null)
+		{
+			equippedWeapon.Reload();
+		}
+	}
+
 	void FixedUpdate()
 	{
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight / 2 + 0.2f, groundMask);
@@ -199,5 +223,15 @@ public class playerController : MonoBehaviour
 	void crouch()
 	{
 
+	}
+
+	public void takeDamage(int amount)
+	{
+		HP -= amount;
+
+		if (HP <= 0)
+		{
+			GameManager.instance.youLose();
+		}
 	}
 }

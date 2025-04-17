@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Door : MonoBehaviour, IInteract
+public class Door : MonoBehaviour
 {
     [SerializeField] GameObject door;
     [SerializeField, Range(0f, 1f)] float openPercent;

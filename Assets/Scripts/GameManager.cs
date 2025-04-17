@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {

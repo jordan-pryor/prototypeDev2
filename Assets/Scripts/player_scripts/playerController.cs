@@ -124,7 +124,7 @@ public class playerController : MonoBehaviour
         if(equippedWeapon != null)
         {
             isFPS = true;
-            if (Input.GetButton("Fire1"))
+            if (Input.GetButtonDown("Fire1"))
             {
                 equippedWeapon.Shoot();
             }

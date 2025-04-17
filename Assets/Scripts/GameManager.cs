@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             }
             else if (menuActive == menuPause)
             {
-                stateUnpaused();
+                stateUnpause();
 
             }
 
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void stateUnpaused()
+    public void stateUnpause()
     {
         isPaused = !isPaused;
         Time.timeScale = timeScaleOrig;

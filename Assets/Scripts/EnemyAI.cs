@@ -25,7 +25,11 @@ public class enemyAI : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+<<<<<<< Updated upstream
         //colorOrig = model.material.color;
+=======
+        colorOrig = model.material.color;
+>>>>>>> Stashed changes
         GameManager.instance.updateGameGoal(1);
     }
 
@@ -42,9 +46,19 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (attackTimer >= attackRate)
         {
+<<<<<<< Updated upstream
             if(agent.remainingDistance <= agent.stoppingDistance){
                 meleeAttack();
              }else{
+=======
+            rangedAttack();
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                meleeAttack();
+            }
+            else
+            {
+>>>>>>> Stashed changes
                 rangedAttack();
             }
         }
@@ -67,9 +81,15 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator flashRed()
     {
+<<<<<<< Updated upstream
         //model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         //model.material.color = colorOrig;
+=======
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = colorOrig;
+>>>>>>> Stashed changes
     }
 
     void rangedAttack()

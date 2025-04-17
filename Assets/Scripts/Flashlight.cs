@@ -22,18 +22,21 @@ public class Flashlight : MonoBehaviour, IInteract
     void CheckLight()
     {
         Renderer rendererRef = GetComponent<Renderer>();
-        Material[] mats = rendererRef.sharedMaterials;
-        if (isOn)
+        if (rendererRef != null)
         {
-            lightRef.SetActive(true);
-            mats[matIndex] = emissMat;
+            Material[] mats = rendererRef.sharedMaterials;
+            if (isOn)
+            {
+                lightRef.SetActive(true);
+                mats[matIndex] = emissMat;
+            }
+            else
+            {
+                lightRef.SetActive(false);
+                mats[matIndex] = baseMat;
+            }
+            rendererRef.sharedMaterials = mats;
         }
-        else
-        {
-            lightRef.SetActive(false);
-            mats[matIndex] = baseMat;
-        }
-        rendererRef.sharedMaterials = mats;
     }
 
     public void Interact()

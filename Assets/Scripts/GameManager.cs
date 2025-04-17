@@ -4,7 +4,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public static gamemanager instance;
+    public static GameManager instance;
 
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuActive;
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text gameGoalCountText;
 
-    public Image playerHPBar;
+    //public Image playerHPBar;
     public GameObject playerDamageScreen;
 
     public GameObject player;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     float timeScaleOrig;
 
     int gameGoalCount;
-    // possiable future use with enemies for tracking.
+    // possible future use with enemies for tracking.
     //public List<EnemyAI> allEnemies = new List<EnemyAI>();
 
     // Awake is called before start. 

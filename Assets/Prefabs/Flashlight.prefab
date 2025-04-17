@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6329206702942419739}
-  - component: {fileID: 6582391897893261626}
   m_Layer: 0
   m_Name: Flashlight
   m_TagString: Untagged
@@ -33,23 +32,6 @@ Transform:
   - {fileID: 2588525493639019339}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6582391897893261626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3004064182763565637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65cce1e5d7cc00e468a999ecf34abe01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightRef: {fileID: 7400082416572757080}
-  rendererRef: {fileID: 3722056748102221860}
-  baseMat: {fileID: -3846018093981099296, guid: e4dc0416dff0e844c9e4037b451a6b6e, type: 3}
-  emissMat: {fileID: 4874126678125670354, guid: e4dc0416dff0e844c9e4037b451a6b6e, type: 3}
-  isOn: 0
 --- !u!1 &7400082416572757080
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,10 +236,5 @@ PrefabInstance:
 --- !u!4 &2588525493639019339 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e4dc0416dff0e844c9e4037b451a6b6e, type: 3}
-  m_PrefabInstance: {fileID: 2623051313668693152}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &3722056748102221860 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: e4dc0416dff0e844c9e4037b451a6b6e, type: 3}
   m_PrefabInstance: {fileID: 2623051313668693152}
   m_PrefabAsset: {fileID: 0}

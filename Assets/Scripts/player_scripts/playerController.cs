@@ -10,13 +10,14 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] Transform cam;                       // Our eyeballs � aka the camera
 	[SerializeField] LayerMask groundMask;                // What counts as "floor" to us
 	[SerializeField] float playerHeight = 2f;             // Tall mode � regular standing height
-	[SerializeField] float crouchHeight = 1f;             // Short king mode � crouch collider height
-	[SerializeField] float crouchTransitionSpeed = 10f;   // How fast we go from tall to small
+	//[SerializeField] float crouchHeight = 1f;             // Short king mode � crouch collider height
+	//[SerializeField] float crouchTransitionSpeed = 10f;   // How fast we go from tall to small
 	[SerializeField] int HP = 100;             // How much life we got left � don�t let it hit 0!
 	int origHP;
 
-	// === Player Movement & Control ===
-	[Header("Player Movement & Control")]
+
+    // === Player Movement & Control ===
+    [Header("Player Movement & Control")]
 	[SerializeField] float moveForce = 40f;                   // Strong enough for responsive force-based movement
 	[SerializeField] float maxSpeed = 7f;                     // General cap – tweak if you want sprint to go over this
 
@@ -24,20 +25,20 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] float deceleration = 12f;                // Slightly stronger than accel to help stop cleanly
 	[SerializeField] float airControlMultiplier = 0.4f;       // Less control mid-air, but still maneuverable
 
-	[SerializeField] float jumpForce = 8f;                    // Height of jump – feels snappy but not floaty
-	[SerializeField] float coyoteTime = 0.2f;                 // Common value, very forgiving
-	[SerializeField] float jumpBufferTime = 0.15f;            // Helps you land consistent jumps
+	//[SerializeField] float jumpForce = 8f;                    // Height of jump – feels snappy but not floaty
+	//[SerializeField] float coyoteTime = 0.2f;                 // Common value, very forgiving
+	//[SerializeField] float jumpBufferTime = 0.15f;            // Helps you land consistent jumps
 
 	[SerializeField] float walkSpeed = 3f;                    // Slow pace, immersive movement
 	[SerializeField] float runSpeed = 5f;                     // Standard movement speed
 	[SerializeField] float sprintSpeed = 8f;                  // Fast and flowy
-	[SerializeField] float crouchSpeed = 2.5f;                // Slow but not crawling
-	[SerializeField] float slideSpeed = 10f;                  // Initial burst when initiating a slide
-	[SerializeField] float slideForce = 20f;                  // Push into the slide – lower = stickier, higher = zippier
-	[SerializeField] float slideDuration = 0.75f;             // Long enough for fun movement, short enough to not abuse
-	[SerializeField] float slideCooldown = 1.2f;              // Prevents chaining slides unrealistically
-	[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
-	[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
+	//[SerializeField] float crouchSpeed = 2.5f;                // Slow but not crawling
+	//[SerializeField] float slideSpeed = 10f;                  // Initial burst when initiating a slide
+	//[SerializeField] float slideForce = 20f;                  // Push into the slide – lower = stickier, higher = zippier
+	//[SerializeField] float slideDuration = 0.75f;             // Long enough for fun movement, short enough to not abuse
+	//[SerializeField] float slideCooldown = 1.2f;              // Prevents chaining slides unrealistically
+	//[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
+	//[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
 
     [SerializeField] bool toggleSprint = false;               // Players choose whether they hold to sprint or toggle
     public int sensX = 75;
@@ -52,12 +53,12 @@ public class playerController : MonoBehaviour, IDamage
 
     // === Gravity & Physics ===
     [Header("Gravity & Physics")]
-	[SerializeField] float gravity;                       // The pull of the void � always down
+	//[SerializeField] float gravity;                       // The pull of the void � always down
 	[SerializeField] float gravityMultiplier;             // How much harder we get yoinked down
 	[SerializeField] float dragGround;                    // Sticky shoes � resistance on the ground
 	[SerializeField] float dragAir;                       // Floating resistance � like pushing through soup
-	[SerializeField] float slopeLimit = 45f;              // Max slope we can climb � beyond this, it�s a slidey slope
-	[SerializeField] float slopeForceMultiplier = 2f;     // Extra push when fighting or sliding down slopes
+	//[SerializeField] float slopeLimit = 45f;              // Max slope we can climb � beyond this, it�s a slidey slope
+	//[SerializeField] float slopeForceMultiplier = 2f;     // Extra push when fighting or sliding down slopes
 
 	// === State Check / Flags ===
 	[Header("State Check / Flags")]
@@ -100,23 +101,31 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] private Transform itemHolder;
 	[SerializeField] GameObject equippedItem;
     [SerializeField] Weapon equippedWeapon;
-	
 
-	// === Timers ===
-	[Header("Timers")]
-	float lastGroundedTime;                               // Last time we touched the ground � for coyote logic
-	float lastJumpPressedTime;                            // Last jump input time � for buffering
-	float lastVaultTime;                                  // Last time we vaulted � cooldown tracking?
-	float slideTimer;                                     // How long we�ve been sliding
-	float slideCooldownTimer;                             // Cooldown between slides � chill out
+    //Basic jump and double jump
+    [SerializeField] float jumpForce = 8f;
+    [SerializeField] int maxJumpCount = 2;
 
-	// === Player State Machine ===
-	public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
+    int currentJumpCount;
+    bool jumpRequested;
+
+
+    // === Timers ===
+    //[Header("Timers")]
+    //float lastGroundedTime;                               // Last time we touched the ground � for coyote logic
+    //float lastJumpPressedTime;                            // Last jump input time � for buffering
+    //float lastVaultTime;                                  // Last time we vaulted � cooldown tracking?
+    //float slideTimer;                                     // How long we�ve been sliding
+    //float slideCooldownTimer;                             // Cooldown between slides � chill out
+
+    // === Player State Machine ===
+    public enum MovementState { Idle, Walk, Run, Sprint, Crouch, Slide, Vault }  // All the ways we move
 	MovementState currentState;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         origHP = HP;
+        updatePlayerUI();
     }
 
     void Update()
@@ -138,6 +147,12 @@ public class playerController : MonoBehaviour, IDamage
         {
             isFPS = false;
         }
+
+        // Check for jump input
+        if (Input.GetButtonDown("Jump") && currentJumpCount < maxJumpCount)
+        {
+            jumpRequested = true;
+        }
     }
 
     void FixedUpdate()
@@ -146,10 +161,24 @@ public class playerController : MonoBehaviour, IDamage
         movement();
         sprint();
         crouch();
+
+        if (isGrounded)
+        {
+            currentJumpCount = 0; // Reset jump count when touching ground
+        }
+
+        if (jumpRequested)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); // reset Y velocity for clean jump
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            currentJumpCount++;
+            jumpRequested = false;
+        }
     }
 
     void movement()
     {
+        
         // === 1. Get Input ===
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -163,7 +192,7 @@ public class playerController : MonoBehaviour, IDamage
         // === 3. Choose Target Speed Based on State ===
         float targetSpeed = walkSpeed;
         if (isSprinting) targetSpeed = sprintSpeed;
-        if (isCrouching) targetSpeed = crouchSpeed;
+        //if (isCrouching) targetSpeed = crouchSpeed;
 
         // === 4. Calculate Desired Velocity ===
         desiredVelocity = moveDirection * targetSpeed;
@@ -187,6 +216,8 @@ public class playerController : MonoBehaviour, IDamage
         isMoving = moveInput.magnitude > 0f;
         if (!isMoving && toggleSprint) { sprintToggled = false; }
     }
+
+   
 
     void sprint()
     {
@@ -230,10 +261,16 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
 
         if (HP <= 0)
         {
             GameManager.instance.youLose();
         }
+    }
+
+    public void updatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / origHP;
     }
 }

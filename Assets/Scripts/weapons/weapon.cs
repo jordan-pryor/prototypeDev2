@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         Debug.Log("Bang! Ammo left: " + ammo);
-        Instantiate(rangedProjectile, shootPoint.position + shootPoint.forward, GameManager.instance.player.transform.rotation);
+        Instantiate(rangedProjectile, Camera.main.transform.position + Camera.main.transform.forward, Camera.main.transform.rotation);
         /*
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer))

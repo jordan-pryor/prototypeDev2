@@ -788,7 +788,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -1118,27 +1118,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   playerHeight: 2
-  crouchHeight: 1
-  crouchTransitionSpeed: 10
   HP: 100
   moveForce: 40
   maxSpeed: 7
   acceleration: 10
   deceleration: 12
   airControlMultiplier: 0.4
-  jumpForce: 8
-  coyoteTime: 0.2
-  jumpBufferTime: 0.15
   walkSpeed: 3
   runSpeed: 5
   sprintSpeed: 8
-  crouchSpeed: 2.5
-  slideSpeed: 10
-  slideForce: 20
-  slideDuration: 0.75
-  slideCooldown: 1.2
-  slideFriction: 3
-  slideAngleThreshold: 30
   toggleSprint: 0
   sensX: 75
   sensY: 75
@@ -1147,27 +1135,21 @@ MonoBehaviour:
   turnThreshold: 0.9
   turnSpeed: 90
   isFPS: 0
-  gravity: 0
   gravityMultiplier: 0
   dragGround: 0
   dragAir: 0
-  slopeLimit: 45
-  slopeForceMultiplier: 2
-  isGrounded: 0
-  isSprinting: 0
-  isCrouching: 0
   isSliding: 0
   canVault: 0
-  wasGroundedLastFrame: 0
   jumpQueued: 0
   isMoving: 0
-  hasJumped: 0
   vaulting: 0
   sprintToggled: 0
   startingWeaponPrefab: {fileID: 9162539479358329946, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
   itemHolder: {fileID: 3148381845871212830}
   equippedItem: {fileID: 0}
   equippedWeapon: {fileID: 6866691368116723455}
+  jumpForce: 8
+  maxJumpCount: 1
 --- !u!114 &8808821351965550876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2846,6 +2828,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3148381845871212830}
     m_Modifications:
+    - target: {fileID: 1800398502945985707, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
+      propertyPath: shootPoint
+      value: 
+      objectReference: {fileID: 255828004856057733}
     - target: {fileID: 4500482914819607245, guid: 9c635096821d3a2448c7c4481457b3b2, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.05907159

@@ -62,20 +62,20 @@ public class playerController : MonoBehaviour, IDamage
 
 	// === State Check / Flags ===
 	[Header("State Check / Flags")]
-	[SerializeField] bool isGrounded;                     // Feet on the floor? Let�s find out
-	[SerializeField] bool isSprinting;                    // Are we zooming?
-	[SerializeField] bool isCrouching;                    // Tiny mode active?
+	bool isGrounded;                     // Feet on the floor? Let�s find out
+	bool isSprinting;                    // Are we zooming?
+	bool isCrouching;                    // Tiny mode active?
 	[SerializeField] bool isSliding;                      // Currently surfing the floor?
 	[SerializeField] bool canVault;                       // Ready to hop over something?
-	[SerializeField] bool wasGroundedLastFrame;           // Were we grounded a moment ago?
+	bool wasGroundedLastFrame;           // Were we grounded a moment ago?
 	[SerializeField] bool jumpQueued;                     // Jump was pressed � just waiting for the perfect moment
 	[SerializeField] bool isMoving;                       // Are we actually going somewhere?
-	[SerializeField] bool hasJumped;                      // Already jumped? Can�t double up unless allowed
+	bool hasJumped;                      // Already jumped? Can�t double up unless allowed
 	[SerializeField] bool vaulting;                       // Mid-vault animation/action?
 	[SerializeField] bool sprintToggled;				  // If sprinting has been toggled
 
-	// === Movement Vectors ===
-	[Header("Movement Vectors")]
+    // === Movement Vectors ===
+    [Header("Movement Vectors")]
 	Vector3 moveInput;                                    // Raw input from player � where we wanna go
 	Vector3 moveDirection;                                // Where we�re *actually* headed
 	Vector3 desiredVelocity;                              // Our dream velocity
@@ -104,7 +104,7 @@ public class playerController : MonoBehaviour, IDamage
 
     //Basic jump and double jump
     [SerializeField] float jumpForce = 8f;
-    [SerializeField] int maxJumpCount = 2;
+    [SerializeField] int maxJumpCount = 1;
 
     int currentJumpCount;
     bool jumpRequested;
@@ -151,29 +151,31 @@ public class playerController : MonoBehaviour, IDamage
         // Check for jump input
         if (Input.GetButtonDown("Jump") && currentJumpCount < maxJumpCount)
         {
-            jumpRequested = true;
+            hasJumped = true;
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); // reset Y velocity for clean jump
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            currentJumpCount++;
         }
     }
 
     void FixedUpdate()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight / 2 + 0.2f, groundMask);
+        Vector3 bottomCenter = capsule.bounds.center - new Vector3(0, capsule.bounds.extents.y, 0) + Vector3.up * 0.05f;
+        float checkRadius = capsule.radius * 0.95f;
+
+        isGrounded = Physics.CheckSphere(bottomCenter, checkRadius, groundMask);
+
+        if (isGrounded && !wasGroundedLastFrame)
+        {
+            currentJumpCount = 0; // Reset jump count when touching ground
+            hasJumped = false;
+        }
+
+        wasGroundedLastFrame = isGrounded;
+
         movement();
         sprint();
         crouch();
-
-        if (isGrounded)
-        {
-            currentJumpCount = 0; // Reset jump count when touching ground
-        }
-
-        if (jumpRequested)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z); // reset Y velocity for clean jump
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            currentJumpCount++;
-            jumpRequested = false;
-        }
     }
 
     void movement()

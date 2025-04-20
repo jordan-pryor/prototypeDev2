@@ -3083,7 +3083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7941734980643030646}
-  - component: {fileID: 7941734980643030651}
+  - component: {fileID: 7941734980643030652}
   - component: {fileID: 2563131023645857572}
   - component: {fileID: 1661925195878408515}
   - component: {fileID: 6454319764810846351}
@@ -3092,6 +3092,7 @@ GameObject:
   - component: {fileID: 7941734980643030649}
   - component: {fileID: 7941734980643030648}
   - component: {fileID: 7941734980643030647}
+  - component: {fileID: 7941734980643030651}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -3246,7 +3247,28 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7941734980643030651
+--- !u!135 &7941734980643030651
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5768565162964285125}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7941734980643030652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3261,8 +3283,16 @@ MonoBehaviour:
   sight:
   - {fileID: 7941734980643030648}
   - {fileID: 7941734980643030647}
-  smell: {fileID: 7941734980643030650}
-  hearing: {fileID: 7941734980643030649}
+  smell: {fileID: 7941734980643030649}
+  hearing: {fileID: 7941734980643030650}
+  actionRange:
+  - {fileID: 7941734980643030651}
+  behaviorDefault: {fileID: 0}
+  behaviorMove: {fileID: 0}
+  behaviorSearch: {fileID: 0}
+  behaviorAction: []
+  currentState: 0
+  points: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

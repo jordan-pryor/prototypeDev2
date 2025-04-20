@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ba610402e05dd924fa4a6f565395352b
+guid: ddc0ffe8ea6a9fb4da99043a5059182a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: armiture|armiture
-      takeName: armiture|armiture
-      internalID: 489928296711636756
+      name: armiture|armiture|armiture|Action
+      takeName: armiture|armiture|armiture|Action
+      internalID: -2135529973265752882
       firstFrame: 0
-      lastFrame: 0
+      lastFrame: 85
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -60,9 +60,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: armiture|Idle
-      takeName: armiture|Idle
-      internalID: 1699470870793181153
+      name: armiture|armiture|armiture|Idle
+      takeName: armiture|armiture|armiture|Idle
+      internalID: 3223700106780324235
       firstFrame: 0
       lastFrame: 40
       wrapMode: 0
@@ -89,9 +89,38 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: armiture|Walk
-      takeName: armiture|Walk
-      internalID: -3752651232631965358
+      name: armiture|armiture|armiture|Search
+      takeName: armiture|armiture|armiture|Search
+      internalID: -541970866149239552
+      firstFrame: 0
+      lastFrame: 121
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: armiture|armiture|armiture|Walk
+      takeName: armiture|armiture|armiture|Walk
+      internalID: -6197652593831001695
       firstFrame: 0
       lastFrame: 81
       wrapMode: 0

@@ -3,17 +3,35 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public List<Transform> points = new List<Transform>();
+    public Transform[] defaultPoints;
+    public List<Transform> targetPoints = new List<Transform>();
     public enum Behavior { Default, Move, Search, Action }
     public Behavior currentBehavior = Behavior.Default;
-    public MonoBehaviour defaultBehavior;
-    public MonoBehaviour moveBehavior;
-    public MonoBehaviour searchBehavior;
-    public MonoBehaviour actionBehavior;
+    [SerializeField] private EnemyBehavior defaultBehavior;
+    [SerializeField] private EnemyBehavior moveBehavior;
+    [SerializeField] private EnemyBehavior searchBehavior;
+    [SerializeField] private EnemyBehavior actionBehavior;
     public bool seenPlayer = false;
+    //private Animator animator;
+    [SerializeField] Animator animator;
     private IEnemy currentScript;
+    private void Start()
+    {
+        //animator = GetComponent<Animator>();
+    }
     void Update()
     {
+        switch (currentBehavior)
+        {
+            case Behavior.Move:
+                animator.SetInteger("State", 3); break;
+            case Behavior.Search:
+                animator.SetInteger("State", 1); break;
+            case Behavior.Action:
+                animator.SetInteger("State", 2); break;
+            default:
+                animator.SetInteger("State", 0); break;
+        }
         currentScript = GetCurrentScript();
         currentScript.Execute(this);
     }
@@ -53,9 +71,9 @@ public class EnemyController : MonoBehaviour
     private void SetBehavior(Behavior newBehavior, Transform target = null)
     {
         currentBehavior = newBehavior;
-        if (target != null && !points.Contains(target))
+        if (target != null && !targetPoints.Contains(target))
         {
-            points.Add(target);
+            targetPoints.Add(target);
         }
     }
     private IEnemy GetCurrentScript()

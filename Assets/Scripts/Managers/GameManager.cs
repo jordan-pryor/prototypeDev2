@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerDamageScreen;
 
     public GameObject player;
-    public playerController playerScript;
+    public playerController playerController;
 
     public bool isPaused;
 
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerScript = player.GetComponent<playerController>();
+        playerController = player.GetComponent<playerController>();
         timeScaleOrig = Time.timeScale;        
     }
 

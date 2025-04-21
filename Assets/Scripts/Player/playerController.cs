@@ -45,8 +45,9 @@ public class playerController : MonoBehaviour, IDamage
     public int sensY = 75;
     public int pitchClamp = 55;                           // Max head turn up/down
     public int yawClamp = 80;
-	public float turnThreshold = 0.9f;
-	public int turnSpeed = 90;
+	public float turnThreshold = 0.45f;
+    public float stationaryThreshold = 0.9f;
+    public int turnSpeed = 90;
 	public bool isFPS = false;
 
     //[SerializeField] AnimationCurve vaultCurve;         // (Planned) Smooth vault motion � parkour vibes incoming
@@ -63,13 +64,13 @@ public class playerController : MonoBehaviour, IDamage
 	// === State Check / Flags ===
 	[Header("State Check / Flags")]
 	bool isGrounded;                     // Feet on the floor? Let�s find out
-	bool isSprinting;                    // Are we zooming?
+	public bool isSprinting;                    // Are we zooming?
 	bool isCrouching;                    // Tiny mode active?
 	[SerializeField] bool isSliding;                      // Currently surfing the floor?
 	[SerializeField] bool canVault;                       // Ready to hop over something?
 	bool wasGroundedLastFrame;           // Were we grounded a moment ago?
 	[SerializeField] bool jumpQueued;                     // Jump was pressed � just waiting for the perfect moment
-	[SerializeField] bool isMoving;                       // Are we actually going somewhere?
+	public bool isMoving;                       // Are we actually going somewhere?
 	bool hasJumped;                      // Already jumped? Can�t double up unless allowed
 	[SerializeField] bool vaulting;                       // Mid-vault animation/action?
 	[SerializeField] bool sprintToggled;				  // If sprinting has been toggled
@@ -100,7 +101,7 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] private GameObject startingWeaponPrefab;
 	[SerializeField] private Transform itemHolder;
 	[SerializeField] GameObject equippedItem;
-    [SerializeField] Weapon equippedWeapon;
+    public Weapon equippedWeapon;
 
     //Basic jump and double jump
     [SerializeField] float jumpForce = 8f;
@@ -127,7 +128,15 @@ public class playerController : MonoBehaviour, IDamage
         origHP = HP;
         updatePlayerUI();
     }
-
+    public void PickUpWeapon(Weapon item)
+    {
+        equippedWeapon = item;
+        item.transform.SetParent(itemHolder);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+        Collider col = item.GetComponent<Collider>();
+        col.enabled = false;
+    }
     void Update()
     {
         if(equippedWeapon != null)

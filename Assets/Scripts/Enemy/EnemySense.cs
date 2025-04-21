@@ -33,4 +33,16 @@ public class SenseTrigger : MonoBehaviour
                 break;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (enemy == null) return;
+
+        switch (sense)
+        {
+            case SenseType.Sight:
+                enemy.OnSightExit(this, other);
+                break;
+        }
+    }
 }

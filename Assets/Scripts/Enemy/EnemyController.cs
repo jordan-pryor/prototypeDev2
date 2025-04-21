@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
@@ -13,14 +14,16 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private EnemyBehavior actionBehavior;
     public bool seenPlayer = false;
     //private Animator animator;
-    [SerializeField] Animator animator;
+    public Animator animator;
     private IEnemy currentScript;
-    private void Start()
-    {
-        //animator = GetComponent<Animator>();
-    }
+    public NavMeshAgent agent;
+    public float guardDistance = 5f;
+    public float memoryDuration = 3f;
+    public float memoryTimer = 0f;
+    [SerializeField] GameObject soundObject;
     void Update()
     {
+        /*
         switch (currentBehavior)
         {
             case Behavior.Move:
@@ -32,8 +35,16 @@ public class EnemyController : MonoBehaviour
             default:
                 animator.SetInteger("State", 0); break;
         }
+        */
         currentScript = GetCurrentScript();
-        currentScript.Execute(this);
+        if (currentScript != null)
+        {
+            currentScript.Execute(this);
+        }
+        if (!seenPlayer)
+        {
+            memoryTimer -= Time.deltaTime;
+        }
     }
 
     public void OnSightTrigger(SenseTrigger source, Collider other)
@@ -41,7 +52,16 @@ public class EnemyController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             SetBehavior(Behavior.Move, other.transform);
+            memoryTimer = memoryDuration;
             seenPlayer = true;
+        }
+    }
+
+    public void OnSightExit(SenseTrigger source, Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            seenPlayer = false;
         }
     }
 
@@ -68,7 +88,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void SetBehavior(Behavior newBehavior, Transform target = null)
+    public void SetBehavior(Behavior newBehavior, Transform target = null)
     {
         currentBehavior = newBehavior;
         if (target != null && !targetPoints.Contains(target))
@@ -76,6 +96,18 @@ public class EnemyController : MonoBehaviour
             targetPoints.Add(target);
         }
     }
+    public void OnAnimationEnd()
+    {
+        animator.SetBool("isSearching", false);
+        animator.SetBool("isActing", false);
+        SetBehavior(Behavior.Default);
+    }
+    public void onAlertEnd()
+    {
+        Instantiate(soundObject, transform.position, transform.rotation);
+        animator.SetBool("isActing", false);
+    }
+
     private IEnemy GetCurrentScript()
     {
         switch (currentBehavior)

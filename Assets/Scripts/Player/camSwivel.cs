@@ -5,6 +5,7 @@ public class camSwivel : MonoBehaviour
     [SerializeField] playerController player;
     private float pitch = 0f;
     private float yaw = 0f;
+    private int speedMod = 45;
 
     // Start is called before the first frame update
     void Start()
@@ -30,18 +31,45 @@ public class camSwivel : MonoBehaviour
         transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
 
         // turning the body
-        float turnThresh = player.yawClamp * player.turnThreshold;
-
-        // If at max yaw then rotate the body
-        if (Mathf.Abs(yaw) >= turnThresh)
+        float turnThresh;
+        if ( player.isSprinting)
         {
-            float excess = yaw - Mathf.Sign(yaw) * turnThresh;
-            // limit turn using turn speed
-            float maxTurn = player.turnSpeed * Time.deltaTime;
-            float turnStep = Mathf.Clamp(excess, -maxTurn, maxTurn);
-            player.transform.Rotate(Vector3.up * turnStep);
-            yaw -= turnStep;
-            transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+            turnThresh = player.yawClamp * ( player.turnThreshold / 2 );
+            speedMod = 45;
         }
+        else
+        {
+            turnThresh = player.yawClamp * player.turnThreshold;
+            speedMod = 0;
+        }
+        float stationaryThresh = player.yawClamp * player.stationaryThreshold;
+        if (player.isMoving)
+        {
+            if (Mathf.Abs(yaw) >= turnThresh)
+            {
+                float excess = yaw - Mathf.Sign(yaw) * turnThresh;
+                // limit turn using turn speed
+                float maxTurn = ( player.turnSpeed + speedMod) * Time.deltaTime;
+                float turnStep = Mathf.Clamp(excess, -maxTurn, maxTurn);
+                player.transform.Rotate(Vector3.up * turnStep);
+                yaw -= turnStep;
+                transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+            }
+        }
+        else
+        {
+            if (Mathf.Abs(yaw) >= stationaryThresh)
+            {
+                float excess = yaw - Mathf.Sign(yaw) * stationaryThresh;
+                // limit turn using turn speed
+                float maxTurn = (player.turnSpeed + speedMod) * Time.deltaTime;
+                float turnStep = Mathf.Clamp(excess, -maxTurn, maxTurn);
+                player.transform.Rotate(Vector3.up * turnStep);
+                yaw -= turnStep;
+                transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+            }
+        }
+        // If at max yaw then rotate the body
+        
     }
 }

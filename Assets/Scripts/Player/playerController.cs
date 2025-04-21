@@ -1,7 +1,8 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, ITrap
 {
 	// === System References ===
 	[Header("System References")]
@@ -12,7 +13,7 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] float playerHeight = 2f;             // Tall mode � regular standing height
 	//[SerializeField] float crouchHeight = 1f;             // Short king mode � crouch collider height
 	//[SerializeField] float crouchTransitionSpeed = 10f;   // How fast we go from tall to small
-	[SerializeField] int HP = 100;             // How much life we got left � don�t let it hit 0!
+	[SerializeField] public int HP = 100;             // How much life we got left � don�t let it hit 0!
 	int origHP;
 
 
@@ -32,13 +33,17 @@ public class playerController : MonoBehaviour, IDamage
 	[SerializeField] float walkSpeed = 3f;                    // Slow pace, immersive movement
 	[SerializeField] float runSpeed = 5f;                     // Standard movement speed
 	[SerializeField] float sprintSpeed = 8f;                  // Fast and flowy
-	//[SerializeField] float crouchSpeed = 2.5f;                // Slow but not crawling
-	//[SerializeField] float slideSpeed = 10f;                  // Initial burst when initiating a slide
-	//[SerializeField] float slideForce = 20f;                  // Push into the slide – lower = stickier, higher = zippier
-	//[SerializeField] float slideDuration = 0.75f;             // Long enough for fun movement, short enough to not abuse
-	//[SerializeField] float slideCooldown = 1.2f;              // Prevents chaining slides unrealistically
-	//[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
-	//[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
+    //[SerializeField] float crouchSpeed = 2.5f;                // Slow but not crawling
+    //[SerializeField] float slideSpeed = 10f;                  // Initial burst when initiating a slide
+    //[SerializeField] float slideForce = 20f;                  // Push into the slide – lower = stickier, higher = zippier
+    //[SerializeField] float slideDuration = 0.75f;             // Long enough for fun movement, short enough to not abuse
+    //[SerializeField] float slideCooldown = 1.2f;              // Prevents chaining slides unrealistically
+    //[SerializeField] float slideFriction = 3f;                // Higher value = quicker slowdown during slide
+    //[SerializeField] float slideAngleThreshold = 30f;         // Starts auto-sliding down steeper slopes
+    // cache for trap
+    float origWalkSpeed;
+    float origRunSpeed;
+    float origSprintSpeed;
 
     [SerializeField] bool toggleSprint = false;               // Players choose whether they hold to sprint or toggle
     public int sensX = 75;
@@ -126,6 +131,10 @@ public class playerController : MonoBehaviour, IDamage
     void Start()
     {
         origHP = HP;
+        HP -= 25;
+        origRunSpeed = runSpeed;
+        origWalkSpeed = walkSpeed;
+        origSprintSpeed = sprintSpeed;
         updatePlayerUI();
     }
     public void PickUpWeapon(Weapon item)
@@ -278,6 +287,19 @@ public class playerController : MonoBehaviour, IDamage
         {
             GameManager.instance.youLose();
         }
+    }
+
+    public IEnumerator trap(float speedMult, int duration)
+    {
+        GameManager.instance.promptTrap.SetActive(true);
+        walkSpeed *= speedMult;
+        sprintSpeed *= speedMult;
+        // crouchSpeed *= speedMult;
+        yield return new WaitForSeconds(duration);
+        walkSpeed = origWalkSpeed;
+        sprintSpeed = origSprintSpeed;
+        // crouchSpeed = origCrouchSpeed;
+        GameManager.instance.promptTrap.SetActive(false);
     }
 
     public void updatePlayerUI()

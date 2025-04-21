@@ -5,42 +5,49 @@ public class Flashlight : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject lightRef;
     [SerializeField] Material baseMat;
-    [SerializeField] Material emissMat;
+    [SerializeField] Material emissiveMat;
     [SerializeField] bool isOn = false;
-    [SerializeField] int matIndex;
+    [SerializeField] int matIndex = 0;
 
-    // Update is called once per frame
-    void Update()
+    Renderer rendererRef;
+    Material[] materials;
+    private void Start()
     {
-        CheckLight();
+        // Start state
+        rendererRef = GetComponent<Renderer>();
+        if (rendererRef != null) materials = rendererRef.materials;
+        ApplyLight();
     }
     private void OnValidate()
     {
-        CheckLight();
+        // Update in Editor
+        ApplyLight();
     }
-
-    void CheckLight()
+    void ApplyLight()
     {
-        Renderer rendererRef = GetComponent<Renderer>();
-        if (rendererRef != null)
+        // Toggle Light and switch Materials
+        if (lightRef != null) lightRef.SetActive(isOn);
+        if (materials != null && materials.Length > matIndex)
         {
-        Material[] mats = rendererRef.sharedMaterials;
-        if (isOn)
-        {
-            lightRef.SetActive(true);
-            mats[matIndex] = emissMat;
+            materials[matIndex] = isOn ? emissiveMat : baseMat;
+            rendererRef.materials = materials;
         }
-        else
-        {
-            lightRef.SetActive(false);
-            mats[matIndex] = baseMat;
-        }
-        rendererRef.sharedMaterials = mats;
     }
+    public void ToggleLight()
+    {
+        // Toggles light instead of Update
+        isOn = !isOn;
+        ApplyLight();
     }
-
     public void Interact()
     {
-        isOn = !isOn;
+        // Calls Toggle
+        ToggleLight();
     }
+
+    // Script for using items
+    //{
+        // Calls Toggle
+     //   ToggleLight();
+    //}
 }

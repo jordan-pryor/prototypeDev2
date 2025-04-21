@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class playerInteract : MonoBehaviour
 {
-    [SerializeField] Camera cam;
     [SerializeField] float range = 3f;
     [SerializeField] LayerMask mask;
     [SerializeField] GameObject promptInteract;
@@ -20,7 +19,7 @@ public class playerInteract : MonoBehaviour
     }
     void CheckInteractable()
     {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, range, mask))
         {
             IInteract interactable = hit.collider.GetComponent<IInteract>();

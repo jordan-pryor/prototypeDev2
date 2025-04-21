@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class FanSpin : MonoBehaviour
 {
@@ -6,12 +7,37 @@ public class FanSpin : MonoBehaviour
     [SerializeField] GameObject blades;
     [SerializeField] float fanSpeed = 10f;
 
-    // Update is called once per frame
-    void Update()
+    Coroutine spinRoutine;
+    private void Start()
     {
-        if(isOn)
+        // Start State
+        TurnFan();
+    }
+    public void ToggleFan()
+    {
+        // Toggle Fan and Call Turn Update
+        isOn = !isOn;
+        TurnFan();
+    }
+    private void TurnFan()
+    {
+        // Start or Stop Coroutine
+        if (isOn)
         {
-            blades.transform.Rotate(Vector3.forward, fanSpeed * Time.deltaTime, Space.Self);
+            spinRoutine = StartCoroutine(SpinFan());
+        }
+        else
+        {
+            if (spinRoutine != null) StopCoroutine(spinRoutine);
+        }
+    }
+    IEnumerator SpinFan()
+    {
+        // Spins fan
+        while (isOn)
+        {
+            blades.transform.Rotate(Vector3.up, fanSpeed * Time.deltaTime, Space.Self);
+            yield return null;
         }
     }
 }

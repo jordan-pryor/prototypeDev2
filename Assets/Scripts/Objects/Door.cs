@@ -1,6 +1,7 @@
 using UnityEngine;
+using System.Collections;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IInteract
 {
     [SerializeField] GameObject door;
     [SerializeField, Range(0f, 1f)] float openPercent;
@@ -9,69 +10,56 @@ public class Door : MonoBehaviour
     [SerializeField] float openSpeed = 1f;
     [SerializeField] bool isLocked = false;
 
-    bool isOpening = false;
-    bool isClosing = false;
+    Coroutine currentRoutine;
 
     void Start()
     {
-        // Hide the door refs
+        // Start State + Hide the door range refs
         doorMin.SetActive(false);
         doorMax.SetActive(false);
-    }
-
-    void Update()
-    {
-        if (isOpening)
-        {
-            // Moves the open percent towards the max
-            openPercent = Mathf.MoveTowards(openPercent, 1f, Time.deltaTime * openSpeed);
-            if (Mathf.Approximately(openPercent, 1f))
-                isOpening = false;
-        }
-
-        if (isClosing)
-        {
-            // Moves the open percent towards the min
-            openPercent = Mathf.MoveTowards(openPercent, 0f, Time.deltaTime * openSpeed);
-            if (Mathf.Approximately(openPercent, 0f))
-                isClosing = false;
-        }
         ApplyRotation();
     }
-
     void OnValidate()
     {
+        // Update in Editor
         ApplyRotation();
     }
-
     void ApplyRotation()
     {
-        // Clamps
+        // Clamps and Updates rotation to percentage of the range
         openPercent = Mathf.Clamp01(openPercent);
         door.transform.rotation = Quaternion.Lerp(doorMin.transform.rotation, doorMax.transform.rotation, openPercent);
     }
+    IEnumerator AnimateDoor(float target)
+    {
+        // Rotates the door till open/close position
+        while(!Mathf.Approximately(openPercent, target))
+        {
+            openPercent = Mathf.MoveTowards(openPercent, target, Time.deltaTime * openSpeed);
+            ApplyRotation();
+            yield return null;
+        }
+        openPercent = target;
+        ApplyRotation();
+    }
     public void Open()
     {
-        isClosing = false;
-        isOpening = true;
+        // Start open routine
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
+        currentRoutine = StartCoroutine(AnimateDoor(1f));
     }
     public void Close()
     {
-        isOpening = false;
-        isClosing = true;
+        // Start close routine
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
+        currentRoutine = StartCoroutine(AnimateDoor(0f));
     }
     public void Interact()
     {
-        if (!isOpening && !isClosing && ( !isLocked /* && key code*/) )
-        {
-            if (Mathf.Approximately(openPercent, 0f))
-                Open();
-            else
-                Close();
-        }
-        else if(isLocked /* && key code*/)
-        {
-        }
+        // On Interact if not locked open or close
+        if (isLocked) return; // lock code goes here
+        if (openPercent < 0.01f) Open();
+        else Close();
     }
 }
 

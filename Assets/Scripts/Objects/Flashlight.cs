@@ -9,13 +9,13 @@ public class Flashlight : MonoBehaviour, IInteract
     [SerializeField] bool isOn = false;
     [SerializeField] int matIndex = 0;
 
-    Renderer rendererRef;
+    [SerializeField] Renderer rendererRef;
     Material[] materials;
     private void Start()
     {
         // Start state
         rendererRef = GetComponent<Renderer>();
-        if (rendererRef != null) materials = rendererRef.materials;
+        if (rendererRef != null) materials = rendererRef.sharedMaterials;
         ApplyLight();
     }
     private void OnValidate()
@@ -27,10 +27,11 @@ public class Flashlight : MonoBehaviour, IInteract
     {
         // Toggle Light and switch Materials
         if (lightRef != null) lightRef.SetActive(isOn);
-        if (materials != null && materials.Length > matIndex)
+        if (rendererRef != null && rendererRef.sharedMaterials.Length > matIndex)
         {
-            materials[matIndex] = isOn ? emissiveMat : baseMat;
-            rendererRef.materials = materials;
+            Material[] mats = rendererRef.sharedMaterials;
+            mats[matIndex] = isOn ? emissiveMat : baseMat;
+            rendererRef.sharedMaterials = mats;
         }
     }
     public void ToggleLight()

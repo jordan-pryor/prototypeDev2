@@ -2,29 +2,34 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] GameObject menuPause;
-    [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuLose;
+    [SerializeField] GMSettings settings;
+
+    Canvas UICanvas;
+
+    GameObject menuPause;
+    GameObject menuActive;
+    GameObject menuWin;
+    GameObject menuLose;
+
+    public GameObject promptTrap;
+    public GameObject promptInteract;
+    public GameObject promptReload;
+
     [SerializeField] TMP_Text gameGoalCountText;
-
-    [SerializeField] public GameObject promptTrap;
-
     public Image playerHPBar;
     public GameObject playerDamageScreen;
 
     public GameObject player;
-    public playerController playerController;
+    public PlayerController playerController;
 
     public bool isPaused;
-
     float timeScaleOrig;
-
     int gameGoalCount;
     // possible future use with enemies for tracking.
     //public List<EnemyAI> allEnemies = new List<EnemyAI>();
@@ -34,7 +39,24 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
-        playerController = player.GetComponent<playerController>();
+        playerController = player.GetComponent<PlayerController>();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        UICanvas = Instantiate(settings.canvasPrefab).GetComponent<Canvas>();
+        menuPause = Instantiate(settings.menuPrefabPause, UICanvas.transform);
+        menuWin = Instantiate(settings.menuPrefabWin, UICanvas.transform);
+        menuLose = Instantiate(settings.menuPrefabLose, UICanvas.transform);
+        promptInteract = Instantiate(settings.menuPrefabInteract, UICanvas.transform);
+        promptReload = Instantiate(settings.menuPrefabReload, UICanvas.transform);
+        promptTrap = Instantiate(settings.menuPrefabTrap, UICanvas.transform);
+
+        menuPause.SetActive(false);
+        menuWin.SetActive(false);
+        menuLose.SetActive(false);
+        promptInteract.SetActive(false);
+        promptReload.SetActive(false);
+        promptTrap.SetActive(false);
+
         timeScaleOrig = Time.timeScale;        
     }
 

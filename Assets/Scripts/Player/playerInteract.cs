@@ -4,10 +4,13 @@ public class playerInteract : MonoBehaviour
 {
     [SerializeField] float range = 3f;
     [SerializeField] LayerMask mask;
-    [SerializeField] GameObject promptInteract;
+    private GameObject promptInteract;
 
     IInteract target;
-
+    private void Start()
+    {
+        promptInteract = GameManager.instance.promptInteract;
+    }
     // Update is called once per frame
     void Update()
     {

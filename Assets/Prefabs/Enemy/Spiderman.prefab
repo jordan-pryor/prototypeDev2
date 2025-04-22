@@ -1033,7 +1033,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2200204184209225848}
   - component: {fileID: 5656858081106485352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1243,7 +1243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7069668898580142742}
   - component: {fileID: 2306587793888767274}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2403,7 +2403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7358428955022595362}
   - component: {fileID: 3348859843848095566}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2732,7 +2732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7577489092634645148}
   - component: {fileID: 2429000480718285075}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmBackRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3692,7 +3692,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8506540321943123859}
   - component: {fileID: 4076013223667936466}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4161,7 +4161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1981407354720897370}
   - component: {fileID: 6789814014692714034}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4559,7 +4559,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5961655588093477284}
   - component: {fileID: 5989480691125829583}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmFrontRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5618,7 +5618,7 @@ GameObject:
   - component: {fileID: 6427960794451628541}
   - component: {fileID: 6857201414751807619}
   - component: {fileID: 8357559152034399999}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spiderman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5668,6 +5668,9 @@ MonoBehaviour:
   animator: {fileID: 6427960794451628541}
   agent: {fileID: 6857201414751807619}
   guardDistance: 5
+  memoryDuration: 3
+  memoryTimer: 0
+  soundObject: {fileID: 0}
 --- !u!95 &6427960794451628541
 Animator:
   serializedVersion: 7
@@ -5840,7 +5843,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6807001597184280271}
   - component: {fileID: 6693383799233196602}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ArmFrontLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6240,7 +6243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 40864997927543171}
   - component: {fileID: 4870410257415604357}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LegBackLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

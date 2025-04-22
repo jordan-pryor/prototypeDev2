@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Weapon : MonoBehaviour, IInteract
+public class Weapon : MonoBehaviour//, IInteract
 {
 	[Header("Stats")]
 	[SerializeField] private int ammo = 12;
@@ -69,9 +69,10 @@ public class Weapon : MonoBehaviour, IInteract
 		ammo = maxAmmo;
 		Debug.Log("Reloaded!");
 	}
-
+    /*
     public void Interact()
     {
-        GameManager.instance.playerController.PickUpWeapon(this);
+        //GameManager.instance.playerController.PickUpWeapon(this);
     }
+    */
 }

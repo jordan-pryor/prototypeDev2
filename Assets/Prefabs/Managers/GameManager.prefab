@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4147731678129228385}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bbc98707c191b44fada4b0a1f605f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuPause: {fileID: 0}
-  menuActive: {fileID: 0}
-  menuWin: {fileID: 0}
-  menuLose: {fileID: 0}
+  settings: {fileID: 11400000, guid: e30da669fdc1212458d7174e39d761c1, type: 2}
+  promptTrap: {fileID: 0}
+  promptInteract: {fileID: 0}
+  promptReload: {fileID: 0}
+  gameGoalCountText: {fileID: 0}
+  playerHPBar: {fileID: 0}
   playerDamageScreen: {fileID: 0}
   player: {fileID: 0}
-  playerScript: {fileID: 0}
+  playerController: {fileID: 0}
   isPaused: 0

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01664be030fcc1843a148c19c24e406e, type: 3}
+  m_Name: GMSettings
+  m_EditorClassIdentifier: 
+  canvasPrefab: {fileID: 5576830722699434529, guid: a3f9dd15970aa2c41954d2882e05b5d6, type: 3}
+  menuPrefabPause: {fileID: 5387299965821982078, guid: 5c0532bf991a9774d9f9baa6d35a46fd, type: 3}
+  menuPrefabWin: {fileID: 7800146004264101475, guid: 00efb4b06cf5e034d831d8401737878a, type: 3}
+  menuPrefabLose: {fileID: 7309906527712972355, guid: ae89980331dfa8d449a06ed270801481, type: 3}
+  menuPrefabReload: {fileID: 5756125342876376623, guid: 719a8160da5a4134e911a9c3d8a30955, type: 3}
+  menuPrefabInteract: {fileID: 3005676512936858766, guid: 81ef721ec3d938344be27f3dd4300076, type: 3}
+  menuPrefabTrap: {fileID: 7000384052966432390, guid: f8f2481549c7a414f983cde041e718af, type: 3}

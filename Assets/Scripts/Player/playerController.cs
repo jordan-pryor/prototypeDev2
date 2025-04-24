@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
@@ -9,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private camController camControl;
+    [SerializeField] private Animator anim;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -53,15 +55,11 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public float stationaryThreshold = 0.9f;
     public float turnSpeed = 90f;
     public float sprintTurnMod = 45f;
-
-    //[Header("Inventory")]
-    //[SerializeField] GameObject[] inventory;
-    //public int inventorySize = 5;
-    //public int currentEquipped;
-
+    
     [Header("Flags")]
     public bool isTrapped;
     private float trapDecrease = 0f;
+    public bool isJumping;
 
     // Update is called once per frame
     private void Update()
@@ -72,6 +70,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     {
         GroundCheck();
         Movement();
+        CheckAnimation();
+        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 100f);
     }
     private void CheckInput()
     {
@@ -82,11 +82,19 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
     }
+    private void CheckAnimation()
+    {
+        anim.SetBool("isWalking", isMoving && !isSprinting);
+        anim.SetBool("isSprinting", isMoving && isSprinting);
+        anim.SetBool("isCrouching", isCrouching);
+        anim.SetBool("isJumping", isJumping);
+    }
     private void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundMask);
         rb.linearDamping = isGrounded ? drag : 0f;
         canJump = true;
+        isJumping = false;
     }
     private void Movement()
     {
@@ -106,13 +114,18 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             Jump();
         }
     }
+    private float LitCheck()
+    {
+        float lightLevel = LightLevelManager.instance.GetLightLevel(transform.position);
+        return Mathf.Clamp01(1f - lightLevel);
+    }
     private void Crouch(bool state)
     {
         isCrouching = state;
-        if( isCrouching ) currentStealth = stealthAmount;
     }
     private void Jump()
     {
+        isJumping = true;
         canJump = false;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

@@ -7,10 +7,7 @@ public class playerInteract : MonoBehaviour
     private GameObject promptInteract;
 
     IInteract target;
-    private void Start()
-    {
-        promptInteract = GameManager.instance.promptInteract;
-    }
+
     // Update is called once per frame
     void Update()
     {
@@ -31,12 +28,12 @@ public class playerInteract : MonoBehaviour
                 if (target != interactable)
                 {
                     target = interactable;
-                    promptInteract.SetActive(true);
+                    GameManager.instance.promptInteract.SetActive(true);
                 }
                 return;
             }
         }
         target = null;
-        promptInteract.SetActive(false);
+        GameManager.instance.promptInteract.SetActive(false);
     }
 }

@@ -9,14 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4873886533302376536}
-  - component: {fileID: 6546415498383774303}
   - component: {fileID: 4797750154324891338}
   - component: {fileID: 1369926023125997664}
   - component: {fileID: 857949819395287719}
   - component: {fileID: 2279267796889778919}
   - component: {fileID: 3210454663342898950}
   - component: {fileID: 4582545131153430712}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: WallOpen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,24 +40,6 @@ Transform:
   - {fileID: 5658500337175790881}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6546415498383774303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292580747682861865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65c3c8a1034560a4fad6de58d3bb5822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 5962784526220211835}
-  openPercent: 0.5
-  doorMin: {fileID: 7201922750383082733}
-  doorMax: {fileID: 5944277812051384569}
-  openSpeed: 1
-  isLocked: 0
 --- !u!33 &4797750154324891338
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -297,7 +278,8 @@ GameObject:
   - component: {fileID: 3734555092451395838}
   - component: {fileID: 1765700495239586317}
   - component: {fileID: 3287979613064331851}
-  m_Layer: 0
+  - component: {fileID: 67098729507740330}
+  m_Layer: 3
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,6 +376,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.1853335, y: 2.0500002, z: 0.18944447}
   m_Center: {x: -0.59266675, y: 1.125, z: -3.9001558e-23}
+--- !u!114 &67098729507740330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962784526220211835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65c3c8a1034560a4fad6de58d3bb5822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 5962784526220211835}
+  openPercent: 0.5
+  doorMin: {fileID: 7201922750383082733}
+  doorMax: {fileID: 5944277812051384569}
+  openSpeed: 1
+  isLocked: 0
 --- !u!1 &7201922750383082733
 GameObject:
   m_ObjectHideFlags: 0

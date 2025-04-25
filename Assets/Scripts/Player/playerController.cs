@@ -159,4 +159,20 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         GameManager.instance.promptTrap.SetActive(false);
         isTrapped = false;
     }
+    public void TakeDamage(int amount)
+    {
+        HP -= amount;
+        UpdatePlayerUI();
+
+        if (HP <= 0)
+        {
+            GameManager.instance.youLose();
+        }
+    }
+    public void UpdatePlayerUI()
+    {
+        // Here for now
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
+    }
+
 }

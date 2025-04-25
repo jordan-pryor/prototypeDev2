@@ -47,7 +47,7 @@ public class damage : MonoBehaviour
 
         if (dmg != null && (type == damageType.stationary || type == damageType.moving || type == damageType.homing))
         {
-            dmg.takeDamage(damageAmount);
+            dmg.TakeDamage(damageAmount);
         }
 
         if (type == damageType.moving || type == damageType.homing)
@@ -75,7 +75,7 @@ public class damage : MonoBehaviour
     IEnumerator damageOther(IDamage d)
     {
         isDamaging = true;
-        d.takeDamage(damageAmount);
+        d.TakeDamage(damageAmount);
         yield return new WaitForSeconds(damageRate);
 
         isDamaging = false;

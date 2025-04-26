@@ -79,4 +79,9 @@ public class Inventory : MonoBehaviour
         }
         equipIndex = newIndex;
     }
+
+    public bool Search(string name)
+    {
+        return false;
+    }
 }

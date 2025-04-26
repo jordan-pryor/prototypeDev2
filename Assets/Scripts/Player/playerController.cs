@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
     [Header("Jump Options")]
     [SerializeField] private float jumpForce = 4f;
-    [SerializeField] private float jumpCooldown = 0.25f;
+    [SerializeField] private float jumpCooldown = 1f;
     [SerializeField] private int jumpCount = 1;
     private bool canJump = true;
     private bool jumpInput;
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         isMoving = moveInput != Vector2.zero;
-        jumpInput = Input.GetButtonDown("Jump");
+        jumpInput = Input.GetButton("Jump");
         isSprinting = Input.GetButton("Sprint");
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
@@ -93,8 +93,16 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     {
         isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundMask);
         rb.linearDamping = isGrounded ? drag : 0f;
+        if (isGrounded)
+        {
+            isJumping = false;
+        }
+    }
+
+    private IEnumerator ResetJump(float duration)
+    {
+        yield return new WaitForSeconds(duration);
         canJump = true;
-        isJumping = false;
     }
     private void Movement()
     {
@@ -129,25 +137,12 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         canJump = false;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        StartCoroutine(ResetJump(jumpCooldown));
     }
     public void SwitchCam()
     {
         isFPS = !isFPS;
         camControl.ToggleCam();
-    }
-    public void takeDamage(int amount)
-    {
-        HP -= amount;
-        updatePlayerUI();
-
-        if (HP <= 0)
-        {
-            GameManager.instance.youLose();
-        }
-    }
-    public void updatePlayerUI()
-    {
-        GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
     }
     IEnumerator ITrap.trap(float speedDecrease, int duration)
     {

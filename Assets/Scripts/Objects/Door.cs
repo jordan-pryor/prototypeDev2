@@ -66,8 +66,7 @@ public class Door : MonoBehaviour, IInteract
 			bool hasKey = GameManager.instance.player.GetComponent<Inventory>().Search(requiredKeyName);
 			if (!hasKey)
 			{
-				GameManager.instance.DisplayPrompt("Locked. Requires: " + requiredKeyName); // Optional prompt
-				return;
+				GameManager.instance.LockPrompt(); return;
 			}
 
 			isLocked = false; // Unlock if player has the key

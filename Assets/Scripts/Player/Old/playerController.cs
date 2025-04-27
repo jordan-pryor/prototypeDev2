@@ -123,7 +123,7 @@ public class playerController : MonoBehaviour, IDamage, ITrap
         origRunSpeed = runSpeed;
         origWalkSpeed = walkSpeed;
         origSprintSpeed = sprintSpeed;
-        updatePlayerUI();
+        oldupdatePlayerUI();
     }
     public void PickUpWeapon(Weapon item)
     {
@@ -266,10 +266,10 @@ public class playerController : MonoBehaviour, IDamage, ITrap
 
     }
 
-    public void takeDamage(int amount)
+    public void TakeDamage(int amount)
     {
         HP -= amount;
-        updatePlayerUI();
+        oldupdatePlayerUI();
 
         if (HP <= 0)
         {
@@ -295,7 +295,7 @@ public class playerController : MonoBehaviour, IDamage, ITrap
         isTrapped = false;
     }
 
-    public void updatePlayerUI()
+    public void oldupdatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / origHP;
     }

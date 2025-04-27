@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject promptTrap;
     public GameObject promptInteract;
     public GameObject promptReload;
+    public GameObject promptLock;
 
     [SerializeField] TMP_Text gameGoalCountText;
     public Image playerHPBar;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         promptInteract = Instantiate(settings.menuPrefabInteract, UICanvas.transform);
         promptReload = Instantiate(settings.menuPrefabReload, UICanvas.transform);
         promptTrap = Instantiate(settings.menuPrefabTrap, UICanvas.transform);
+        promptLock = Instantiate(settings.menuPrefabLock, UICanvas.transform);
 
         menuPause.SetActive(false);
         menuWin.SetActive(false);
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
         promptInteract.SetActive(false);
         promptReload.SetActive(false);
         promptTrap.SetActive(false);
+        promptLock.SetActive(false);
 
         timeScaleOrig = Time.timeScale;        
     }
@@ -74,15 +78,16 @@ public class GameManager : MonoBehaviour
             else if (menuActive == menuPause)
             {
                 stateUnpause();
-
             }
-
-
         }
     }
 
     public void statePause()
     {
+        promptInteract.SetActive(false);
+        promptReload.SetActive(false);
+        promptTrap.SetActive(false);
+        promptLock.SetActive(false);
         isPaused = !isPaused;
         Time.timeScale = 0;
         Cursor.visible = true;
@@ -118,6 +123,17 @@ public class GameManager : MonoBehaviour
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
+    }
+    public void LockPrompt()
+    {
+        StartCoroutine(LockPromptRoutine(1.0f));
+    }
+
+    private IEnumerator LockPromptRoutine(float duration)
+    {
+        promptLock.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        promptLock.SetActive(false);
     }
 
     //public void RegisterEnemy(EnemyAI enemy)

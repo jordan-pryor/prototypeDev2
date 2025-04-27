@@ -10,4 +10,5 @@ public class GMSettings : ScriptableObject
     public GameObject menuPrefabReload;
     public GameObject menuPrefabInteract;
     public GameObject menuPrefabTrap;
+    public GameObject menuPrefabLock;
 }

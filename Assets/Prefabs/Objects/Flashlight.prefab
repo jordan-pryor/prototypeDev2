@@ -130,7 +130,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8722158183392217557}
-  - component: {fileID: 4091147120350517867}
   - component: {fileID: 8347160961886859173}
   - component: {fileID: 9036515157385622252}
   - component: {fileID: 1560012353047124232}
@@ -150,32 +149,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7585822052911295943}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: -2.524, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.9781786, z: -0, w: -0.20776586}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5581431231163633970}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4091147120350517867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7585822052911295943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65cce1e5d7cc00e468a999ecf34abe01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lightRef: {fileID: 3525814253058793438}
-  baseMat: {fileID: 2100000, guid: 809b1f498ea18eb42a99efc0c12c5469, type: 2}
-  emissiveMat: {fileID: 2100000, guid: 6d5756d96894f4448a87974f6a0797b0, type: 2}
-  isOn: 1
-  matIndex: 2
-  rendererRef: {fileID: 9036515157385622252}
+  m_LocalEulerAnglesHint: {x: 0, y: 203.983, z: 0}
 --- !u!33 &8347160961886859173
 MeshFilter:
   m_ObjectHideFlags: 0

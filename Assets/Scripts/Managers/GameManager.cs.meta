@@ -3,7 +3,19 @@ guid: 1bbc98707c191b44fada4b0a1f605f71
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - settings: {instanceID: 0}
+  - promptTrap: {instanceID: 0}
+  - promptInteract: {instanceID: 0}
+  - promptReload: {instanceID: 0}
+  - promptLock: {instanceID: 0}
+  - gameGoalCountText: {instanceID: 0}
+  - playerHPBar: {instanceID: 0}
+  - playerDamageScreen: {instanceID: 0}
+  - player: {instanceID: 0}
+  - playerController: {instanceID: 0}
+  - keyPreFab: {fileID: 8781173508894012262, guid: 8deac020093c0ca4f8328466aa46ee56, type: 3}
+  - keySpawnPoint: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

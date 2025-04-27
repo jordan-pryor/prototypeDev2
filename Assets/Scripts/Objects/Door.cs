@@ -75,5 +75,10 @@ public class Door : MonoBehaviour, IInteract
 		if (openPercent < 0.01f) Open();
 		else Close();
 	}
+
+	public bool isDoorOpen()
+	{
+		return openPercent >= 1f;
+	}
 }
 

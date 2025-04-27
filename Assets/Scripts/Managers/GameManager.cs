@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOrig;
     int gameGoalCount;
+
+    public bool hasKey = false;       //Set false for has key. 
+    public GameObject keyPreFab;
+    public Transform keySpawnPoint;
+
     // possible future use with enemies for tracking.
     //public List<EnemyAI> allEnemies = new List<EnemyAI>();
 
@@ -111,10 +117,20 @@ public class GameManager : MonoBehaviour
 
         if (gameGoalCount <= 0)
         {
-            //You Won!
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            int totalScenes = SceneManager.sceneCountInBuildSettings;
+
+            if(currentIndex == totalScenes -1)
+            {
+                //You Won!
+                statePause();
+                menuActive = menuWin;
+                menuActive.SetActive(true);
+            }
+            else
+            {
+                spawnKey();
+            }
         }
     }
 
@@ -134,6 +150,27 @@ public class GameManager : MonoBehaviour
         promptLock.SetActive(true);
         yield return new WaitForSeconds(duration);
         promptLock.SetActive(false);
+    }
+    //sets if player has key so they can transition.
+    public void collectKey()
+    {
+        hasKey = true;
+    }
+
+    public void loadSceneByName(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    public void reloadCurrentScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+
+    public void spawnKey()
+    {
+        Instantiate(keyPreFab, keySpawnPoint.position, Quaternion.identity);
     }
 
     //public void RegisterEnemy(EnemyAI enemy)

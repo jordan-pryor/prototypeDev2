@@ -92,6 +92,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        promptInteract.SetActive(false);
+        promptReload.SetActive(false);
+        promptTrap.SetActive(false);
     }
 
     public void stateUnpause()

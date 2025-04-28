@@ -84,10 +84,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     private void CheckAnimation()
     {
-        anim.SetBool("isWalking", isMoving && !isSprinting);
-        anim.SetBool("isSprinting", isMoving && isSprinting);
+        anim.SetBool("isMoving", isMoving);
         anim.SetBool("isCrouching", isCrouching);
-        anim.SetBool("isJumping", isJumping);
+        anim.SetBool("isGrounded", isGrounded);
     }
     private void GroundCheck()
     {
@@ -109,6 +108,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         Vector3 velocityChange = desiredVelocity - horizontalVelocity;
         velocityChange = Vector3.ClampMagnitude(velocityChange, acceleration);
         rb.AddForce(velocityChange * moveForce, ForceMode.Force);
+        float animBlend = horizontalVelocity.magnitude / speedSprint;
+        anim.SetFloat("Speed", animBlend);
         if (jumpInput && isGrounded && canJump)
         {
             Jump();
@@ -126,6 +127,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private void Jump()
     {
         isJumping = true;
+        anim.SetTrigger("isJumping");
         canJump = false;
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

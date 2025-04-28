@@ -19,3 +19,4 @@ MonoBehaviour:
   menuPrefabReload: {fileID: 5756125342876376623, guid: 719a8160da5a4134e911a9c3d8a30955, type: 3}
   menuPrefabInteract: {fileID: 3005676512936858766, guid: 81ef721ec3d938344be27f3dd4300076, type: 3}
   menuPrefabTrap: {fileID: 7000384052966432390, guid: f8f2481549c7a414f983cde041e718af, type: 3}
+  menuPrefabLock: {fileID: 7000384052966432390, guid: 3fe6dba88a3c2614cb2650e8e7ad30eb, type: 3}

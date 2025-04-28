@@ -22,10 +22,7 @@ public class camController : MonoBehaviour
     }
     public void ToggleCam()
     {
-        if (camSwivel != null && camFPS != null)
-        {
-            camSwivel.enabled = !player.isFPS;
-            camFPS.enabled = player.isFPS;
-        }
+        camSwivel.enabled = !player.isFPS;
+        camFPS.enabled = player.isFPS;
     }
 }

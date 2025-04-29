@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using NUnit;
 
 public class Trap : MonoBehaviour
 {
@@ -34,3 +35,28 @@ public class Trap : MonoBehaviour
         state = TrapState.Active; // active
     }
 }
+
+/*
+ * was on player controller
+ * === if we can crouch, then instantiate, then uncrouch easily, that would add to the experience. if not, all good
+*
+void placeTrap(Trap trap)
+{
+    // place trap at player pos
+    Vector3 trapPos = transform.position;
+    // change y to 0
+    trapPos.y = 0;
+    // crouch
+
+    // instantiate trap.trap??
+    Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
+    // uncrouch
+
+    // empty hands
+    itemModel.GetComponent<MeshFilter>().sharedMesh = null;
+    itemModel.GetComponent<MeshRenderer>().sharedMaterial = null;
+    // remove from inv
+    inv.Remove(inv[invPos]);
+    invPos = inv.Count - 1;
+}
+*/

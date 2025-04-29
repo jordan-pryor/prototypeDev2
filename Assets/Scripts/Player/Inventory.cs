@@ -1,4 +1,3 @@
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -8,15 +7,15 @@ public class Inventory : MonoBehaviour
     [SerializeField] Transform handSocket;
 
     GameObject[] slots;
-    ItemData[] slotData;
+    BaseData[] slotData;
     int equipIndex = 0;
     int prevIndex = -1;
     private void Start()
     {
         slots = new GameObject[capacity];
-        slotData = new ItemData[capacity];
+        slotData = new BaseData[capacity];
     }
-    public bool TryAdd(ItemData data)
+    public bool TryAdd(BaseData data)
     {
         for (int i = 0; i < capacity; i++)
         {

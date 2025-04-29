@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3041864951094968731}
   - component: {fileID: 5784140199582060451}
   - component: {fileID: 4219589011801413066}
-  - component: {fileID: 142893094762893798}
+  - component: {fileID: 1203009553409776971}
   m_Layer: 0
   m_Name: Book
   m_TagString: Untagged
@@ -88,30 +88,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &142893094762893798
-Rigidbody:
+--- !u!114 &1203009553409776971
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5385281974378538576}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463b3620909de4f4880979f19ef0f66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mats:
+  - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
+  - {fileID: 2100000, guid: f786dca15c039c9439ed20ef40458743, type: 2}
+  - {fileID: 2100000, guid: 95f8d73949f2e3f449928be16c3d4257, type: 2}
+  - {fileID: 2100000, guid: 83a120a72bc10d44c903e672e86351cb, type: 2}
+  - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
+  - {fileID: 2100000, guid: 9daf2e6be5fced84caa9a1b4f6c658fb, type: 2}
+  - {fileID: 2100000, guid: ef770d80f46fdc6418f6894abd2911ab, type: 2}

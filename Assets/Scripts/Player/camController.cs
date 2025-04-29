@@ -11,10 +11,6 @@ public class camController : MonoBehaviour
     {
         ToggleCam();
     }
-    private void OnValidate()
-    {
-        ToggleCam();
-    }
     void LateUpdate()
     {
         Vector3 offset = new Vector3(0, vertOff, 0);
@@ -22,10 +18,7 @@ public class camController : MonoBehaviour
     }
     public void ToggleCam()
     {
-        if (camSwivel != null && camFPS != null)
-        {
-            camSwivel.enabled = !player.isFPS;
-            camFPS.enabled = player.isFPS;
-        }
+        camSwivel.enabled = !player.isFPS;
+        camFPS.enabled = player.isFPS;
     }
 }

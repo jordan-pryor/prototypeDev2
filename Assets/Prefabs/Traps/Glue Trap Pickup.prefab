@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1456268917159883301
+--- !u!1 &4055121057641899178
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,64 +8,61 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5326942365972667387}
-  - component: {fileID: 9182079476637555120}
-  - component: {fileID: 135160383043433506}
-  - component: {fileID: 7971159945788179590}
-  - component: {fileID: 6348770556964274538}
-  m_Layer: 3
-  m_Name: Bear Trap
+  - component: {fileID: 2522178451980843009}
+  - component: {fileID: 8053857894673625779}
+  - component: {fileID: 2614249698430577862}
+  - component: {fileID: 3623843893756968066}
+  - component: {fileID: 5905720978453120340}
+  m_Layer: 0
+  m_Name: Glue Trap Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5326942365972667387
+--- !u!4 &2522178451980843009
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456268917159883301}
+  m_GameObject: {fileID: 4055121057641899178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.773, y: 2.052, z: 3.696}
-  m_LocalScale: {x: 1, y: 0.065, z: 1}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0.75}
+  m_LocalScale: {x: 0.3, y: 0.25, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9182079476637555120
+--- !u!114 &8053857894673625779
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456268917159883301}
+  m_GameObject: {fileID: 4055121057641899178}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c8b5257df702844380401c6cdf247ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  speedMult: 0
-  trapDurationSeconds: 5
-  trapResetSeconds: 2
---- !u!33 &135160383043433506
+  data: {fileID: 11400000, guid: e0a05d12171eea544bcd7041a6280d86, type: 2}
+--- !u!33 &2614249698430577862
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456268917159883301}
+  m_GameObject: {fileID: 4055121057641899178}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7971159945788179590
+--- !u!23 &3623843893756968066
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456268917159883301}
+  m_GameObject: {fileID: 4055121057641899178}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,7 +79,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 336dd8efcb84cff4abf984896b884888, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,13 +101,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6348770556964274538
+--- !u!136 &5905720978453120340
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456268917159883301}
+  m_GameObject: {fileID: 4055121057641899178}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -119,7 +116,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

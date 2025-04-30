@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ae50ea9ec8ddcb24bb19cd12cc325543, type: 3}
-  m_Name: Key
+  m_Name: Flashlight
   m_EditorClassIdentifier: 
-  itemName: MainKey
-  prefab: {fileID: 8781173508894012262, guid: 5aa80c755f3c7a24584dc513db96b363, type: 3}
+  itemName: Flashlight
+  prefab: {fileID: 7585822052911295943, guid: feb2bef8103b86e46a3329d6afb4e4da, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
   dropSound: {fileID: 0}
-  defaultRotation: {x: 0, y: 0, z: 0, w: 0}
+  defaultRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}

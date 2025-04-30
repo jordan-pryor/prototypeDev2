@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] Transform attackPos;
     [SerializeField] GameObject rangedProjectile;
@@ -76,7 +76,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    void IDamage.TakeDamage(int amount)
+    void IDamage.TakeDamage(float amount)
     {
         HP -= amount;
         StartCoroutine(flashRed());

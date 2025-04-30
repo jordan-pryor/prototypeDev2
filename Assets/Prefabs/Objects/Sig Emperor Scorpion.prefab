@@ -199,6 +199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7731583233814029094}
+  - component: {fileID: 2512284064908265852}
   m_Layer: 0
   m_Name: Sig Emperor Scorpion
   m_TagString: Untagged
@@ -223,6 +224,18 @@ Transform:
   - {fileID: 5431581962766945557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2512284064908265852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2463198526074631682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 659954ff9e5aad044b0d0b977145c8f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2507159509409666519
 GameObject:
   m_ObjectHideFlags: 0

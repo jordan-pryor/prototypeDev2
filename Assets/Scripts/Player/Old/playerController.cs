@@ -3,8 +3,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Rendering;
 
-public class playerController : MonoBehaviour, IDamage, ITrap
+public class playerController : MonoBehaviour//, IDamage, ITrap
 {
+    /*
     // === System References ===
     [Header("System References")]
     [SerializeField] Rigidbody rb;                         // Our physics-powered body — the meat mech
@@ -299,4 +300,5 @@ public class playerController : MonoBehaviour, IDamage, ITrap
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / origHP;
     }
+*/
 }

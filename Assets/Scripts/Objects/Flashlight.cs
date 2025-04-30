@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Flashlight : MonoBehaviour, IInteract
+public class Flashlight : MonoBehaviour, IInteract, IUse
 {
     [SerializeField] GameObject lightRef;
     [SerializeField] Material baseMat;
@@ -46,9 +46,10 @@ public class Flashlight : MonoBehaviour, IInteract
         ToggleLight();
     }
 
-    // Script for using items
-    //{
-        // Calls Toggle
-     //   ToggleLight();
-    //}
+    public void Use(bool primary)
+    {
+        if (primary){
+            ToggleLight();
+        }
+    }
 }

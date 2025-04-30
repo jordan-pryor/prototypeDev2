@@ -1,16 +1,6 @@
 using UnityEngine;
 
-public class IUse : MonoBehaviour
+public interface IUse
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Use(bool primary);
 }

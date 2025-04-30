@@ -8,4 +8,5 @@ public abstract class BaseData : ScriptableObject
     public GameObject emptyPickupPrefab;
     public ItemSlot slot = ItemSlot.Pocket;
     public Sound dropSound;
+    public Quaternion defaultRotation;
 }

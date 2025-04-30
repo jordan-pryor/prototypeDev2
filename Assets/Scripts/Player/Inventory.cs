@@ -22,8 +22,8 @@ public class Inventory : MonoBehaviour
             if (slots[i] == null)
             {
                 slots[i] = Instantiate(data.prefab, pocketSockets[i]);
-                slots[i].transform.localPosition = Vector3.zero;
-                slots[i].transform.localRotation = Quaternion.identity;
+                //slots[i].transform.localPosition = Vector3.zero;
+                //slots[i].transform.localRotation = Quaternion.identity;
                 if (slots[i].TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;
                 if (slots[i].TryGetComponent(out Collider col)) col.enabled = false;
                 slotData[i] = data;

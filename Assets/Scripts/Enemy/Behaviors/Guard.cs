@@ -5,8 +5,7 @@ public class Guard : EnemyBehavior, IEnemy
 {
     public override void Execute(EnemyController controller)
     {
-        if (controller.defaultPoints.Length == 0) return;
-        Transform targetPoint = controller.defaultPoints[0];
+        Transform targetPoint = GetGuardPoint(controller);
         float distance = Vector3.Distance(controller.transform.position, targetPoint.position);
         if (distance > controller.guardDistance)
         {
@@ -18,5 +17,19 @@ public class Guard : EnemyBehavior, IEnemy
             controller.agent.SetDestination(controller.transform.position);
             controller.animator.SetBool("isWalking", false);
         }
+    }
+    public Transform GetGuardPoint(EnemyController controller)
+    {
+        if(controller.defaultPoints.Count > 0 && controller.defaultPoints[0] != null)
+        {
+            return controller.defaultPoints[0];
+        }
+        NewGuard( controller);
+        return controller.defaultPoints[0];
+    }
+    public void NewGuard(EnemyController controller)
+    {
+        if(controller.defaultPoints.Count == 0) controller.defaultPoints.Add(controller.transform);
+        else controller.defaultPoints[0] = controller.transform;
     }
 }

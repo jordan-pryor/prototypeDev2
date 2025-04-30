@@ -12,4 +12,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c03c1ce219ca2b249b96f48dc964583e, type: 3}
   m_Name: Alert
   m_EditorClassIdentifier: 
-  soundObject: {fileID: 6969508562701821113, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}

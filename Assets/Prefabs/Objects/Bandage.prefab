@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6360791088184960493}
-  - component: {fileID: -757831125874348530}
   - component: {fileID: 1585659715106162451}
   - component: {fileID: 9055687855668167989}
   - component: {fileID: 3773784017390326102}
   m_Layer: 0
-  m_Name: Bandage Pickup
+  m_Name: Bandage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,19 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-757831125874348530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6223596583665874545}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c8b5257df702844380401c6cdf247ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 2c0a4b297e2be1049a8235149a1be202, type: 2}
 --- !u!33 &1585659715106162451
 MeshFilter:
   m_ObjectHideFlags: 0

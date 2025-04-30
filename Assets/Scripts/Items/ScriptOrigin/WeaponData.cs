@@ -7,4 +7,7 @@ public class WeaponData : BaseData
     public float fireRate = 0.1f;
     public float damage = 10f;
     public Sound shotSound;
+    public float reloadTime = 1.5f;
+    public float range = 50f;
+    public GameObject bullet;
 }

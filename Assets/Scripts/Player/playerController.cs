@@ -1,9 +1,6 @@
 using NUnit;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
 {
@@ -12,6 +9,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private camController camControl;
     [SerializeField] private Animator anim;
+    private Coroutine healRoutine;
+    [SerializeField] private Inventory inv;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -43,13 +42,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public float currentStealth;
 
     [Header("Stats")]
-    public int maxHP = 100;
-    public int HP = 100;
-    // heal tick helpers
-    float healTimer;
-    float healInterval = 1f;
-    int healCount;
-    int healAmt;
+    public float maxHP = 100f;
+    public float HP = 100f;
 
     [Header("Camera Options")]
     public bool isFPS = false;
@@ -71,9 +65,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private void Update()
     {
         CheckInput();
-
-        if (!GameManager.instance.isPaused)
-            healTick();
     }
     private void FixedUpdate()
     {
@@ -90,6 +81,18 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isSprinting = Input.GetButton("Sprint");
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
+        bool fire = Input.GetButtonDown("Fire1");
+        if ( fire || Input.GetButtonDown("Reload"))
+        {
+            if (inv.equipIndex != -1)
+            {
+                GameObject equipped = inv.slots[inv.equipIndex];
+                if (equipped != null && equipped.TryGetComponent(out IUse item))
+                {
+                    item.Use(fire);
+                }
+            }
+        }
     }
     private void CheckAnimation()
     {
@@ -106,7 +109,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             isJumping = false;
         }
     }
-
     private IEnumerator ResetJump(float duration)
     {
         yield return new WaitForSeconds(duration);
@@ -150,9 +152,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         StartCoroutine(ResetJump(jumpCooldown));
     }
-    public void SwitchCam()
+    public void SwitchCam( bool newisFPS)
     {
-        isFPS = !isFPS;
+        isFPS = newisFPS;
         camControl.ToggleCam();
     }
     IEnumerator ITrap.trap(float speedDecrease, int duration)
@@ -165,7 +167,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         GameManager.instance.promptTrap.SetActive(false);
         isTrapped = false;
     }
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         HP -= amount;
         UpdatePlayerUI();
@@ -175,39 +177,31 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             GameManager.instance.youLose();
         }
     }
-    void healTick()
+    public void StartHealing(float healAmt, int healCount, float healInterval)
     {
-        // update timer
-        healTimer += Time.deltaTime;
+        if (healRoutine != null)
+            StopCoroutine(healRoutine);
 
-        if (healTimer >= healInterval && // heal once per second?
-            healCount > 0 &&        // ticks left
-            HP + healAmt < maxHP) // not full health
-        {
-            // heal
-            HP += healAmt;
-            // ticks--
-            healCount--;
-            Debug.Log(healCount);
-            // reset timer
-            healTimer = 0;
-        }
-
-        // full health
-        if (HP + healAmt > maxHP)
-        {
-            HP = maxHP; // full
-            // stop hot - done healing
-            healAmt = 0;
-            healCount = 0;
-        }
-
-        UpdatePlayerUI(); // update UI
+        healRoutine = StartCoroutine(HealOverTime(healAmt, healCount, healInterval));
     }
-
+    private IEnumerator HealOverTime(float healAmt, int healCount, float healInterval)
+    {
+        while (healCount > 0 && HP < maxHP)
+        {
+            while (GameManager.instance.isPaused)
+                yield return null;
+            yield return new WaitForSeconds(healInterval);
+            float prevHP = HP;
+            HP = Mathf.Min(HP + healAmt, maxHP);
+            healCount--;
+            if (HP != prevHP)
+                UpdatePlayerUI();
+        }
+        healRoutine = null;
+    }
     public void UpdatePlayerUI()
     {
         // Here for now
-        GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
+        //GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
     }
 }

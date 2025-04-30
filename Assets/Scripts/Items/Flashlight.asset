@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f20cbd9891560f4a82dbdba4d3fff9c, type: 3}
-  m_Name: Glue Trap
+  m_Script: {fileID: 11500000, guid: ae50ea9ec8ddcb24bb19cd12cc325543, type: 3}
+  m_Name: Flashlight
   m_EditorClassIdentifier: 
-  itemName: Glue Trap
-  prefab: {fileID: 4055121057641899178, guid: 3ada8e0ea08ab814288c861d92e0eaae, type: 3}
+  itemName: Flashlight
+  prefab: {fileID: 7585822052911295943, guid: feb2bef8103b86e46a3329d6afb4e4da, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
   dropSound: {fileID: 0}
-  trapToSet: {fileID: 5411539714991072618, guid: 6196d6dc80d5e894db6815e402c89336, type: 3}
-  trapSound: {fileID: 0}
+  defaultRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}

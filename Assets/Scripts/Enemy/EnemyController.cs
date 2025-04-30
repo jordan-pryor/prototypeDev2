@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamage
 {
     public enum Behavior { Default, Move, Search, Action }
     [Header("References")]
@@ -42,6 +42,8 @@ public class EnemyController : MonoBehaviour
     public float turnSpeed = 5f;
     public int detection = 50;
     public float speed = 3.5f;
+    private float HP = 5f;
+    public float maxHP = 5f;
     private void Start()
     {
         agent.speed = speed;
@@ -122,6 +124,15 @@ public class EnemyController : MonoBehaviour
                 return actionBehavior as IEnemy;
             default:
                 return defaultBehavior as IEnemy;
+        }
+    }
+    void IDamage.TakeDamage(float amount)
+    {
+        HP -= amount;
+        if (HP <= 0)
+        {
+            Destroy(gameObject);
+            GameManager.instance.updateGameGoal(-1);
         }
     }
 }

@@ -40,7 +40,12 @@ public class EnemyController : MonoBehaviour
     public float memoryDuration = 3f;
     public float searchTime = 5f;
     public float turnSpeed = 5f;
-    
+    public int detection = 50;
+    public float speed = 3.5f;
+    private void Start()
+    {
+        agent.speed = speed;
+    }
     void Update()
     {
         if (seenPlayer) FacePlayer();

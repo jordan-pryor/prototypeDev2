@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public float currentStealth;
 
     [Header("Stats")]
-    public int maxHP = 100;
-    public int HP = 100;
+    int maxHP = 100;
+    public int HP; //= 100;
 
     [Header("Camera Options")]
     public bool isFPS = false;
@@ -60,6 +60,13 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public bool isTrapped;
     private float trapDecrease = 0f;
     public bool isJumping;
+
+    void Start()
+    {
+        maxHP = HP;
+        UpdatePlayerUI();
+        //spawnPlayer();
+    }
 
     // Update is called once per frame
     private void Update()

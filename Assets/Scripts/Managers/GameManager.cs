@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text gameGoalCountText;
     public Image playerHPBar;
+    
     public GameObject playerDamageScreen;
 
     public GameObject player;
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         UICanvas = Instantiate(settings.canvasPrefab).GetComponent<Canvas>();
+        playerHPBar = UICanvas.transform.Find("HealthBarFill").GetComponent<Image>();
         menuPause = Instantiate(settings.menuPrefabPause, UICanvas.transform);
         menuWin = Instantiate(settings.menuPrefabWin, UICanvas.transform);
         menuLose = Instantiate(settings.menuPrefabLose, UICanvas.transform);
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;        
     }
 
+    
     // Update is called once per frame
     void Update()
     {
@@ -175,6 +178,8 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(keyPreFab, keySpawnPoint.position, Quaternion.identity);
     }
+
+    
 
     //public void RegisterEnemy(EnemyAI enemy)
     //{

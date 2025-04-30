@@ -1,5 +1,6 @@
 using NUnit;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
@@ -81,6 +82,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isSprinting = Input.GetButton("Sprint");
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
+        bool leftHeld = Input.GetButton("Fire2");
+        anim.SetBool("isWatch", leftHeld);
         bool fire = Input.GetButtonDown("Fire1");
         if ( fire || Input.GetButtonDown("Reload"))
         {

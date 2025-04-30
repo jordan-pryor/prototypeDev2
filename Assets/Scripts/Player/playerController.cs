@@ -1,3 +1,4 @@
+using NUnit;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -44,6 +45,11 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [Header("Stats")]
     public int maxHP = 100;
     public int HP = 100;
+    // heal tick helpers
+    float healTimer;
+    float healInterval = 1f;
+    int healCount;
+    int healAmt;
 
     [Header("Camera Options")]
     public bool isFPS = false;
@@ -65,6 +71,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private void Update()
     {
         CheckInput();
+
+        if (!GameManager.instance.isPaused)
+            healTick();
     }
     private void FixedUpdate()
     {
@@ -166,10 +175,39 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             GameManager.instance.youLose();
         }
     }
+    void healTick()
+    {
+        // update timer
+        healTimer += Time.deltaTime;
+
+        if (healTimer >= healInterval && // heal once per second?
+            healCount > 0 &&        // ticks left
+            HP + healAmt < maxHP) // not full health
+        {
+            // heal
+            HP += healAmt;
+            // ticks--
+            healCount--;
+            Debug.Log(healCount);
+            // reset timer
+            healTimer = 0;
+        }
+
+        // full health
+        if (HP + healAmt > maxHP)
+        {
+            HP = maxHP; // full
+            // stop hot - done healing
+            healAmt = 0;
+            healCount = 0;
+        }
+
+        UpdatePlayerUI(); // update UI
+    }
+
     public void UpdatePlayerUI()
     {
         // Here for now
         GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
     }
-
 }

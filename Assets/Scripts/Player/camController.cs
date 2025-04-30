@@ -11,10 +11,6 @@ public class camController : MonoBehaviour
     {
         ToggleCam();
     }
-    private void OnValidate()
-    {
-        ToggleCam();
-    }
     void LateUpdate()
     {
         Vector3 offset = new Vector3(0, vertOff, 0);

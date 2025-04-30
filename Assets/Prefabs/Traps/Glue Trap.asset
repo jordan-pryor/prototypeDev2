@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f20cbd9891560f4a82dbdba4d3fff9c, type: 3}
+  m_Name: Glue Trap
+  m_EditorClassIdentifier: 
+  itemName: Glue Trap
+  prefab: {fileID: 4055121057641899178, guid: 3ada8e0ea08ab814288c861d92e0eaae, type: 3}
+  emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
+  slot: 0
+  dropSound: {fileID: 0}
+  trapToSet: {fileID: 5411539714991072618, guid: 6196d6dc80d5e894db6815e402c89336, type: 3}
+  trapSound: {fileID: 0}

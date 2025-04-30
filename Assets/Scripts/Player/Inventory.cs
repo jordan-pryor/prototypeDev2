@@ -84,3 +84,73 @@ public class Inventory : MonoBehaviour
         return false;
     }
 }
+
+/* USE ITEM
+void useItem(BaseData data) {
+    if (data is HealData)
+    {
+        // cast item as heal
+        HealData heal = (HealData)data;
+        useHealItem(heal.instantAmt, heal.hotAmt, heal.sec);
+    }
+    else if (data is TrapData)
+    {
+        // cast item as trap
+        TrapData trap = (TrapData)data;
+        if(controller.isGrounded) placeTrap(trap);
+    }
+}
+*/
+
+/*
+ * PLACE TRAP
+ * === if we can crouch, then instantiate, then uncrouch easily, that would add to the experience. if not, all good
+*
+void placeTrap(TrapData trap)
+{
+    // place trap at player pos
+    Vector3 trapPos = transform.position;
+    // change y to 0.075 according to model size
+    trapPos.y = 0.075f;
+    // crouch
+
+    // instantiate trap.trap??
+    Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
+    // uncrouch
+
+    // empty hands
+    itemModel.GetComponent<MeshFilter>().sharedMesh = null;
+    itemModel.GetComponent<MeshRenderer>().sharedMaterial = null;
+
+    // remove from inv
+    inv.Remove(inv[invPos]);
+    invPos = inv.Count - 1;
+}
+*/
+
+/* USE HEAL ITEM
+void useHealItem(int instantAmt, int hotAmt = 0, int sec = 1)
+{
+    // instant heal - doesn't count for HOT
+    if (HP + instantAmt < origHP)
+        HP += instantAmt;
+    else
+        HP = origHP; // full
+
+    // hot
+    if (hotAmt > 0 && HP < origHP) // not full health
+    {
+        // reset all hot vars
+        // any previous hot is lost
+        healCount = sec;
+        healAmt = hotAmt;
+    }
+
+    // empty hands
+    itemModel.GetComponent<MeshFilter>().sharedMesh = null;
+    itemModel.GetComponent<MeshRenderer>().sharedMaterial = null;
+    // remove from inv
+    inv.Remove(inv[invPos]);
+    invPos = inv.Count - 1;
+}
+*/

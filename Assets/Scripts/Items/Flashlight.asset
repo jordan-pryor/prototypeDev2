@@ -16,5 +16,5 @@ MonoBehaviour:
   prefab: {fileID: 7585822052911295943, guid: feb2bef8103b86e46a3329d6afb4e4da, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
-  dropSound: {fileID: 0}
+  dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
   defaultRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}

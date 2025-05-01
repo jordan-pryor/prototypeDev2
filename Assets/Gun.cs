@@ -72,6 +72,7 @@ public class Gun : MonoBehaviour, IUse
         Instantiate(sfx, transform.position, transform.rotation);
         if (Physics.Raycast(origin, dir, out RaycastHit hit, range))
         {
+            Debug.Log(hit.collider.name);
             if (hit.collider.TryGetComponent(out IDamage target))
             {
                 target.TakeDamage(damage);

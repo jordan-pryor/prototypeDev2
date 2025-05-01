@@ -16,7 +16,7 @@ MonoBehaviour:
   prefab: {fileID: 2463198526074631682, guid: 5b9a6e819c6745045a6936e0b6258b9c, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
-  dropSound: {fileID: 0}
+  dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
   defaultRotation: {x: 0, y: 0, z: 0.17364818, w: 0.9848077}
   maxAmmo: 10
   fireRate: 0.1

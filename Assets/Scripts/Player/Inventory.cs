@@ -9,12 +9,13 @@ public class Inventory : MonoBehaviour
     public GameObject[] slots;
     BaseData[] slotData;
     const int None = -1;
-    public int equipIndex = 0;
+    public int equipIndex = None;
     private void Start()
     {
         slots = new GameObject[capacity];
         slotData = new BaseData[capacity];
-    }
+        equipIndex = None;
+}
     public bool TryAdd(BaseData data)
     {
         for (int i = 0; i < capacity; i++)
@@ -102,6 +103,15 @@ public class Inventory : MonoBehaviour
         }
         equipIndex = newIndex;
         GameManager.instance.playerController.SwitchCam(CheckCam(equipIndex));
+    }
+    public void Unequip()
+    {
+        if (equipIndex == None || slots[equipIndex] == null) return;
+        slots[equipIndex].transform.SetParent(pocketSockets[equipIndex]);
+        slots[equipIndex].transform.localPosition = Vector3.zero;
+        slots[equipIndex].transform.localRotation = slotData[equipIndex].defaultRotation;
+        equipIndex = None;
+        GameManager.instance.playerController.SwitchCam(false);
     }
     public bool Search(string name)
     {

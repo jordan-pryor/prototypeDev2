@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 public class EnemyController : MonoBehaviour, IDamage
 {
     public enum Behavior { Default, Move, Search, Action }
+    public enum PathMode { Cycle, PingPong, Random }
+
     [Header("References")]
     [SerializeField] private EnemyBehavior defaultBehavior;
     [SerializeField] private EnemyBehavior moveBehavior;
@@ -16,6 +18,10 @@ public class EnemyController : MonoBehaviour, IDamage
     [SerializeField] GameObject soundObject;
     public List<Transform> defaultPoints = new List<Transform>();
     public List<Transform> targetPoints = new List<Transform>();
+    public Vector3 origin;
+    public LayerMask wallMask;
+    public GameObject bullet;
+    public Transform attackPos;
 
     [Header("State")]
     public Behavior currentBehavior = Behavior.Default;
@@ -44,9 +50,16 @@ public class EnemyController : MonoBehaviour, IDamage
     public float speed = 3.5f;
     private float HP = 5f;
     public float maxHP = 5f;
+    public int patrolIndex = 0;
+    public int patrolDir = 1;
+    public int patrolPoints = 5;
+    public PathMode pathMode = PathMode.Cycle;
+    public float patrolWait = 1f;
+
     private void Start()
     {
         agent.speed = speed;
+        origin = transform.position;
     }
     void Update()
     {
@@ -98,11 +111,25 @@ public class EnemyController : MonoBehaviour, IDamage
     public void OnAlertEnd()
     {
         Instantiate(soundObject, transform.position, transform.rotation);
-        SetBehavior(Behavior.Default);
+        if (seenPlayer)
+        {
+            SetBehavior(Behavior.Move);
+        }
+        else
+        {
+            SetBehavior(Behavior.Default);
+        }
     }
     public void OnAnimationEnd()
     {
-        SetBehavior(Behavior.Default);
+        if (seenPlayer)
+        {
+            SetBehavior(Behavior.Move);
+        }
+        else
+        {
+            SetBehavior(Behavior.Default);
+        }
     }
     public void FacePlayer()
     {
@@ -133,6 +160,31 @@ public class EnemyController : MonoBehaviour, IDamage
         {
             Destroy(gameObject);
             GameManager.instance.updateGameGoal(-1);
+        }
+    }
+    public Transform TowardWall( float pMin, float pMax)
+    {
+        Vector2 ran = Random.insideUnitCircle.normalized;
+        Vector3 dir = new Vector3(ran.x, 0f, ran.y);
+        Vector3 pos;
+        if (Physics.Raycast(origin, dir, out RaycastHit hit, Mathf.Infinity, wallMask))
+        {
+            pos = Vector3.Lerp(origin, hit.point, Random.Range(pMin, pMax));
+        }
+        else
+        {
+            pos = origin;
+        }
+        GameObject obj = new GameObject(name);
+        obj.transform.position = pos;
+        return obj.transform;
+    }
+    public void Fire()
+    {
+        bullet = Instantiate(bullet, attackPos.position, attackPos.rotation);
+        if(bullet.TryGetComponent(out Rigidbody rb))
+        {
+            rb.AddForce(attackPos.forward * 5, ForceMode.Impulse);
         }
     }
 }

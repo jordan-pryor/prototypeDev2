@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private camController camControl;
-    [SerializeField] private Animator anim;
+    public Animator anim;
     private Coroutine healRoutine;
-    [SerializeField] private Inventory inv;
+    public Inventory inv;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private float speedSprint = 8f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float drag = 1.1f;
-    [SerializeField] private bool toggleSprint = false;
+    //[SerializeField] private bool toggleSprint = false;
     private Vector2 moveInput;
     public bool isSprinting;
     public bool isMoving;
@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [Header("Jump Options")]
     [SerializeField] private float jumpForce = 4f;
     [SerializeField] private float jumpCooldown = 1f;
-    [SerializeField] private int jumpCount = 1;
+    //[SerializeField] private int jumpCount = 1;
     private bool canJump = true;
     private bool jumpInput;
 
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private bool isGrounded;
 
     [Header("Crouch")]
-    [SerializeField] private float stealthAmount = 50f;
+    [SerializeField] private float stealthAmount = 100f;
     private bool isCrouching;
     public float currentStealth;
 
@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         GroundCheck();
         Movement();
         CheckAnimation();
-        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 100f);
+        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f);
     }
     private void CheckInput()
     {

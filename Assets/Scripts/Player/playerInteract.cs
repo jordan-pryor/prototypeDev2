@@ -7,15 +7,23 @@ public class playerInteract : MonoBehaviour
     private GameObject promptInteract;
 
     IInteract target;
-
+    IInteract grabTarget;
     // Update is called once per frame
     void Update()
     {
         CheckInteractable();
         if(target != null && Input.GetKeyDown(KeyCode.E))
         {
-            target.Interact();
+            if((target as Component).CompareTag("Pickup")) GameManager.instance.playerController.inv.Unequip();
+            GameManager.instance.playerController.anim.SetTrigger("isGrabbing");
+            grabTarget = target;
         }
+    }
+    public void Grabbed()
+    {
+        if (grabTarget == null) return;
+        grabTarget.Interact();
+        grabTarget = null;
     }
     void CheckInteractable()
     {

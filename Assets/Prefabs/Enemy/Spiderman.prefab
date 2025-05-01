@@ -5456,7 +5456,6 @@ GameObject:
   - component: {fileID: 6427960794451628541}
   - component: {fileID: 6857201414751807619}
   - component: {fileID: 8357559152034399999}
-  - component: {fileID: 7256145017434250250}
   m_Layer: 6
   m_Name: Spiderman
   m_TagString: Untagged
@@ -5496,7 +5495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBehavior: {fileID: 11400000, guid: ccf633bad6813a5488ed4b299a50d6ed, type: 2}
+  defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
   moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
   actionBehavior: {fileID: 11400000, guid: c2a7f1a47ac512e439a71237c3d59e0d, type: 2}
@@ -5505,6 +5504,12 @@ MonoBehaviour:
   soundObject: {fileID: 0}
   defaultPoints: []
   targetPoints: []
+  origin: {x: 0, y: 0, z: 0}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  bullet: {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
+  attackPos: {fileID: 8470140459672816279}
   currentBehavior: 0
   seenPlayer: 0
   memoryTimer: 0
@@ -5522,13 +5527,18 @@ MonoBehaviour:
   actionMask:
     serializedVersion: 2
     m_Bits: 3017
-  guardDistance: 7
+  guardDistance: 5
   memoryDuration: 4
   searchTime: 7
   turnSpeed: 5
-  detection: 50
+  detection: 75
   speed: 4
   maxHP: 10
+  patrolIndex: 0
+  patrolDir: 1
+  patrolPoints: 5
+  pathMode: 0
+  patrolWait: 1
 --- !u!95 &6427960794451628541
 Animator:
   serializedVersion: 7
@@ -5596,33 +5606,6 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!54 &7256145017434250250
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7887017152377124399}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &7958823384844796636
 GameObject:
   m_ObjectHideFlags: 0

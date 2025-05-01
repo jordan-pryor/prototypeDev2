@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour//, IInteract
 	[SerializeField] private int maxAmmo = 12;
 	[SerializeField] private float fireRate = 1f;
 	[SerializeField] private float range = 100f;
-	[SerializeField] private int damage = 10;
+	//[SerializeField] private int damage = 10;
     [SerializeField] GameObject rangedProjectile;
     [SerializeField] GameObject promptReload;
 

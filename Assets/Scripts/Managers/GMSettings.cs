@@ -11,5 +11,4 @@ public class GMSettings : ScriptableObject
     public GameObject menuPrefabInteract;
     public GameObject menuPrefabTrap;
     public GameObject menuPrefabLock;
-    public bool isFinalLevel = false;
 }

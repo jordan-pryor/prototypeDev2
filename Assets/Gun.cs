@@ -11,7 +11,9 @@ public class Gun : MonoBehaviour, IUse
     float reloadTime;
     bool isReloading;
     float range;
-    GameObject bullet;
+    GameObject hitFX;
+    Sound sfx;
+    Sound rfx;
     public void PullStat(WeaponData data)
     {
         maxAmmo = data.maxAmmo;
@@ -20,7 +22,9 @@ public class Gun : MonoBehaviour, IUse
         damage = data.damage;
         reloadTime = data.reloadTime;
         range = data.range;
-        bullet = data.bullet;
+        hitFX = data.hitFX;
+        sfx = data.shotSound;
+        rfx = data.reloadFX;
     }
     public void Use(bool primary)
     {
@@ -57,6 +61,7 @@ public class Gun : MonoBehaviour, IUse
         isReloading = true;
         yield return new WaitForSeconds(reloadTime);
         currentAmmo = maxAmmo;
+        Instantiate(rfx, transform.position, transform.rotation);
         isReloading = false;
     }
     private void Shoot()
@@ -64,11 +69,15 @@ public class Gun : MonoBehaviour, IUse
         Camera cam = Camera.main;
         Vector3 origin = cam.transform.position;
         Vector3 dir = cam.transform.forward;
+        Instantiate(sfx, transform.position, transform.rotation);
         if (Physics.Raycast(origin, dir, out RaycastHit hit, range))
         {
-            var trail = Instantiate(bullet, origin, Quaternion.LookRotation(hit.transform.position - origin));
-            Destroy(trail, 2f);
-            if (hit.collider.TryGetComponent(out IDamage target)) target.TakeDamage(damage);
+            if (hit.collider.TryGetComponent(out IDamage target))
+            {
+                target.TakeDamage(damage);
+                GameObject fx = Instantiate(hitFX, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(fx, 1f);
+            }
         }
     }
 }

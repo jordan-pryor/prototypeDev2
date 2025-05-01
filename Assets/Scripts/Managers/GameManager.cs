@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,12 +24,13 @@ public class GameManager : MonoBehaviour
     public GameObject promptReload;
     public GameObject promptLock;
 
-    [SerializeField] TMP_Text gameGoalCountText;
-    public Image playerHPBar;
+    public TMP_Text gameGoalCountText;
+    
     public GameObject playerDamageScreen;
 
     public GameObject player;
     public PlayerController playerController;
+    public bool killEnemies = true;
 
     public bool isPaused;
     float timeScaleOrig;
@@ -110,17 +112,20 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        //gameGoalCountText.text = gameGoalCount.ToString("F0");
+        playerController.goalText.text = gameGoalCount.ToString("F0");
 
         if (gameGoalCount <= 0)
         {
             //You Won!
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
+            if(killEnemies) youWin();
         }
     }
-
+    public void youWin()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+    }
     public void youLose()
     {
         statePause();

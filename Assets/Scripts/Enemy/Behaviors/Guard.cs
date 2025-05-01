@@ -9,12 +9,13 @@ public class Guard : EnemyBehavior, IEnemy
         float distance = Vector3.Distance(controller.transform.position, targetPoint.position);
         if (distance > controller.guardDistance)
         {
+            controller.agent.isStopped = false;
             controller.agent.SetDestination(targetPoint.position);
             controller.animator.SetBool("isWalking", true);
         }
         else
         {
-            controller.agent.SetDestination(controller.transform.position);
+            controller.agent.isStopped = true;
             controller.animator.SetBool("isWalking", false);
         }
     }
@@ -29,7 +30,8 @@ public class Guard : EnemyBehavior, IEnemy
     }
     public void NewGuard(EnemyController controller)
     {
-        if(controller.defaultPoints.Count == 0) controller.defaultPoints.Add(controller.transform);
-        else controller.defaultPoints[0] = controller.transform;
+        if (controller.defaultPoints.Count == 0) controller.defaultPoints.Add(controller.TowardWall(0.1f, 0.9f));
+        else controller.defaultPoints[0] = controller.TowardWall(0.1f, 0.9f);
     }
 }
+

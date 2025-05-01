@@ -9,9 +9,11 @@ public class Door : MonoBehaviour, IInteract
 	[SerializeField] GameObject doorMin;
 	[SerializeField] GameObject doorMax;
 	[SerializeField] float openSpeed = 1f;
+	public Sound doors;
 
 	[Header("Lock Settings")]
 	[SerializeField] bool isLocked = false;
+	[SerializeField] bool isWin = false;
 	[SerializeField] string requiredKeyName = "Key"; // Custom key name
 
 	public bool isTransition = false;
@@ -53,13 +55,15 @@ public class Door : MonoBehaviour, IInteract
 	{
 		if (currentRoutine != null) StopCoroutine(currentRoutine);
 		currentRoutine = StartCoroutine(AnimateDoor(1f));
+		Instantiate(doors, transform.position, transform.rotation);
 	}
 
 	public void Close()
 	{
 		if (currentRoutine != null) StopCoroutine(currentRoutine);
 		currentRoutine = StartCoroutine(AnimateDoor(0f));
-	}
+        Instantiate(doors, transform.position, transform.rotation);
+    }
 
 	public void Interact()
 	{
@@ -83,6 +87,10 @@ public class Door : MonoBehaviour, IInteract
 			SceneManager.LoadScene(sceneIndex);
 
         }
+		if (isWin)
+		{
+			GameManager.instance.youWin();
+		}
 	}
 }
 

@@ -45,6 +45,7 @@ public class SenseTrigger : MonoBehaviour
                     {
                         if (hit.collider.CompareTag("Player"))
                         {
+                            if (GameManager.instance.playerController.currentStealth >= enemy.detection) return;
                             detect = true;
                             if (sense == SenseType.Sight)
                             {

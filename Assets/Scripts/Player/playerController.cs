@@ -1,7 +1,8 @@
 using NUnit;
 using System.Collections;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
 {
@@ -9,9 +10,13 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private camController camControl;
-    [SerializeField] private Animator anim;
+    public Animator anim;
     private Coroutine healRoutine;
-    [SerializeField] private Inventory inv;
+    public Inventory inv;
+    public TMP_Text goalText;
+    public Sound footsteps;
+    public Sound jump;
+    public Image playerHPBar;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -19,7 +24,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private float speedSprint = 8f;
     [SerializeField] private float acceleration = 10f;
     [SerializeField] private float drag = 1.1f;
-    [SerializeField] private bool toggleSprint = false;
+    //[SerializeField] private bool toggleSprint = false;
     private Vector2 moveInput;
     public bool isSprinting;
     public bool isMoving;
@@ -28,7 +33,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [Header("Jump Options")]
     [SerializeField] private float jumpForce = 4f;
     [SerializeField] private float jumpCooldown = 1f;
-    [SerializeField] private int jumpCount = 1;
+    //[SerializeField] private int jumpCount = 1;
     private bool canJump = true;
     private bool jumpInput;
 
@@ -38,7 +43,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private bool isGrounded;
 
     [Header("Crouch")]
-    [SerializeField] private float stealthAmount = 50f;
+    [SerializeField] private float stealthAmount = 100f;
     private bool isCrouching;
     public float currentStealth;
 
@@ -72,7 +77,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         GroundCheck();
         Movement();
         CheckAnimation();
-        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 100f);
+        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f);
     }
     private void CheckInput()
     {
@@ -82,9 +87,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isSprinting = Input.GetButton("Sprint");
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
-        bool leftHeld = Input.GetButton("Fire2");
-        anim.SetBool("isWatch", leftHeld);
         bool fire = Input.GetButtonDown("Fire1");
+        anim.SetBool("isWatch", Input.GetButton("Fire2"));
         if ( fire || Input.GetButtonDown("Reload"))
         {
             if (inv.equipIndex != -1)
@@ -96,6 +100,10 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
                 }
             }
         }
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation);
     }
     private void CheckAnimation()
     {
@@ -151,6 +159,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isJumping = true;
         anim.SetTrigger("isJumping");
         canJump = false;
+        Instantiate(jump, transform.position, transform.rotation);
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         StartCoroutine(ResetJump(jumpCooldown));
@@ -204,7 +213,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     public void UpdatePlayerUI()
     {
-        // Here for now
-        //GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
+        playerHPBar.fillAmount = HP / maxHP;
     }
 }

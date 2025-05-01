@@ -10,4 +10,5 @@ public class WeaponData : BaseData
     public float reloadTime = 1.5f;
     public float range = 50f;
     public GameObject hitFX;
+    public Sound reloadFX;
 }

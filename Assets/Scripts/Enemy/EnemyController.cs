@@ -123,6 +123,7 @@ public class EnemyController : MonoBehaviour, IDamage
     }
     public void OnAnimationEnd()
     {
+        Instantiate(soundObject, transform.position, transform.rotation);
         if (seenPlayer)
         {
             SetBehavior(Behavior.Move);

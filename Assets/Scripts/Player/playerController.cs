@@ -2,6 +2,7 @@ using NUnit;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
 {
@@ -13,6 +14,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private Coroutine healRoutine;
     public Inventory inv;
     public TMP_Text goalText;
+    public Sound footsteps;
+    public Sound jump;
+    public Image playerHPBar;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -97,6 +101,10 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             }
         }
     }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation);
+    }
     private void CheckAnimation()
     {
         anim.SetBool("isMoving", isMoving);
@@ -151,6 +159,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isJumping = true;
         anim.SetTrigger("isJumping");
         canJump = false;
+        Instantiate(jump, transform.position, transform.rotation);
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         StartCoroutine(ResetJump(jumpCooldown));
@@ -204,7 +213,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     public void UpdatePlayerUI()
     {
-        // Here for now
-        //GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
+        playerHPBar.fillAmount = HP / maxHP;
     }
 }

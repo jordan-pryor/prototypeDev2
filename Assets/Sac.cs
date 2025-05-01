@@ -26,6 +26,11 @@ public class Sac : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(5);
+        if (other.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(damage);
+        Vector3 spawnPos = transform.position;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 10f))
+        {
+            spawnPos = hit.point;
+        }
     }
 }

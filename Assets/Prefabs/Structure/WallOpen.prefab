@@ -393,7 +393,12 @@ MonoBehaviour:
   doorMin: {fileID: 7201922750383082733}
   doorMax: {fileID: 5944277812051384569}
   openSpeed: 1
+  doors: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
   isLocked: 0
+  isWin: 0
+  requiredKeyName: Key
+  isTransition: 0
+  sceneIndex: -1
 --- !u!1 &7201922750383082733
 GameObject:
   m_ObjectHideFlags: 0

@@ -279,7 +279,7 @@ MonoBehaviour:
   actionBehavior: {fileID: 11400000, guid: e03a314ad77026e45b683253c5481241, type: 2}
   animator: {fileID: 1749985964454703331}
   agent: {fileID: 9195562840211566796}
-  soundObject: {fileID: 6969508562701821113, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
+  soundObject: {fileID: 1521164592709516988, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
   defaultPoints: []
   targetPoints: []
   origin: {x: 0, y: 0, z: 0}

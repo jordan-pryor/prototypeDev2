@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject promptLock;
 
     public TMP_Text gameGoalCountText;
-    public Image playerHPBar;
+    
     public GameObject playerDamageScreen;
 
     public GameObject player;

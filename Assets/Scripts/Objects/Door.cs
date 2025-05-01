@@ -9,6 +9,7 @@ public class Door : MonoBehaviour, IInteract
 	[SerializeField] GameObject doorMin;
 	[SerializeField] GameObject doorMax;
 	[SerializeField] float openSpeed = 1f;
+	public Sound doors;
 
 	[Header("Lock Settings")]
 	[SerializeField] bool isLocked = false;
@@ -54,13 +55,15 @@ public class Door : MonoBehaviour, IInteract
 	{
 		if (currentRoutine != null) StopCoroutine(currentRoutine);
 		currentRoutine = StartCoroutine(AnimateDoor(1f));
+		Instantiate(doors, transform.position, transform.rotation);
 	}
 
 	public void Close()
 	{
 		if (currentRoutine != null) StopCoroutine(currentRoutine);
 		currentRoutine = StartCoroutine(AnimateDoor(0f));
-	}
+        Instantiate(doors, transform.position, transform.rotation);
+    }
 
 	public void Interact()
 	{

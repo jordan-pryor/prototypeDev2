@@ -5501,7 +5501,7 @@ MonoBehaviour:
   actionBehavior: {fileID: 11400000, guid: 19ad5a8d9173cf444abca8ace36fc24b, type: 2}
   animator: {fileID: 6427960794451628541}
   agent: {fileID: 6857201414751807619}
-  soundObject: {fileID: 0}
+  soundObject: {fileID: 4209597050636819218, guid: 223ae9ae8c2f9a5409ae11e6cf6e886e, type: 3}
   defaultPoints: []
   targetPoints: []
   origin: {x: 0, y: 0, z: 0}

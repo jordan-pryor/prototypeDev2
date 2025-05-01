@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject promptReload;
     public GameObject promptLock;
 
-    [SerializeField] TMP_Text gameGoalCountText;
+    public TMP_Text gameGoalCountText;
     public Image playerHPBar;
     public GameObject playerDamageScreen;
 
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        //gameGoalCountText.text = gameGoalCount.ToString("F0");
+        playerController.goalText.text = gameGoalCount.ToString("F0");
 
         if (gameGoalCount <= 0)
         {

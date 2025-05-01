@@ -1,5 +1,6 @@
 using NUnit;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public Animator anim;
     private Coroutine healRoutine;
     public Inventory inv;
+    public TMP_Text goalText;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -82,6 +84,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
         bool fire = Input.GetButtonDown("Fire1");
+        anim.SetBool("isWatch", Input.GetButton("Fire2"));
         if ( fire || Input.GetButtonDown("Reload"))
         {
             if (inv.equipIndex != -1)

@@ -12,6 +12,7 @@ public class Door : MonoBehaviour, IInteract
 
 	[Header("Lock Settings")]
 	[SerializeField] bool isLocked = false;
+	[SerializeField] bool isWin = false;
 	[SerializeField] string requiredKeyName = "Key"; // Custom key name
 
 	public bool isTransition = false;
@@ -83,6 +84,10 @@ public class Door : MonoBehaviour, IInteract
 			SceneManager.LoadScene(sceneIndex);
 
         }
+		if (isWin)
+		{
+			GameManager.instance.youWin();
+		}
 	}
 }
 

@@ -1949,8 +1949,8 @@ MonoBehaviour:
     m_Bits: 256
   stealthAmount: 100
   currentStealth: 0
-  maxHP: 100
-  HP: 100
+  maxHP: 10
+  HP: 10
   isFPS: 0
   sensX: 75
   sensY: 75

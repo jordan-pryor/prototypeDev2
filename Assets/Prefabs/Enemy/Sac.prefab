@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7667043952178791359}
   - component: {fileID: 8066495681585405194}
   - component: {fileID: 5754132116673743763}
-  - component: {fileID: 362668951355461211}
+  - component: {fileID: 7190701404643468125}
   m_Layer: 0
   m_Name: Sac
   m_TagString: Untagged
@@ -137,7 +137,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &362668951355461211
+--- !u!114 &7190701404643468125
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,12 +146,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6403615474198346355}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 738b5a44ed529484987364f58fe6e3f1, type: 3}
+  m_Script: {fileID: 11500000, guid: 66854b4c6a497b74fb950855ea4bd02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  rb: {fileID: 5754132116673743763}
-  damageAmount: 5
-  damageRate: 0
-  speed: 5
-  destroyTime: 20
+  trap: {fileID: 5411539714991072618, guid: 6196d6dc80d5e894db6815e402c89336, type: 3}
+  timerStart: 3
+  damage: 5

@@ -55,6 +55,7 @@ public class EnemyController : MonoBehaviour, IDamage
     public int patrolPoints = 5;
     public PathMode pathMode = PathMode.Cycle;
     public float patrolWait = 1f;
+    public float damage = 2;
 
     private void Start()
     {
@@ -181,10 +182,18 @@ public class EnemyController : MonoBehaviour, IDamage
     }
     public void Fire()
     {
-        bullet = Instantiate(bullet, attackPos.position, attackPos.rotation);
-        if(bullet.TryGetComponent(out Rigidbody rb))
+        GameObject bull = Instantiate(bullet, attackPos.position, attackPos.rotation);
+        if(bull != null && bull.TryGetComponent(out Rigidbody rb))
         {
             rb.AddForce(attackPos.forward * 5, ForceMode.Impulse);
+        }
+    }
+    public void Melee()
+    {
+        Transform playerPos = GameManager.instance.player.transform;
+        if (Vector3.Distance(transform.position, playerPos.position) < actionRange)
+        {
+            if (playerPos.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(damage);
         }
     }
 }

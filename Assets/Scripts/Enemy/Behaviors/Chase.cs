@@ -5,7 +5,6 @@ public class Chase : EnemyBehavior, IEnemy
 {
     public override void Execute(EnemyController controller)
     {
-        Debug.Log("Move");
         if (!controller.seenPlayer)
         {
             if (controller.memoryTimer <= 0f)

@@ -2219,10 +2219,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -5498,7 +5498,7 @@ MonoBehaviour:
   defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
   moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
-  actionBehavior: {fileID: 11400000, guid: c2a7f1a47ac512e439a71237c3d59e0d, type: 2}
+  actionBehavior: {fileID: 11400000, guid: 19ad5a8d9173cf444abca8ace36fc24b, type: 2}
   animator: {fileID: 6427960794451628541}
   agent: {fileID: 6857201414751807619}
   soundObject: {fileID: 0}
@@ -5536,9 +5536,10 @@ MonoBehaviour:
   maxHP: 10
   patrolIndex: 0
   patrolDir: 1
-  patrolPoints: 5
+  patrolPoints: 10
   pathMode: 0
-  patrolWait: 1
+  patrolWait: 3
+  damage: 2
 --- !u!95 &6427960794451628541
 Animator:
   serializedVersion: 7

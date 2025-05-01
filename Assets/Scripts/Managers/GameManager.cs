@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public PlayerController playerController;
+    public bool killEnemies = true;
 
     public bool isPaused;
     float timeScaleOrig;
@@ -115,12 +117,15 @@ public class GameManager : MonoBehaviour
         if (gameGoalCount <= 0)
         {
             //You Won!
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
+            if(killEnemies) youWin();
         }
     }
-
+    public void youWin()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+    }
     public void youLose()
     {
         statePause();

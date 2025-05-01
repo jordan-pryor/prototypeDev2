@@ -101,10 +101,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 16896
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -276,7 +276,7 @@ MonoBehaviour:
   defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
   moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
-  actionBehavior: {fileID: 11400000, guid: c2a7f1a47ac512e439a71237c3d59e0d, type: 2}
+  actionBehavior: {fileID: 11400000, guid: e03a314ad77026e45b683253c5481241, type: 2}
   animator: {fileID: 1749985964454703331}
   agent: {fileID: 9195562840211566796}
   soundObject: {fileID: 6969508562701821113, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
@@ -286,6 +286,8 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
+  bullet: {fileID: 0}
+  attackPos: {fileID: 0}
   currentBehavior: 0
   seenPlayer: 0
   memoryTimer: 0
@@ -315,6 +317,7 @@ MonoBehaviour:
   patrolPoints: 5
   pathMode: 0
   patrolWait: 2.5
+  damage: 2
 --- !u!195 &9195562840211566796
 NavMeshAgent:
   m_ObjectHideFlags: 0

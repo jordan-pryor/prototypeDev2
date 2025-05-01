@@ -24,4 +24,4 @@ MonoBehaviour:
   shotSound: {fileID: 0}
   reloadTime: 1.5
   range: 50
-  bullet: {fileID: 3461133142221195434, guid: 77e9c516073291d4bb63f31d9d3fab9b, type: 3}
+  hitFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}

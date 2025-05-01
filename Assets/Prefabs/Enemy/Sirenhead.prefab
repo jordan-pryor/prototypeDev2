@@ -135,7 +135,7 @@ SphereCollider:
     m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -199,10 +199,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 16896
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -381,7 +381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
+  defaultBehavior: {fileID: 11400000, guid: ccf633bad6813a5488ed4b299a50d6ed, type: 2}
   moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
   actionBehavior: {fileID: 11400000, guid: c2a7f1a47ac512e439a71237c3d59e0d, type: 2}
@@ -395,6 +395,8 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
+  bullet: {fileID: 0}
+  attackPos: {fileID: 0}
   currentBehavior: 0
   seenPlayer: 0
   memoryTimer: 0
@@ -423,6 +425,8 @@ MonoBehaviour:
   patrolDir: 1
   patrolPoints: 5
   pathMode: 0
+  patrolWait: 1
+  damage: 2
 --- !u!195 &4330516625042123016
 NavMeshAgent:
   m_ObjectHideFlags: 0

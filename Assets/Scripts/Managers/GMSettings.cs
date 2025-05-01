@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [CreateAssetMenu(fileName = "GMSettings", menuName = "Config/GMSettings")]
 public class GMSettings : ScriptableObject

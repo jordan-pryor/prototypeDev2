@@ -1,8 +1,7 @@
+using NUnit;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
 {
@@ -11,6 +10,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private Transform groundCheckPoint;
     [SerializeField] private camController camControl;
     [SerializeField] private Animator anim;
+    private Coroutine healRoutine;
+    [SerializeField] private Inventory inv;
 
     [Header("Movement Options")]
     [SerializeField] private float speedCrouch = 2.5f;
@@ -42,8 +43,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public float currentStealth;
 
     [Header("Stats")]
-    int maxHP = 100;
-    public int HP; //= 100;
+    public float maxHP = 100f;
+    public float HP = 100f;
 
     [Header("Camera Options")]
     public bool isFPS = false;
@@ -60,13 +61,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public bool isTrapped;
     private float trapDecrease = 0f;
     public bool isJumping;
-
-    void Start()
-    {
-        maxHP = HP;
-        UpdatePlayerUI();
-        //spawnPlayer();
-    }
 
     // Update is called once per frame
     private void Update()
@@ -88,6 +82,20 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isSprinting = Input.GetButton("Sprint");
         if (Input.GetKeyDown(KeyCode.LeftControl)) Crouch(true);
         else if (Input.GetKeyUp(KeyCode.LeftControl)) Crouch(false);
+        bool leftHeld = Input.GetButton("Fire2");
+        anim.SetBool("isWatch", leftHeld);
+        bool fire = Input.GetButtonDown("Fire1");
+        if ( fire || Input.GetButtonDown("Reload"))
+        {
+            if (inv.equipIndex != -1)
+            {
+                GameObject equipped = inv.slots[inv.equipIndex];
+                if (equipped != null && equipped.TryGetComponent(out IUse item))
+                {
+                    item.Use(fire);
+                }
+            }
+        }
     }
     private void CheckAnimation()
     {
@@ -104,7 +112,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             isJumping = false;
         }
     }
-
     private IEnumerator ResetJump(float duration)
     {
         yield return new WaitForSeconds(duration);
@@ -148,9 +155,9 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         StartCoroutine(ResetJump(jumpCooldown));
     }
-    public void SwitchCam()
+    public void SwitchCam( bool newisFPS)
     {
-        isFPS = !isFPS;
+        isFPS = newisFPS;
         camControl.ToggleCam();
     }
     IEnumerator ITrap.trap(float speedDecrease, int duration)
@@ -163,7 +170,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         GameManager.instance.promptTrap.SetActive(false);
         isTrapped = false;
     }
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         HP -= amount;
         UpdatePlayerUI();
@@ -173,10 +180,31 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             GameManager.instance.youLose();
         }
     }
+    public void StartHealing(float healAmt, int healCount, float healInterval)
+    {
+        if (healRoutine != null)
+            StopCoroutine(healRoutine);
+
+        healRoutine = StartCoroutine(HealOverTime(healAmt, healCount, healInterval));
+    }
+    private IEnumerator HealOverTime(float healAmt, int healCount, float healInterval)
+    {
+        while (healCount > 0 && HP < maxHP)
+        {
+            while (GameManager.instance.isPaused)
+                yield return null;
+            yield return new WaitForSeconds(healInterval);
+            float prevHP = HP;
+            HP = Mathf.Min(HP + healAmt, maxHP);
+            healCount--;
+            if (HP != prevHP)
+                UpdatePlayerUI();
+        }
+        healRoutine = null;
+    }
     public void UpdatePlayerUI()
     {
         // Here for now
-        GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
+        //GameManager.instance.playerHPBar.fillAmount = (float)HP / maxHP;
     }
-
 }

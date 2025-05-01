@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour, IInteract
 {
@@ -12,6 +13,9 @@ public class Door : MonoBehaviour, IInteract
 	[Header("Lock Settings")]
 	[SerializeField] bool isLocked = false;
 	[SerializeField] string requiredKeyName = "Key"; // Custom key name
+
+	public bool isTransition = false;
+	public int sceneIndex = -1;
 
 	Coroutine currentRoutine;
 
@@ -74,6 +78,11 @@ public class Door : MonoBehaviour, IInteract
 
 		if (openPercent < 0.01f) Open();
 		else Close();
+		if (isTransition && sceneIndex > -1 && SceneManager.GetActiveScene().buildIndex != sceneIndex)
+		{
+			SceneManager.LoadScene(sceneIndex);
+
+        }
 	}
 
 	public bool isDoorOpen()

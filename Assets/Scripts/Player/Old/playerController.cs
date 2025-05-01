@@ -15,7 +15,7 @@ public class playerController : MonoBehaviour//, IDamage, ITrap
     [SerializeField] float playerHeight = 2f;              // Tall mode — regular standing height
     //[SerializeField] float crouchHeight = 1f;            // Short king mode — crouch collider height
     //[SerializeField] float crouchTransitionSpeed = 10f;  // How fast we go from tall to small
-    [SerializeField] public int HP = 100;                  // How much life we got left — don’t let it hit 0!
+    public int HP;                                   // How much life we got left — don’t let it hit 0!
     int origHP;
 
     // === Player Movement & Control ===
@@ -121,6 +121,7 @@ public class playerController : MonoBehaviour//, IDamage, ITrap
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        origHP = HP;
         origRunSpeed = runSpeed;
         origWalkSpeed = walkSpeed;
         origSprintSpeed = sprintSpeed;

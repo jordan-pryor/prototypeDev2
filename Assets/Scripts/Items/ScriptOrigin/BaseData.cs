@@ -2,11 +2,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Items")]
 public abstract class BaseData : ScriptableObject
 {
-    public enum ItemSlot { Pocket, Hand }
-    public string itemName;
-    public GameObject prefab;
-    public GameObject emptyPickupPrefab;
-    public ItemSlot slot = ItemSlot.Pocket;
-    public Sound dropSound;
-    public Quaternion defaultRotation;
+    public string itemName;                    // Name shown in UI or logs
+    public GameObject prefab;                  // Visual model used in hand or inventory
+    public GameObject emptyPickupPrefab;       // Optional pickup version when item is dropped
+    public Sound dropSound;                    // Sound played when dropped
+    public Quaternion defaultRotation;         // Rotation used when placed in socket/hand
 }

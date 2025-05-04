@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class playerController : MonoBehaviour//, IDamage, ITrap
 {
+    //OLD CODE
+
     /*
     // === System References ===
     [Header("System References")]

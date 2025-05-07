@@ -2,8 +2,10 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class EnemyAI : MonoBehaviour //, IDamage
 {
+    // OLD ENEMY
+    /*
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] float HP;
@@ -87,4 +89,5 @@ public class EnemyAI : MonoBehaviour, IDamage
             GameManager.instance.updateGameGoal(-1);            
         }
     }
+    */
 }

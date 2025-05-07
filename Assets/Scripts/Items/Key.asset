@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: 
   itemName: MainKey
-  prefab: {fileID: 8781173508894012262, guid: 5aa80c755f3c7a24584dc513db96b363, type: 3}
+  prefab: {fileID: 8781173508894012262, guid: 8deac020093c0ca4f8328466aa46ee56, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
-  dropSound: {fileID: 0}
+  dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}

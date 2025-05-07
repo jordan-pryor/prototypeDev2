@@ -16,12 +16,13 @@ MonoBehaviour:
   prefab: {fileID: 2463198526074631682, guid: 5b9a6e819c6745045a6936e0b6258b9c, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   slot: 0
-  dropSound: {fileID: 0}
-  defaultRotation: {x: 0, y: 0, z: 0, w: 0}
-  maxAmmo: 30
-  fireRate: 0.1
-  damage: 10
-  shotSound: {fileID: 0}
+  dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
+  defaultRotation: {x: 0, y: 0, z: 0.17364818, w: 0.9848077}
+  maxAmmo: 6
+  fireRate: 1
+  damage: 1
+  shotSound: {fileID: 8358248104247095852, guid: 223ae9ae8c2f9a5409ae11e6cf6e886e, type: 3}
   reloadTime: 1.5
   range: 50
-  bullet: {fileID: 3461133142221195434, guid: 77e9c516073291d4bb63f31d9d3fab9b, type: 3}
+  hitFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  reloadFX: {fileID: 8213874844554620015, guid: 3d83b8038d2467848bde6fee6f993861, type: 3}

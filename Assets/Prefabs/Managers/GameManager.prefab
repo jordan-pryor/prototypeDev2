@@ -48,13 +48,9 @@ MonoBehaviour:
   promptTrap: {fileID: 0}
   promptInteract: {fileID: 0}
   promptReload: {fileID: 0}
-  promptLock: {fileID: 0}
   gameGoalCountText: {fileID: 0}
   playerHPBar: {fileID: 0}
   playerDamageScreen: {fileID: 0}
   player: {fileID: 0}
   playerController: {fileID: 0}
   isPaused: 0
-  hasKey: 0
-  keyPreFab: {fileID: 8781173508894012262, guid: 8deac020093c0ca4f8328466aa46ee56, type: 3}
-  keySpawnPoint: {fileID: 0}

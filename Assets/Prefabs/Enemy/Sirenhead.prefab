@@ -135,7 +135,7 @@ SphereCollider:
     m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -199,10 +199,10 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 16896
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -358,9 +358,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ddc0ffe8ea6a9fb4da99043a5059182a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4119595820208887766}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: ddc0ffe8ea6a9fb4da99043a5059182a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7843098132290748030}
   m_SourcePrefab: {fileID: 100100000, guid: ddc0ffe8ea6a9fb4da99043a5059182a, type: 3}
 --- !u!4 &354386579906368729 stripped
 Transform:
@@ -384,16 +381,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBehavior: {fileID: 11400000, guid: ccf633bad6813a5488ed4b299a50d6ed, type: 2}
+  defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
   moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
   actionBehavior: {fileID: 11400000, guid: c2a7f1a47ac512e439a71237c3d59e0d, type: 2}
   animator: {fileID: 4119595820208887766}
   agent: {fileID: 4330516625042123016}
-  soundObject: {fileID: 0}
-  defaultPoints:
-  - {fileID: 0}
+  soundObject: {fileID: 8324907387892166886, guid: 92f81ce28dfae0f449a965758e18911f, type: 3}
+  defaultPoints: []
   targetPoints: []
+  origin: {x: 0, y: 0, z: 0}
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  bullet: {fileID: 0}
+  attackPos: {fileID: 0}
   currentBehavior: 0
   seenPlayer: 0
   memoryTimer: 0
@@ -415,9 +417,15 @@ MonoBehaviour:
   memoryDuration: 3
   searchTime: 5
   turnSpeed: 5
-  detection: 50
+  detection: 25
   speed: 3.5
   maxHP: 5
+  patrolIndex: 0
+  patrolDir: 1
+  patrolPoints: 3
+  pathMode: 0
+  patrolWait: 1
+  damage: 2
 --- !u!195 &4330516625042123016
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -485,30 +493,3 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &7843098132290748030
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1126137517767937635}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0

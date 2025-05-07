@@ -3,25 +3,28 @@ using System.Collections;
 
 public class FanSpin : MonoBehaviour
 {
-    [SerializeField] bool isOn;
-    [SerializeField] GameObject blades;
-    [SerializeField] float fanSpeed = 10f;
+    [SerializeField] bool isOn;                  // Current power state
+    [SerializeField] GameObject blades;          // Fan blade object to rotate
+    [SerializeField] float fanSpeed = 10f;       // Rotation speed of blades
 
     Coroutine spinRoutine;
+
     private void Start()
     {
-        // Start State
+        // Initialize based on isOn state
         TurnFan();
     }
+
     public void ToggleFan()
     {
-        // Toggle Fan and Call Turn Update
+        // Toggle power state and update behavior
         isOn = !isOn;
         TurnFan();
     }
+
     private void TurnFan()
     {
-        // Start or Stop Coroutine
+        // Start or stop rotation coroutine based on isOn
         if (isOn)
         {
             spinRoutine = StartCoroutine(SpinFan());
@@ -31,9 +34,10 @@ public class FanSpin : MonoBehaviour
             if (spinRoutine != null) StopCoroutine(spinRoutine);
         }
     }
+
     IEnumerator SpinFan()
     {
-        // Spins fan
+        // Continuously rotate blades while fan is on
         while (isOn)
         {
             blades.transform.Rotate(Vector3.up, fanSpeed * Time.deltaTime, Space.Self);

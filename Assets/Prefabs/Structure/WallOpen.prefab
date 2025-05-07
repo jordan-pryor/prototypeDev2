@@ -71,8 +71,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d5756d96894f4448a87974f6a0797b0, type: 2}
-  - {fileID: 2100000, guid: 809b1f498ea18eb42a99efc0c12c5469, type: 2}
+  - {fileID: 2100000, guid: bee5ab1847a41ac4ea4b200633aad0d1, type: 2}
+  - {fileID: 2100000, guid: 4e74521af449d8a4ba431c778496c46d, type: 2}
   - {fileID: 2100000, guid: 1114c4aa4d7dc61448fc5d71baf0957d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -393,7 +393,12 @@ MonoBehaviour:
   doorMin: {fileID: 7201922750383082733}
   doorMax: {fileID: 5944277812051384569}
   openSpeed: 1
+  doors: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
   isLocked: 0
+  isWin: 0
+  requiredKeyName: Key
+  isTransition: 0
+  sceneIndex: -1
 --- !u!1 &7201922750383082733
 GameObject:
   m_ObjectHideFlags: 0

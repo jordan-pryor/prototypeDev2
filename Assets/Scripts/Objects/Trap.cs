@@ -3,13 +3,7 @@ using System.Collections;
 
 public class Trap : MonoBehaviour
 {
-    // TODO: In start ResetTrap is always called. A bool for start state might be better.
-    // TODO: Need a check to see if type is Manual before interacted with.
-    // TODO: Input check needs to be replaced with the interact interface.
-    // TODO: Calling the trap prompt should be moved to a coroutine in GameManager like the lock prompt.
-                // We can make a modular ShowPrompt function that takes in the prompt type and float time
-    // TODO: A lot of logic here can be consolidated into one place, for cleaner more organized code.
-    // Ask me for help if you need it.
+    
 
     // Trap behavior types
     private enum trapType { noreset, auto, manual }
@@ -31,9 +25,8 @@ public class Trap : MonoBehaviour
 
     private void Start()
     {
-        resetWait = new WaitForSeconds(trapResetSeconds);
+        //resetWait = new WaitForSeconds(trapResetSeconds);
         OnStateChange();                         // Update trap visuals
-        StartCoroutine(resetTrap());             // Begin reset cycle
     }
 
     void Update()
@@ -54,18 +47,13 @@ public class Trap : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) return;
-        inTrigger = true;
+        //inTrigger = true;
 
-        // If trap is active and player is trapable
+        // If trap is active and enemy is trapable
         ITrap itrap = other.GetComponent<ITrap>();
         if (itrap != null && curState == trapState.active)
         {
             StartCoroutine(itrap.trap(speedMult, trapDurationSeconds));
-        }
-
-        // Handle trap deactivation and optional auto-reset
-        if (type != trapType.noreset)
-        {
             curState = trapState.inactive;
             OnStateChange();
 
@@ -74,6 +62,18 @@ public class Trap : MonoBehaviour
                 StartCoroutine(resetTrap());
             }
         }
+
+        // Handle trap deactivation and optional auto-reset. Leave incase want a pickup after setting it. 
+        //if (type != trapType.noreset)
+        //{
+        //curState = trapState.inactive;
+        //OnStateChange();
+
+        //if (type == trapType.auto)
+        //{
+        //StartCoroutine(resetTrap());
+        //}
+        //}
     }
 
     private void OnTriggerExit(Collider other)

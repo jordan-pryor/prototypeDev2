@@ -165,80 +165,31 @@ public class Inventory : MonoBehaviour
     {
         return slotData[equipIndex] is WeaponData;
     }
-}
 
-// ALL THIS NEEDS TO BE MOVED TO A MONOBEHAVIOR SCRIPT USING THE USE INTERFACE
-
-//PRIMARY BEHAVIOR is click SECONDARY is R
-
-
-
-/* USE ITEM
-void useItem(BaseData data) {
-    if (data is HealData)
+    //Set so can use items from inventory.
+    void UseEquippedItem()
     {
-        // cast item as heal
-        HealData heal = (HealData)data;
-        useHealItem(heal.instantAmt, heal.hotAmt, heal.sec);
-    }
-    else if (data is TrapData)
-    {
-        // cast item as trap
-        TrapData trap = (TrapData)data;
-        if(controller.isGrounded) placeTrap(trap);
-    }
-}
-*/
+        if (equipIndex == None || slotData[equipIndex] == null) return;
 
-/*
- * PLACE TRAP
- * === if we can crouch, then instantiate, then uncrouch easily, that would add to the experience. if not, all good
-*
-void placeTrap(TrapData trap)
-{
-    // place trap at player pos
-    Vector3 trapPos = transform.position;
-    // change y to 0.075 according to model size
-    trapPos.y = 0.075f;
-    // crouch
+        if (slotData[equipIndex] is TrapData trapData)
+        {
+            if (GameManager.instance.playerController.isGrounded)
+            {
+                PlaceTrap(trapData);
+            }
+        }
 
-    // instantiate trap.trap??
-    Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
-    // uncrouch
-
-    // empty hands
-    itemModel.GetComponent<MeshFilter>().sharedMesh = null;
-    itemModel.GetComponent<MeshRenderer>().sharedMaterial = null;
-
-    // remove from inv
-    inv.Remove(inv[invPos]);
-    invPos = inv.Count - 1;
-}
-*/
-
-/* USE HEAL ITEM
-void useHealItem(int instantAmt, int hotAmt = 0, int sec = 1)
-{
-    // instant heal - doesn't count for HOT
-    if (HP + instantAmt < origHP)
-        HP += instantAmt;
-    else
-        HP = origHP; // full
-
-    // hot
-    if (hotAmt > 0 && HP < origHP) // not full health
-    {
-        // reset all hot vars
-        // any previous hot is lost
-        healCount = sec;
-        healAmt = hotAmt;
+        //can add health items or other items to this
     }
 
-    // empty hands
-    itemModel.GetComponent<MeshFilter>().sharedMesh = null;
-    itemModel.GetComponent<MeshRenderer>().sharedMaterial = null;
-    // remove from inv
-    inv.Remove(inv[invPos]);
-    invPos = inv.Count - 1;
+    void PlaceTrap(TrapData trap)
+    {
+        Vector3 trapPos = GameManager.instance.player.transform.position;
+        trapPos.y = 0.075f;
+        Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
+
+        Delete(equipIndex);
+    }
 }
-*/
+
+

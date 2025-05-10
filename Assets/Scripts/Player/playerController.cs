@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [Header("Ground Check")]
     [SerializeField] private float groundCheckRadius = 0.3f;
     [SerializeField] private LayerMask groundMask;
-    private bool isGrounded;
+    public bool isGrounded;
 
     [Header("Crouch")]
     [SerializeField] private float stealthAmount = 100f;

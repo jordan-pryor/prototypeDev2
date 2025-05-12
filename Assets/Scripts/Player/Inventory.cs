@@ -36,6 +36,10 @@ public class Inventory : MonoBehaviour
             {
                 gun.PullStat(weaponData);
             }
+            else if (data is TrapData trapData && slots[i].TryGetComponent(out Trap trap))
+            {
+                trap.Pull
+            }
 
             // Disable physics
             if (slots[i].TryGetComponent(out Rigidbody rb)) rb.isKinematic = true;

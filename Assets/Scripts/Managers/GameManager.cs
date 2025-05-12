@@ -22,11 +22,14 @@ public class GameManager : MonoBehaviour
     public GameObject promptInteract;         // UI: interact prompt
     public GameObject promptReload;           // UI: reload prompt
     public GameObject promptLock;             // UI: locked interaction
+    public GameObject inventoryUI;            // UI: Inventory
+    bool isInventoryOpen = false;             // Sets if inventory open or not
 
     public TMP_Text gameGoalCountText;        // Text to display goal progress
     public GameObject playerDamageScreen;     // Red flash or feedback when damaged
     public GameObject player;                 // Player reference
     public PlayerController playerController; // Reference to player controller script
+    public Inventory playerInventory;         // Reference to Inventory
 
     public bool killEnemies = true;           // Enables win condition check
     public bool isPaused;                     // Pause state flag
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
         // Cache player references
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+        playerInventory = player.GetComponent<Inventory>();
 
         // Lock cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
@@ -80,6 +84,11 @@ public class GameManager : MonoBehaviour
             {
                 stateUnpause();
             }
+        }
+
+        if (Input.GetButtonDown("Inventory"))
+        {
+            ToggleInventory();
         }
     }
 
@@ -153,5 +162,18 @@ public class GameManager : MonoBehaviour
         promptLock.SetActive(true);
         yield return new WaitForSeconds(duration);
         promptLock.SetActive(false);
+    }
+
+    // Turn inventory on and off.
+    public void ToggleInventory()
+    {
+        isInventoryOpen = !isInventoryOpen;
+        inventoryUI.SetActive(isInventoryOpen);
+
+        Time.timeScale = isInventoryOpen ? 0 : 1;
+        isPaused = isInventoryOpen;  // keep if want to pause game, remove if not. 
+
+        Cursor.visible = isInventoryOpen;
+        Cursor.lockState = isInventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
     }
 }

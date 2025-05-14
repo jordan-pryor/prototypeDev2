@@ -1,32 +1,38 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Flashlight : MonoBehaviour, IInteract
+public class Flashlight : MonoBehaviour, IInteract, IUse
 {
-    [SerializeField] GameObject lightRef;
-    [SerializeField] Material baseMat;
-    [SerializeField] Material emissiveMat;
-    [SerializeField] bool isOn = false;
-    [SerializeField] int matIndex = 0;
+    [SerializeField] GameObject lightRef;           // Actual light object
+    [SerializeField] Material baseMat;              // Non-emissive material
+    [SerializeField] Material emissiveMat;          // Emissive/glowing material
+    [SerializeField] bool isOn = false;             // Current on/off state
+    [SerializeField] int matIndex = 0;              // Index of material slot to change
 
-    [SerializeField] Renderer rendererRef;
+    [SerializeField] Renderer rendererRef;          // Renderer used to swap materials
     Material[] materials;
+
     private void Start()
     {
-        // Start state
+        // Get renderer and set initial material/light state
         rendererRef = GetComponent<Renderer>();
-        if (rendererRef != null) materials = rendererRef.sharedMaterials;
+        if (rendererRef != null)
+            materials = rendererRef.sharedMaterials;
+
         ApplyLight();
     }
+
     private void OnValidate()
     {
-        // Update in Editor
+        // Auto-update visuals when values are changed in editor
         ApplyLight();
     }
+
+    // Applies light and material state based on `isOn`
     void ApplyLight()
     {
-        // Toggle Light and switch Materials
         if (lightRef != null) lightRef.SetActive(isOn);
+
         if (rendererRef != null && rendererRef.sharedMaterials.Length > matIndex)
         {
             Material[] mats = rendererRef.sharedMaterials;
@@ -34,21 +40,26 @@ public class Flashlight : MonoBehaviour, IInteract
             rendererRef.sharedMaterials = mats;
         }
     }
+
+    // Public method to toggle flashlight state
     public void ToggleLight()
     {
-        // Toggles light instead of Update
         isOn = !isOn;
         ApplyLight();
     }
+
+    // Called when interacted with (e.g. pickup or activation)
     public void Interact()
     {
-        // Calls Toggle
         ToggleLight();
     }
 
-    // Script for using items
-    //{
-        // Calls Toggle
-     //   ToggleLight();
-    //}
+    // Called via item usage system (e.g. equipped item usage)
+    public void Use(bool primary)
+    {
+        if (primary)
+        {
+            ToggleLight();
+        }
+    }
 }

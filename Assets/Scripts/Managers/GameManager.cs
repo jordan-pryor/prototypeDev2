@@ -4,13 +4,13 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [SerializeField] GMSettings settings;
-
+    [SerializeField] GMSettings settings;     // UI configuration
     Canvas UICanvas;
 
     GameObject menuPause;
@@ -18,32 +18,35 @@ public class GameManager : MonoBehaviour
     GameObject menuWin;
     GameObject menuLose;
 
-    public GameObject promptTrap;
-    public GameObject promptInteract;
-    public GameObject promptReload;
-    public GameObject promptLock;
+    public GameObject promptTrap;             // UI: trap warning
+    public GameObject promptInteract;         // UI: interact prompt
+    public GameObject promptReload;           // UI: reload prompt
+    public GameObject promptLock;             // UI: locked interaction
 
-    [SerializeField] TMP_Text gameGoalCountText;
-    public Image playerHPBar;
-    public GameObject playerDamageScreen;
+    public TMP_Text gameGoalCountText;        // Text to display goal progress
+    public GameObject playerDamageScreen;     // Red flash or feedback when damaged
+    public GameObject player;                 // Player reference
+    public PlayerController playerController; // Reference to player controller script
 
-    public GameObject player;
-    public PlayerController playerController;
+    public bool killEnemies = true;           // Enables win condition check
+    public bool isPaused;                     // Pause state flag
 
-    public bool isPaused;
-    float timeScaleOrig;
-    int gameGoalCount;
-    // possible future use with enemies for tracking.
-    //public List<EnemyAI> allEnemies = new List<EnemyAI>();
+    float timeScaleOrig;                      // Used to restore time scale on unpause
+    int gameGoalCount;                        // Tracks how many goals remain
 
-    // Awake is called before start. 
     void Awake()
     {
         instance = this;
+
+        // Cache player references
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+
+        // Lock cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // Setup UI from settings
         UICanvas = Instantiate(settings.canvasPrefab).GetComponent<Canvas>();
         menuPause = Instantiate(settings.menuPrefabPause, UICanvas.transform);
         menuWin = Instantiate(settings.menuPrefabWin, UICanvas.transform);
@@ -53,20 +56,18 @@ public class GameManager : MonoBehaviour
         promptTrap = Instantiate(settings.menuPrefabTrap, UICanvas.transform);
         promptLock = Instantiate(settings.menuPrefabLock, UICanvas.transform);
 
+        // Disable menus initially
         menuPause.SetActive(false);
         menuWin.SetActive(false);
         menuLose.SetActive(false);
-        promptInteract.SetActive(false);
-        promptReload.SetActive(false);
-        promptTrap.SetActive(false);
-        promptLock.SetActive(false);
+        HidePrompts();
 
-        timeScaleOrig = Time.timeScale;        
+        timeScaleOrig = Time.timeScale;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Handle pause input (usually ESC)
         if (Input.GetButtonDown("Cancel"))
         {
             if (menuActive == null)
@@ -82,18 +83,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void statePause()
+    // Hides all in-game interaction prompts
+    public void HidePrompts()
     {
         promptInteract.SetActive(false);
         promptReload.SetActive(false);
         promptTrap.SetActive(false);
         promptLock.SetActive(false);
+    }
+
+    // Pauses the game and shows cursor
+    public void statePause()
+    {
+        HidePrompts();
         isPaused = !isPaused;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
 
+    // Unpauses the game and hides cursor
     public void stateUnpause()
     {
         isPaused = !isPaused;
@@ -104,46 +113,45 @@ public class GameManager : MonoBehaviour
         menuActive = null;
     }
 
+    // Updates the game goal counter and checks win condition
     public void updateGameGoal(int amount)
     {
         gameGoalCount += amount;
-        gameGoalCountText.text = gameGoalCount.ToString("F0");
+        playerController.goalText.text = gameGoalCount.ToString("F0");
 
-        if (gameGoalCount <= 0)
+        if (gameGoalCount <= 0 && killEnemies)
         {
-            //You Won!
-            statePause();
-            menuActive = menuWin;
-            menuActive.SetActive(true);
+            youWin();
         }
     }
 
+    // Called when win condition is met
+    public void youWin()
+    {
+        statePause();
+        menuActive = menuWin;
+        menuActive.SetActive(true);
+    }
+
+    // Called when player loses the game
     public void youLose()
     {
         statePause();
         menuActive = menuLose;
         menuActive.SetActive(true);
     }
+
+    // Shows a short lock interaction prompt
     public void LockPrompt()
     {
         StartCoroutine(LockPromptRoutine(1.0f));
     }
 
+    // Coroutine for timed display of lock message
     private IEnumerator LockPromptRoutine(float duration)
     {
         promptLock.SetActive(true);
         yield return new WaitForSeconds(duration);
         promptLock.SetActive(false);
     }
-
-    //public void RegisterEnemy(EnemyAI enemy)
-    //{
-    //     allEnemies.Add(enemy);
-    //}
-
-    //public void UnregisterEnemy(EnemyAI enemy)
-    //{
-    //    allEnemies.Remove(enemy);
-    //}
-
 }

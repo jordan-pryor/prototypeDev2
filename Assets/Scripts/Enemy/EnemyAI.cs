@@ -2,11 +2,13 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour, IDamage
+public class EnemyAI : MonoBehaviour //, IDamage
 {
+    // OLD ENEMY
+    /*
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] Transform attackPos;
     [SerializeField] GameObject rangedProjectile;
@@ -76,7 +78,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    void IDamage.TakeDamage(int amount)
+    void IDamage.TakeDamage(float amount)
     {
         HP -= amount;
         StartCoroutine(flashRed());
@@ -87,4 +89,5 @@ public class EnemyAI : MonoBehaviour, IDamage
             GameManager.instance.updateGameGoal(-1);            
         }
     }
+    */
 }

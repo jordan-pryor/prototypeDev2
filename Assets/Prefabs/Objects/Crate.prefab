@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1362323619471622636}
   - component: {fileID: 5048786469793627524}
   - component: {fileID: -7014121143395751936}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 6976
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

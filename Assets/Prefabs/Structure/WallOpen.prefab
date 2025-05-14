@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 292580747682861865}
   serializedVersion: 2
   m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 0, y: 0, z: 6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -393,7 +393,12 @@ MonoBehaviour:
   doorMin: {fileID: 7201922750383082733}
   doorMax: {fileID: 5944277812051384569}
   openSpeed: 1
+  doors: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
   isLocked: 0
+  isWin: 0
+  requiredKeyName: Key
+  isTransition: 0
+  sceneIndex: -1
 --- !u!1 &7201922750383082733
 GameObject:
   m_ObjectHideFlags: 0

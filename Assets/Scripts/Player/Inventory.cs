@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
             }
             else if (data is TrapData trapData && slots[i].TryGetComponent(out Trap trap))
             {
-                trap.Pull
+                trap.PullStat(trapData);
             }
 
             // Disable physics
@@ -110,6 +110,12 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+
+        if(equipIndex != None && slotData[equipIndex] is TrapData td && Input.GetButtonDown("Fire1"))
+        {
+            PlaceTrap(td);
+            return;
+        }
     }
 
     // Equips the item at the given index
@@ -168,29 +174,18 @@ public class Inventory : MonoBehaviour
     public bool CheckCam(int index)
     {
         return slotData[equipIndex] is WeaponData;
-    }
-
-    //Set so can use items from inventory.
-    void UseEquippedItem()
-    {
-        if (equipIndex == None || slotData[equipIndex] == null) return;
-
-        if (slotData[equipIndex] is TrapData trapData)
-        {
-            if (GameManager.instance.playerController.isGrounded)
-            {
-                PlaceTrap(trapData);
-            }
-        }
-
-        //can add health items or other items to this
-    }
+    }    
 
     void PlaceTrap(TrapData trap)
     {
         Vector3 trapPos = GameManager.instance.player.transform.position;
         trapPos.y = 0.075f;
-        Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
+        GameObject trapObj = Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
+
+        if(trapObj.TryGetComponent<Trap>(out var trapcomp))
+        {
+            trapcomp.PullStat(trap);
+        }
 
         Delete(equipIndex);
     }

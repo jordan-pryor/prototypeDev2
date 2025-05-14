@@ -1,114 +1,53 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
-    
+    float slowMulti;
+    float duration;
+    bool isArmed = false;
 
-    // Trap behavior types
-    private enum trapType { noreset, auto, manual }
-
-    // Trap state stages
-    public enum trapState { inactive, reset, active }
-
-    [Header("Trap Options")]
-    [SerializeField] Renderer model;             // Visual indicator
-    [SerializeField] trapType type;              // Reset behavior type
-    [SerializeField] float speedMult;            // Movement slowdown multiplier
-    [SerializeField] int trapDurationSeconds = 5;// Time player is trapped
-    [SerializeField] int trapResetSeconds = 2;   // Time before trap reactivates
-
-    public trapState curState = trapState.inactive; // Initial state
-
-    private bool inTrigger;                      // Tracks if player is inside trigger
-    WaitForSeconds resetWait;                    // Cached wait for reset duration
-
-    private void Start()
+    public void PullStat(TrapData data)
     {
-        //resetWait = new WaitForSeconds(trapResetSeconds);
-        OnStateChange();                         // Update trap visuals
+        slowMulti = data.slowMultiplier;
+        duration = data.trapDuration;
     }
 
-    void Update()
+    private void Awake()
     {
-        // If player is inside trigger and trap is inactive
-        if (inTrigger && curState == trapState.inactive)
-        {
-            GameManager.instance.promptInteract.SetActive(true);
+        //makes sure collider is set
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
+    }
 
-            // Player manually resets trap
-            if (Input.GetButtonDown("Interact"))
-            {
-                StartCoroutine(resetTrap());
-            }
-        }
+    private void OnEnable()
+    {
+        isArmed = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger) return;
-        //inTrigger = true;
+        if (!isArmed) return;
 
-        // If trap is active and enemy is trapable
-        ITrap itrap = other.GetComponent<ITrap>();
-        if (itrap != null && curState == trapState.active)
+        if(other.CompareTag("Enemy"))
         {
-            StartCoroutine(itrap.trap(speedMult, trapDurationSeconds));
-            curState = trapState.inactive;
-            OnStateChange();
+            isArmed = false;
 
-            if (type == trapType.auto)
+            if(other.TryGetComponent<NavMeshAgent>(out var agent))
             {
-                StartCoroutine(resetTrap());
+                StartCoroutine(HandleAgentSlow(agent));
             }
         }
-
-        // Handle trap deactivation and optional auto-reset. Leave incase want a pickup after setting it. 
-        //if (type != trapType.noreset)
-        //{
-        //curState = trapState.inactive;
-        //OnStateChange();
-
-        //if (type == trapType.auto)
-        //{
-        //StartCoroutine(resetTrap());
-        //}
-        //}
     }
 
-    private void OnTriggerExit(Collider other)
+    IEnumerator HandleAgentSlow(NavMeshAgent agent)
     {
-        inTrigger = false;
-        GameManager.instance.promptInteract.SetActive(false);
-    }
-
-    // Handles resetting the trap over time
-    IEnumerator resetTrap()
-    {
-        curState = trapState.reset;
-        OnStateChange();
-        yield return resetWait;
-        curState = trapState.active;
-        OnStateChange();
-    }
-
-    // Updates trap model color based on current state
-    public void OnStateChange()
-    {
-        if (model != null)
-        {
-            switch (curState)
-            {
-                case trapState.active:
-                    model.material.color = Color.red;
-                    break;
-                case trapState.inactive:
-                    model.material.color = Color.black;
-                    break;
-                case trapState.reset:
-                    model.material.color = Color.gray;
-                    break;
-            }
-        }
+        float orginalSpeed = agent.speed;
+        agent.speed = orginalSpeed * slowMulti;
+        yield return new WaitForSeconds(duration);
+        agent.speed = orginalSpeed;
+        Destroy(gameObject, 0.1f);
     }
 }

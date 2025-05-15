@@ -10,7 +10,7 @@ public class TurretAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
 
     [Header("-----Stats-----")]
-    [Range(1,3)][SerializeField] int HP;
+    [Range(1,3)][SerializeField] float HP;
     [Range(1,10)][SerializeField] int faceTargetSpeed;
     [Range(45,180)][SerializeField] int FOVangle;
     [Range(2,10)][SerializeField] int shootRate;
@@ -84,7 +84,7 @@ public class TurretAI : MonoBehaviour, IDamage
         }
     }
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         HP -= amount;
         StartCoroutine(flashRed());

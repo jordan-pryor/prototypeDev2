@@ -1,114 +1,53 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
-    // TODO: In start ResetTrap is always called. A bool for start state might be better.
-    // TODO: Need a check to see if type is Manual before interacted with.
-    // TODO: Input check needs to be replaced with the interact interface.
-    // TODO: Calling the trap prompt should be moved to a coroutine in GameManager like the lock prompt.
-                // We can make a modular ShowPrompt function that takes in the prompt type and float time
-    // TODO: A lot of logic here can be consolidated into one place, for cleaner more organized code.
-    // Ask me for help if you need it.
+    float slowMulti;
+    float duration;
+    bool isArmed = false;
 
-    // Trap behavior types
-    private enum trapType { noreset, auto, manual }
-
-    // Trap state stages
-    public enum trapState { inactive, reset, active }
-
-    [Header("Trap Options")]
-    [SerializeField] Renderer model;             // Visual indicator
-    [SerializeField] trapType type;              // Reset behavior type
-    [SerializeField] float speedMult;            // Movement slowdown multiplier
-    [SerializeField] int trapDurationSeconds = 5;// Time player is trapped
-    [SerializeField] int trapResetSeconds = 2;   // Time before trap reactivates
-
-    public trapState curState = trapState.inactive; // Initial state
-
-    private bool inTrigger;                      // Tracks if player is inside trigger
-    WaitForSeconds resetWait;                    // Cached wait for reset duration
-
-    private void Start()
+    public void PullStat(TrapData data)
     {
-        resetWait = new WaitForSeconds(trapResetSeconds);
-        OnStateChange();                         // Update trap visuals
-        StartCoroutine(resetTrap());             // Begin reset cycle
+        slowMulti = data.slowMultiplier;
+        duration = data.trapDuration;
     }
 
-    void Update()
+    private void Awake()
     {
-        // If player is inside trigger and trap is inactive
-        if (inTrigger && curState == trapState.inactive)
-        {
-            GameManager.instance.promptInteract.SetActive(true);
+        //makes sure collider is set
+        var col = GetComponent<Collider>();
+        col.isTrigger = true;
+    }
 
-            // Player manually resets trap
-            if (Input.GetButtonDown("Interact"))
-            {
-                StartCoroutine(resetTrap());
-            }
-        }
+    private void OnEnable()
+    {
+        isArmed = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger) return;
-        inTrigger = true;
+        if (!isArmed) return;
 
-        // If trap is active and player is trapable
-        ITrap itrap = other.GetComponent<ITrap>();
-        if (itrap != null && curState == trapState.active)
+        if(other.CompareTag("Enemy"))
         {
-            StartCoroutine(itrap.trap(speedMult, trapDurationSeconds));
-        }
+            isArmed = false;
 
-        // Handle trap deactivation and optional auto-reset
-        if (type != trapType.noreset)
-        {
-            curState = trapState.inactive;
-            OnStateChange();
-
-            if (type == trapType.auto)
+            if(other.TryGetComponent<NavMeshAgent>(out var agent))
             {
-                StartCoroutine(resetTrap());
+                StartCoroutine(HandleAgentSlow(agent));
             }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    IEnumerator HandleAgentSlow(NavMeshAgent agent)
     {
-        inTrigger = false;
-        GameManager.instance.promptInteract.SetActive(false);
-    }
-
-    // Handles resetting the trap over time
-    IEnumerator resetTrap()
-    {
-        curState = trapState.reset;
-        OnStateChange();
-        yield return resetWait;
-        curState = trapState.active;
-        OnStateChange();
-    }
-
-    // Updates trap model color based on current state
-    public void OnStateChange()
-    {
-        if (model != null)
-        {
-            switch (curState)
-            {
-                case trapState.active:
-                    model.material.color = Color.red;
-                    break;
-                case trapState.inactive:
-                    model.material.color = Color.black;
-                    break;
-                case trapState.reset:
-                    model.material.color = Color.gray;
-                    break;
-            }
-        }
+        float orginalSpeed = agent.speed;
+        agent.speed = orginalSpeed * slowMulti;
+        yield return new WaitForSeconds(duration);
+        agent.speed = orginalSpeed;
+        Destroy(gameObject, 0.1f);
     }
 }

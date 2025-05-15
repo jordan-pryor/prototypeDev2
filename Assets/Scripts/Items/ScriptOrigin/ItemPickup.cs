@@ -20,4 +20,5 @@ public class ItemPickup : MonoBehaviour, IInteract
         if (inv) inv.TryAdd(data);  // Add item to player's inventory
         Destroy(gameObject);        // Remove pickup from the world
     }
+
 }

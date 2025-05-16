@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 8627238401888168610}
   - component: {fileID: 7967230256619704018}
   m_Layer: 0
-  m_Name: Glue Trap
+  m_Name: Shock Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,12 +135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 0}
-  type: 0
-  speedMult: 0.5
-  trapDurationSeconds: 5
-  trapResetSeconds: 2
-  curState: 0
 --- !u!33 &2405219192683027559
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -213,7 +207,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.25, y: 5, z: 1.25}
+  m_Size: {x: 2, y: 5, z: 2}
   m_Center: {x: 0.2, y: 1, z: -0.1}
 --- !u!1 &5421072873313912049
 GameObject:

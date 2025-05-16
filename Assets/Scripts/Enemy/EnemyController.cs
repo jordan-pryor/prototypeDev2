@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -58,18 +59,38 @@ public class EnemyController : MonoBehaviour, IDamage
     public float patrolWait = 1f;
     public float damage = 2;
 
+    //Stun Settings
+    bool isStunned;
+    Coroutine stunCourtine;
+
+
     private void Start()
     {
         agent.speed = speed;               // Set movement speed
         origin = transform.position;       // Save original spawn position
+        if (agent != null) agent.speed = speed;  //Set stun check.
     }
 
     void Update()
     {
+        if(isStunned)
+        {
+            if (agent != null) agent.isStopped = true;
+            return;
+        }
+
         if (seenPlayer) FacePlayer();      // Rotate toward player if seen
         memoryTimer -= seenPlayer ? 0f : Time.deltaTime;  // Countdown memory if player not seen
         currentScript = GetCurrentBehavior();              // Get behavior script
         currentScript.Execute(this);                       // Run behavior
+
+        if(agent != null)
+        {
+            agent.isStopped = false;
+            agent.speed = speed;
+        }
+
+        
     }
 
     // Called by ray-based enemy vision
@@ -201,6 +222,30 @@ public class EnemyController : MonoBehaviour, IDamage
         if (Vector3.Distance(transform.position, playerPos.position) < actionRange)
         {
             if (playerPos.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(damage);
+        }
+    }
+
+    public void Stun(float duration)
+    {
+        if(stunCourtine != null)
+        {
+            StopCoroutine(stunCourtine);
+        }
+
+        stunCourtine = StartCoroutine(StunRoutine(duration));
+    }
+
+    IEnumerator StunRoutine(float duration)
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(duration);
+        isStunned = false;
+        stunCourtine = null;
+
+        if(agent != null)
+        {
+            agent.isStopped = false;
+            agent.speed = speed;
         }
     }
 }

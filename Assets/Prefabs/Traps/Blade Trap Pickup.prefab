@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2251707361858739417}
   - component: {fileID: 3007218700033890613}
   m_Layer: 3
-  m_Name: Bear Trap Pickup
+  m_Name: Blade Trap Pickup
   m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c8b5257df702844380401c6cdf247ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f39eaf69722b6924c908174ae3cf47f4, type: 2}
+  data: {fileID: 11400000, guid: fbd2eacd9ba447b4d828a8460ead7f5c, type: 2}
 --- !u!33 &8088671571335212157
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7971159945788179590}
   - component: {fileID: 6348770556964274538}
   m_Layer: 3
-  m_Name: Bear Trap
+  m_Name: Blade Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

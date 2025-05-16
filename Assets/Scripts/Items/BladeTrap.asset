@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 020271e3b8b072142803b9ff8d1248d4, type: 3}
-  m_Name: SpikeTrap
+  m_Name: BladeTrap
   m_EditorClassIdentifier: 
-  itemName: Spike Trap
-  prefab: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
-  emptyPickupPrefab: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
+  itemName: Blade Trap
+  prefab: {fileID: 7319792554659015290, guid: 0a49a685d10ce534d968affe90ee15b6, type: 3}
+  emptyPickupPrefab: {fileID: 7319792554659015290, guid: 0a49a685d10ce534d968affe90ee15b6, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}
-  trapToSet: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
-  damageAmount: 20
+  trapToSet: {fileID: 1456268917159883301, guid: 18afbdc7584ab7047a905f834746fcad, type: 3}
+  damageAmount: 15
   stunDuration: 0
-  resetDelay: 3
+  resetDelay: 5
   persistent: 0
-  maxUses: 10
+  maxUses: 1

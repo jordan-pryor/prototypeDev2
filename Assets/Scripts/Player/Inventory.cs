@@ -1,6 +1,8 @@
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 
+
+
 public class Inventory : MonoBehaviour
 {
     [SerializeField] int capacity = 5;
@@ -16,7 +18,39 @@ public class Inventory : MonoBehaviour
         slots = new GameObject[capacity];
         slotData = new ItemData[capacity];
     }
-    public bool TryAdd(ItemData data)
+    //Crafting System Update
+    public bool HasMaterials(string itemID, int quantity)
+    {
+        int count = 0;
+        for (int i = 0; i < slotData.Length; i++)
+        {
+            if (slotData[i] != null && slotData[i].itemName == itemID)
+            {
+                count++;
+                if (count >= quantity) return true;
+            }
+        }
+        return false;
+    }
+    // Also Crafting System Update(will Come back and Comment What it do once I get it working)
+    public bool ConsumeMaterials(string itemID, int quantity)
+	{
+		int count = 0;
+		for (int i = 0; i < slotData.Length; i++)
+		{
+			if (slotData[i] != null && slotData[i].itemName == itemID)
+			{
+				Destroy(slots[i]);
+				slots[i] = null;
+				slotData[i] = null;
+				count++;
+				if (count >= quantity) return true;
+			}
+		}
+		return false;
+	}
+
+	public bool TryAdd(ItemData data)
     {
         for (int i = 0; i < capacity; i++)
         {
@@ -80,3 +114,4 @@ public class Inventory : MonoBehaviour
         equipIndex = newIndex;
     }
 }
+

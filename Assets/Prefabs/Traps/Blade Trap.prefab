@@ -47,12 +47,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 7971159945788179590}
-  type: 2
-  speedMult: 0
-  trapDurationSeconds: 5
-  trapResetSeconds: 2
-  curState: 0
 --- !u!33 &135160383043433506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124,7 +118,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
+  m_Radius: 3
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}

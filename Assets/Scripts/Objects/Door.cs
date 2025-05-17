@@ -39,10 +39,7 @@ public class Door : MonoBehaviour, IInteract
     void ApplyRotation()
     {
         openPercent = Mathf.Clamp01(openPercent);
-        door.transform.rotation = Quaternion.Lerp(
-            doorMin.transform.rotation,
-            doorMax.transform.rotation,
-            openPercent
+        door.transform.rotation = Quaternion.Lerp( doorMin.transform.rotation, doorMax.transform.rotation, openPercent
         );
     }
 

@@ -5,14 +5,15 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour
 {
-    float slowMulti;
-    float duration;
+    TrapData tData;
+    int usesLeft;
     bool isArmed = false;
 
     public void PullStat(TrapData data)
     {
-        slowMulti = data.slowMultiplier;
-        duration = data.trapDuration;
+        tData = data;
+        usesLeft = data.maxUses;
+        isArmed = true;
     }
 
     private void Awake()
@@ -22,32 +23,51 @@ public class Trap : MonoBehaviour
         col.isTrigger = true;
     }
 
-    private void OnEnable()
-    {
-        isArmed = true;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isArmed) return;
+        if (!isArmed || usesLeft <= 0) return;
+        if (!other.CompareTag("Enemy")) return;
 
-        if(other.CompareTag("Enemy"))
+        isArmed = false;
+        usesLeft--;
+
+        //Damage
+        if(tData.damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
         {
-            isArmed = false;
+            damage.TakeDamage(tData.damageAmount);
+        }
 
-            if(other.TryGetComponent<NavMeshAgent>(out var agent))
-            {
-                StartCoroutine(HandleAgentSlow(agent));
-            }
+        //Stun
+        if(tData.stunDuration > 0 && other.TryGetComponent<EnemyController>(out var enemyController))
+        {
+            enemyController.Stun(tData.stunDuration);
+        }
+
+        if(tData.persistent && usesLeft > 0)
+        {
+            StartCoroutine(Rearm());
+        }
+        else
+        {
+            StartCoroutine(ResetToPickup());
         }
     }
 
-    IEnumerator HandleAgentSlow(NavMeshAgent agent)
+    IEnumerator Rearm()
     {
-        float orginalSpeed = agent.speed;
-        agent.speed = orginalSpeed * slowMulti;
-        yield return new WaitForSeconds(duration);
-        agent.speed = orginalSpeed;
-        Destroy(gameObject, 0.1f);
+        yield return new WaitForSeconds(tData.resetDelay);
+        isArmed = true;
+    }
+
+    IEnumerator ResetToPickup()
+    {
+        yield return new WaitForSeconds(tData.resetDelay);
+
+        var pick = Instantiate(tData.emptyPickupPrefab, transform.position, Quaternion.identity);
+
+        pick.GetComponent<ItemPickup>().data = tData;
+
+        Destroy(gameObject);
     }
 }

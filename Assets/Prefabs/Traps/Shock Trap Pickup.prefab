@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3623843893756968066}
   - component: {fileID: 5905720978453120340}
   m_Layer: 0
-  m_Name: Glue Trap Pickup
+  m_Name: Shock Trap Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

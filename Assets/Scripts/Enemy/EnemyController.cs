@@ -21,8 +21,8 @@ public class EnemyController : MonoBehaviour, IDamage
     public List<Transform> targetPoints = new();                // Interest points (player, etc.)
     public Vector3 origin;
     public LayerMask wallMask;
-    public GameObject bullet;
-    public Transform attackPos;
+    [SerializeField] private GameObject[] bulletTypes; // 0 = normal, 1 = venom
+	public Transform attackPos;
 
     [Header("State")]
     public Behavior currentBehavior = Behavior.Default;
@@ -184,18 +184,35 @@ public class EnemyController : MonoBehaviour, IDamage
         return obj.transform;
     }
 
-    // Fires a projectile forward from the attack position
-    public void Fire()
-    {
-        GameObject bull = Instantiate(bullet, attackPos.position, attackPos.rotation);
-        if (bull != null && bull.TryGetComponent(out Rigidbody rb))
-        {
-            rb.AddForce(attackPos.forward * 5, ForceMode.Impulse);
-        }
-    }
+	// Fires a projectile forward from the attack position
+	public void Fire()
+	{
+		int index = 0;
 
-    // Deals melee damage if player is in range
-    public void Melee()
+		// Check if player is trapped
+		if (GameManager.instance.playerController.isTrapped)
+		{
+			index = 1; // Use venom bullet
+			Debug.Log($"{name} is using **VENOM** projectile (player is trapped).");
+		}
+		else
+		{
+			Debug.Log($"{name} is using **NORMAL** projectile.");
+		}
+
+		GameObject selectedBullet = bulletTypes.Length > index ? bulletTypes[index] : null;
+
+		if (selectedBullet != null)
+		{
+			GameObject bull = Instantiate(selectedBullet, attackPos.position, attackPos.rotation);
+			if (bull.TryGetComponent(out Rigidbody rb))
+			{
+				rb.AddForce(attackPos.forward * 5, ForceMode.Impulse);
+			}
+		}
+	}
+	// Deals melee damage if player is in range
+	public void Melee()
     {
         Transform playerPos = GameManager.instance.player.transform;
         if (Vector3.Distance(transform.position, playerPos.position) < actionRange)

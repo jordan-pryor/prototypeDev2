@@ -9,7 +9,7 @@ public class TrapData : BaseData
     [Header("Effects")]
     public int damageAmount = 0;
     public float stunDuration = 0f;
-    public float speedDecrease = 0f;
+    public float speedDecrease = 1f;
 
     [Header("Reset/Pickup")]
     public float resetDelay = 5f;   //Time before rearm's

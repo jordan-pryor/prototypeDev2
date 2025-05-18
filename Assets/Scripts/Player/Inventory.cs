@@ -5,6 +5,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] int capacity = 5;                   // Max number of items
     [SerializeField] Transform[] pocketSockets;          // Storage positions for inventory items
     [SerializeField] Transform handSocket;               // Socket for equipped item
+    [SerializeField] private float placementDistance = 2f;
 
     public GameObject[] slots;                           // Instantiated item objects
     BaseData[] slotData;                                 // ScriptableObject data for each slot
@@ -110,12 +111,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-
-        if(equipIndex != None && slotData[equipIndex] is TrapData td && Input.GetButtonDown("Fire1"))
-        {
-            PlaceTrap(td);
-            return;
-        }
     }
 
     // Equips the item at the given index
@@ -175,19 +170,59 @@ public class Inventory : MonoBehaviour
     {
         return slotData[equipIndex] is WeaponData;
     }    
-
+    /*
     void PlaceTrap(TrapData trap)
     {
         Vector3 trapPos = GameManager.instance.player.transform.position;
         trapPos.y = 0.075f;
         GameObject trapObj = Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
-
         if(trapObj.TryGetComponent<Trap>(out var trapcomp))
         {
             trapcomp.PullStat(trap);
         }
-
         Delete(equipIndex);
+    }
+    */
+    public void PlaceTrap(int index)
+    {
+        if (slots[index] == null || slotData[index] == null) return;
+
+        // Instantiate trap prefab
+        GameObject trap = Instantiate(slotData[index].emptyPickupPrefab);
+        trap.GetComponent<ItemPickup>().data = slotData[index];
+        if (slotData[index] is TrapData trapData)
+        {
+            if (trap.TryGetComponent<Trap>(out var trapComp))
+            {
+                trapComp.PullStat(trapData);
+            }
+        }
+        // Calculate placement position (in front of player, on the ground)
+        Vector3 forwardPosition = Camera.main.transform.position + Camera.main.transform.forward * placementDistance;
+        RaycastHit hit;
+
+        // Raycast downward to align with the ground
+        if (Physics.Raycast(forwardPosition + Vector3.up, Vector3.down, out hit, 5f))
+        {
+            trap.transform.position = hit.point;
+        }
+        else
+        {
+            // Fallback to forward position if ground not detected
+            trap.transform.position = forwardPosition;
+        }
+
+        // No rotation (aligned to world space)
+        trap.transform.rotation = Quaternion.identity;
+
+        // Remove rigidbody or make it static since it's a placed trap
+        Rigidbody rb = trap.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+        // Remove from inventory
+        Delete(index);
     }
 }
 

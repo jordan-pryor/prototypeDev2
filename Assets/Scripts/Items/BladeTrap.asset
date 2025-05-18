@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: BladeTrap
   m_EditorClassIdentifier: 
   itemName: Blade Trap
-  prefab: {fileID: 7319792554659015290, guid: 0a49a685d10ce534d968affe90ee15b6, type: 3}
-  emptyPickupPrefab: {fileID: 7319792554659015290, guid: 0a49a685d10ce534d968affe90ee15b6, type: 3}
+  prefab: {fileID: 5411539714991072618, guid: 359317d1d525ed74a8f8b25a5cbcad2d, type: 3}
+  emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}
   trapToSet: {fileID: 1456268917159883301, guid: 18afbdc7584ab7047a905f834746fcad, type: 3}
   damageAmount: 15
   stunDuration: 0
+  speedDecrease: 0
   resetDelay: 5
   persistent: 0
   maxUses: 1

@@ -3,71 +3,48 @@ using System.Collections;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
-public class Trap : MonoBehaviour
+public class Trap : MonoBehaviour, IUse, IInteract
 {
-    TrapData tData;
-    int usesLeft;
-    bool isArmed = false;
+    [SerializeField] int usesLeft;
+    [SerializeField] bool isArmed = false;
+    [SerializeField] float damageAmount = 0f;
+    [SerializeField] float stunDuration = 0f;
+    [SerializeField] float speedDecrease = 0f;
+    public void Interact()
+    {
+        if (isArmed){
 
+        }
+    }
     public void PullStat(TrapData data)
     {
-        tData = data;
         usesLeft = data.maxUses;
+        damageAmount = data.damageAmount;
+        stunDuration = data.stunDuration;
+        speedDecrease = data.speedDecrease;
         isArmed = true;
     }
 
-    private void Awake()
+    public void Use(bool primary)
     {
-        //makes sure collider is set
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
+        GameManager.instance.playerInventory.PlaceTrap(0);
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
         if (!isArmed || usesLeft <= 0) return;
-        if (!other.CompareTag("Enemy")) return;
-
+        if (!(other.CompareTag("Enemy") || other.CompareTag("Player"))) return;
+        //Damage
+        if(damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
+        {
+            damage.TakeDamage(damageAmount);
+        }
+        //Stun/Slow
+        if(stunDuration > 0 && other.TryGetComponent<ITrap>(out var trapped))
+        {
+            StartCoroutine(trapped.trap(speedDecrease, stunDuration));
+        }
         isArmed = false;
         usesLeft--;
-
-        //Damage
-        if(tData.damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
-        {
-            damage.TakeDamage(tData.damageAmount);
-        }
-
-        //Stun
-        if(tData.stunDuration > 0 && other.TryGetComponent<ITrap>(out var enemyController))
-        {
-            StartCoroutine(enemyController.trap(tData.speedDecrease, tData.stunDuration));
-        }
-
-        if(tData.persistent && usesLeft > 0)
-        {
-            StartCoroutine(Rearm());
-        }
-        else
-        {
-            StartCoroutine(ResetToPickup());
-        }
-    }
-
-    IEnumerator Rearm()
-    {
-        yield return new WaitForSeconds(tData.resetDelay);
-        isArmed = true;
-    }
-
-    IEnumerator ResetToPickup()
-    {
-        yield return new WaitForSeconds(tData.resetDelay);
-
-        var pick = Instantiate(tData.emptyPickupPrefab, transform.position, Quaternion.identity);
-
-        pick.GetComponent<ItemPickup>().data = tData;
-
-        Destroy(gameObject);
     }
 }

@@ -256,10 +256,8 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
     {
         if (isStunned) yield break;
         isStunned = true;
-        GameManager.instance.promptTrap.SetActive(true);
         trapDecrease = speedDecrease;
         yield return new WaitForSeconds(duration);
-        GameManager.instance.promptTrap.SetActive(false);
         isStunned = false;
     }
 }

@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         camControl.ToggleCam();
     }
 
-    IEnumerator ITrap.trap(float speedDecrease, int duration)
+    IEnumerator ITrap.trap(float speedDecrease, float duration)
     {
         if (isTrapped) yield break;
         isTrapped = true;

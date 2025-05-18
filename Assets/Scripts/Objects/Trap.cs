@@ -39,9 +39,9 @@ public class Trap : MonoBehaviour
         }
 
         //Stun
-        if(tData.stunDuration > 0 && other.TryGetComponent<EnemyController>(out var enemyController))
+        if(tData.stunDuration > 0 && other.TryGetComponent<ITrap>(out var enemyController))
         {
-            enemyController.Stun(tData.stunDuration);
+            StartCoroutine(enemyController.trap(tData.speedDecrease, tData.stunDuration));
         }
 
         if(tData.persistent && usesLeft > 0)

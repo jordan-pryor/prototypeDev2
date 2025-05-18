@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-public class EnemyController : MonoBehaviour, IDamage
+public class EnemyController : MonoBehaviour, IDamage, ITrap
 {
     // AI behavior states and patrol path types
     public enum Behavior { Default, Move, Search, Action }
@@ -62,6 +63,7 @@ public class EnemyController : MonoBehaviour, IDamage
     //Stun Settings
     bool isStunned;
     Coroutine stunCourtine;
+    float trapDecrease = 0f;
 
 
     private void Start()
@@ -225,27 +227,39 @@ public class EnemyController : MonoBehaviour, IDamage
         }
     }
 
-    public void Stun(float duration)
-    {
-        if(stunCourtine != null)
-        {
-            StopCoroutine(stunCourtine);
-        }
+    //Commented out for time may be needed later. 
+    //public void Stun(float duration)
+    //{
+    //    if(stunCourtine != null)
+    //    {
+    //        StopCoroutine(stunCourtine);
+    //    }
 
-        stunCourtine = StartCoroutine(StunRoutine(duration));
-    }
+    //    stunCourtine = StartCoroutine(StunRoutine(duration));
+    //}
 
-    IEnumerator StunRoutine(float duration)
+    //IEnumerator StunRoutine(float duration)
+    //{
+    //    isStunned = true;
+    //    yield return new WaitForSeconds(duration);
+    //    isStunned = false;
+    //    stunCourtine = null;
+
+    //    if(agent != null)
+    //    {
+    //        agent.isStopped = false;
+    //        agent.speed = speed;
+    //    }
+    //}
+
+    public IEnumerator trap(float speedDecrease, float duration)
     {
+        if (isStunned) yield break;
         isStunned = true;
+        GameManager.instance.promptTrap.SetActive(true);
+        trapDecrease = speedDecrease;
         yield return new WaitForSeconds(duration);
+        GameManager.instance.promptTrap.SetActive(false);
         isStunned = false;
-        stunCourtine = null;
-
-        if(agent != null)
-        {
-            agent.isStopped = false;
-            agent.speed = speed;
-        }
     }
 }

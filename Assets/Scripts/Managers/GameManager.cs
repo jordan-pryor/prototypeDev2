@@ -170,10 +170,14 @@ public class GameManager : MonoBehaviour
         isInventoryOpen = !isInventoryOpen;
         inventoryUI.SetActive(isInventoryOpen);
 
-        Time.timeScale = isInventoryOpen ? 0 : 1;
-        isPaused = isInventoryOpen;  // keep if want to pause game, remove if not. 
-
-        Cursor.visible = isInventoryOpen;
-        Cursor.lockState = isInventoryOpen ? CursorLockMode.None : CursorLockMode.Locked;
+        if(isInventoryOpen)
+        {
+            statePause();
+            menuActive = inventoryUI;
+        }
+        else
+        {
+            stateUnpause();
+        }
     }
 }

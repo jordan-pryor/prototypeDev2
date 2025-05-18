@@ -6,7 +6,11 @@ public class Slash : EnemyBehavior, IEnemy
 {
     public override void Execute(EnemyController controller)
     {
-        //instantiate a trigger in front of the enemy that only lasts for a split second, that does damage on contact, and then is removed
-
+        controller.Melee();
+        Transform playerPos = GameManager.instance.player.transform;
+        if (Vector3.Distance(controller.transform.position, playerPos.position) > controller.actionRange)
+        {
+            controller.SetBehavior(EnemyController.Behavior.Search);
+        }
     }
 }

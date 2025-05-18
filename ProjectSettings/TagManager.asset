@@ -8,6 +8,7 @@ TagManager:
   - Pickup
   - Volume
   - Enemy
+  - Movebox
   layers:
   - Default
   - TransparentFX

@@ -5,6 +5,6 @@ public class Grab : EnemyBehavior, IEnemy
 {
     public override void Execute(EnemyController controller)
     {
-        //not entirely sure what grab is supposed to do but I'll ask later and presumably it's a melee attack
+        //Supposed to be a dead by daylight inspired grab to escape from. not implemented currently
     }
 }

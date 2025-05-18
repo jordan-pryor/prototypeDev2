@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -12,12 +13,24 @@ public class Inventory : MonoBehaviour
 
     const int None = -1;                                 // Constant representing no equipped item
     public int equipIndex = None;                        // Currently equipped slot index
+    struct MaterialData
+    {
+        public string name;
+        public int amount;
+        public MaterialData(string name, int amount)
+        {
+            this.name = name;
+            this.amount = amount;
+        }
+    }
+    [SerializeField] private List<MaterialData> materials;
 
     private void Start()
     {
         slots = new GameObject[capacity];
         slotData = new BaseData[capacity];
         equipIndex = None;
+        materials = new List<MaterialData>();
     }
 
     // Tries to add a new item to the inventory

@@ -5509,7 +5509,9 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
-  bullet: {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
+  bulletTypes:
+  - {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
+  - {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
   attackPos: {fileID: 8470140459672816279}
   currentBehavior: 0
   seenPlayer: 0

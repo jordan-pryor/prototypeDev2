@@ -18,9 +18,39 @@ public class Inventory : MonoBehaviour
         slotData = new BaseData[capacity];
         equipIndex = None;
     }
-
-    // Tries to add a new item to the inventory
-    public bool TryAdd(BaseData data)
+    //Crafting System Update
+    public bool HasMaterials(string itemID, int quantity)
+    {
+	    int count = 0;
+	    for (int i = 0; i < slotData.Length; i++)
+	    {
+		    if (slotData[i] != null && slotData[i].itemName == itemID)
+		    {
+			    count++;
+			    if (count >= quantity) return true;
+		    }
+	    }
+	    return false;
+    }
+    // Also Crafting System Update(will Come back and Comment What it do once I get it working)
+    public bool ConsumeMaterials(string itemID, int quantity)
+    {
+	    int count = 0;
+	    for (int i = 0; i < slotData.Length; i++)
+	    {
+		    if (slotData[i] != null && slotData[i].itemName == itemID)
+		    {
+			    Destroy(slots[i]);
+			    slots[i] = null;
+			    slotData[i] = null;
+			    count++;
+			    if (count >= quantity) return true;
+		    }
+	    }
+	    return false;
+    }
+	// Tries to add a new item to the inventory
+	public bool TryAdd(BaseData data)
     {
         for (int i = 0; i < capacity; i++)
         {

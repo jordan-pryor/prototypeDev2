@@ -12,10 +12,10 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
     public enum PathMode { Cycle, PingPong, Random }
 
     [Header("References")]
-    [SerializeField] private EnemyBehavior defaultBehavior;     // Idle/guard behavior
-    [SerializeField] private EnemyBehavior moveBehavior;        // Chase behavior
-    [SerializeField] private EnemyBehavior searchBehavior;      // Search behavior
-    [SerializeField] private EnemyBehavior actionBehavior;      // Attack behavior
+    [SerializeField] private EnemyBehavior[] defaultBehavior;     // Idle/guard behavior
+    [SerializeField] private EnemyBehavior[] moveBehavior;        // Chase behavior
+    [SerializeField] private EnemyBehavior[] searchBehavior;      // Search behavior
+    [SerializeField] private EnemyBehavior[] actionBehavior;      // Attack behavior
     public Animator animator;
     public NavMeshAgent agent;
     [SerializeField] GameObject soundObject;                    // Used to alert others or make noise
@@ -37,6 +37,7 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
     public float sightRange = 20f;
     public float sightFOV = 90f;
     public LayerMask sightMask;
+    public bool isTracker = false;
 
     [Header("Action Range")]
     public Transform[] actionOrigins;
@@ -61,9 +62,7 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
     public float damage = 2;
 
     //Stun Settings
-    bool isStunned;
-    Coroutine stunCourtine;
-    float trapDecrease = 0f;
+    float trapDecrease = 1f;
 
 
     private void Start()
@@ -75,24 +74,11 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
 
     void Update()
     {
-        if(isStunned)
-        {
-            if (agent != null) agent.isStopped = true;
-            return;
-        }
-
         if (seenPlayer) FacePlayer();      // Rotate toward player if seen
         memoryTimer -= seenPlayer ? 0f : Time.deltaTime;  // Countdown memory if player not seen
         currentScript = GetCurrentBehavior();              // Get behavior script
         currentScript.Execute(this);                       // Run behavior
-
-        if(agent != null)
-        {
-            agent.isStopped = false;
-            agent.speed = speed;
-        }
-
-        
+        if (isTracker) seenPlayer = true;
     }
 
     // Called by ray-based enemy vision
@@ -168,11 +154,17 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
     {
         return currentBehavior switch
         {
-            Behavior.Move => moveBehavior as IEnemy,
-            Behavior.Search => searchBehavior as IEnemy,
-            Behavior.Action => actionBehavior as IEnemy,
-            _ => defaultBehavior as IEnemy
+            Behavior.Move => PickRandom(moveBehavior),
+            Behavior.Search => PickRandom(searchBehavior),
+            Behavior.Action => PickRandom(actionBehavior),
+            _ => PickRandom(defaultBehavior)
         };
+    }
+
+    private IEnemy PickRandom(EnemyBehavior[] list)
+    {
+        return (list == null || list.Length == 0) ? null
+               : list[Random.Range(0, list.Length)] as IEnemy;
     }
 
     // Apply damage and destroy enemy if HP is 0
@@ -243,38 +235,10 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
             if (playerPos.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(damage);
         }
     }
-
-    //Commented out for time may be needed later. 
-    //public void Stun(float duration)
-    //{
-    //    if(stunCourtine != null)
-    //    {
-    //        StopCoroutine(stunCourtine);
-    //    }
-
-    //    stunCourtine = StartCoroutine(StunRoutine(duration));
-    //}
-
-    //IEnumerator StunRoutine(float duration)
-    //{
-    //    isStunned = true;
-    //    yield return new WaitForSeconds(duration);
-    //    isStunned = false;
-    //    stunCourtine = null;
-
-    //    if(agent != null)
-    //    {
-    //        agent.isStopped = false;
-    //        agent.speed = speed;
-    //    }
-    //}
-
     public IEnumerator trap(float speedDecrease, float duration)
     {
-        if (isStunned) yield break;
-        isStunned = true;
         trapDecrease = speedDecrease;
         yield return new WaitForSeconds(duration);
-        isStunned = false;
+        trapDecrease = 1f;
     }
 }

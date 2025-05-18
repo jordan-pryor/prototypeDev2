@@ -15,4 +15,3 @@ MonoBehaviour:
   behaviorArray:
   - {fileID: 11400000, guid: 6d00f38268bcc554ba683e1908b19903, type: 2}
   - {fileID: 11400000, guid: f46925f45589c5049996b9152a2e1218, type: 2}
-  - {fileID: 11400000, guid: c9640e45236c46640850bcfc3e44147b, type: 2}

@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour
 
     const int None = -1;                                 // Constant representing no equipped item
     public int equipIndex = None;                        // Currently equipped slot index
-    struct MaterialData
+    public struct MaterialData
     {
         public string name;
         public int amount;
@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour
             this.amount = amount;
         }
     }
-    [SerializeField] private List<MaterialData> materials;
+    public List<MaterialData> materials;
 
     private void Start()
     {
@@ -35,37 +35,57 @@ public class Inventory : MonoBehaviour
     //Crafting System Update
     public bool HasMaterials(string itemID, int quantity)
     {
-	    int count = 0;
-	    for (int i = 0; i < slotData.Length; i++)
-	    {
-		    if (slotData[i] != null && slotData[i].itemName == itemID)
-		    {
-			    count++;
-			    if (count >= quantity) return true;
-		    }
-	    }
-	    return false;
+        foreach (var material in materials)
+        {
+            if (material.name == itemID && material.amount >= quantity)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     // Also Crafting System Update(will Come back and Comment What it do once I get it working)
     public bool ConsumeMaterials(string itemID, int quantity)
     {
-	    int count = 0;
-	    for (int i = 0; i < slotData.Length; i++)
-	    {
-		    if (slotData[i] != null && slotData[i].itemName == itemID)
-		    {
-			    Destroy(slots[i]);
-			    slots[i] = null;
-			    slotData[i] = null;
-			    count++;
-			    if (count >= quantity) return true;
-		    }
-	    }
-	    return false;
+        for (int i = 0; i < materials.Count; i++)
+        {
+            if (materials[i].name == itemID)
+            {
+                if (materials[i].amount >= quantity)
+                {
+                    materials[i] = new MaterialData(materials[i].name, materials[i].amount - quantity);
+                    return true;
+                }
+                else
+                {
+                    return false; // Not enough material to consume
+                }
+            }
+        }
+        return false; // Material not found
     }
-	// Tries to add a new item to the inventory
-	public bool TryAdd(BaseData data)
+    public void AddMaterial(string itemID, int quantity)
     {
+        for (int i = 0; i < materials.Count; i++)
+        {
+            if (materials[i].name == itemID)
+            {
+                // Add to existing stack
+                materials[i] = new MaterialData(itemID, materials[i].amount + quantity);
+                return;
+            }
+        }
+        // If material not found, add as new entry
+        materials.Add(new MaterialData(itemID, quantity));
+    }
+    // Tries to add a new item to the inventory
+    public bool TryAdd(BaseData data)
+    {
+        if( data is MatData)
+        {
+            AddMaterial(data.name, 1);
+            return true;
+        }
         for (int i = 0; i < capacity; i++)
         {
             if (slots[i] != null) continue;

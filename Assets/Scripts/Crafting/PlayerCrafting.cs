@@ -1,39 +1,41 @@
+using System.Collections.Generic;
 using UnityEngine;
+using static Inventory;
 
 public class PlayerCrafting : MonoBehaviour
 {
-	[SerializeField] Inventory inventory;
-	[SerializeField] CraftingRecipe[] testRecipes; // Assign in Inspector
+    [SerializeField] private CraftingRecipe[] testRecipes;       // Assign recipes in inspector
 
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.C)) // Example: Craft with key press
-		{
-			if (testRecipes.Length > 0)
-			{
-				TryCraft(testRecipes[0]); // Try to craft the first recipe
-			}
-		}
-	}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            if (testRecipes.Length > 0)
+            {
+                TryCraft(testRecipes[0]);
+            }
+        }
+    }
 
-	public bool TryCraft(CraftingRecipe recipe)
-	{
-		foreach (var ingredient in recipe.ingredients)
-		{
-			if (!inventory.HasMaterials(ingredient.itemID, ingredient.quantity))
-			{
-				Debug.Log("Missing ingredient: " + ingredient.itemID);
-				return false;
-			}
-		}
+    public bool TryCraft(CraftingRecipe recipe)
+    {
+        // Check if all ingredients are available
+        foreach (var ingredient in recipe.ingredients)
+        {
+            if (!GameManager.instance.playerInventory.HasMaterials(ingredient.itemID, ingredient.quantity))
+            {
+                return false;
+            }
+        }
 
-		foreach (var ingredient in recipe.ingredients)
-		{
-			inventory.ConsumeMaterials(ingredient.itemID, ingredient.quantity);
-		}
+        // Consume ingredients
+        foreach (var ingredient in recipe.ingredients)
+        {
+            GameManager.instance.playerInventory.ConsumeMaterials(ingredient.itemID, ingredient.quantity);
+        }
 
-		inventory.TryAdd(recipe.result);
-		Debug.Log("Crafted: " + recipe.result.name);
-		return true;
-	}
+        // Add the result
+        GameManager.instance.playerInventory.TryAdd(recipe.result);
+        return true;
+    }
 }

@@ -208,13 +208,7 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
 		if (GameManager.instance.playerController.isTrapped)
 		{
 			index = 1; // Use venom bullet
-			Debug.Log($"{name} is using **VENOM** projectile (player is trapped).");
 		}
-		else
-		{
-			Debug.Log($"{name} is using **NORMAL** projectile.");
-		}
-
 		GameObject selectedBullet = bulletTypes.Length > index ? bulletTypes[index] : null;
 
 		if (selectedBullet != null)

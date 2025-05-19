@@ -48240,7 +48240,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 67098729507740330, guid: acfd739125928bf40af8330d7c41c176, type: 3}
       propertyPath: isLocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 67098729507740330, guid: acfd739125928bf40af8330d7c41c176, type: 3}
       propertyPath: sceneIndex

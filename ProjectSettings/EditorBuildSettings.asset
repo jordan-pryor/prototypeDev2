@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NewMac.unity
+    path: Assets/Scenes/Old_and_Testing/NewMac.unity
     guid: b904ba2873c5dcf4c9d3d99ea9a70d55
   - enabled: 1
-    path: Assets/Scenes/Jason.unity
+    path: Assets/Scenes/Old_and_Testing/Jason.unity
     guid: 94b4363fa9395fb408c88f350549b5d4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -5458,7 +5458,7 @@ GameObject:
   - component: {fileID: 8357559152034399999}
   m_Layer: 6
   m_Name: Spiderman
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5495,10 +5495,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
-  moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
-  searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
-  actionBehavior: {fileID: 11400000, guid: 19ad5a8d9173cf444abca8ace36fc24b, type: 2}
+  defaultBehavior:
+  - {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
+  - {fileID: 11400000, guid: ccf633bad6813a5488ed4b299a50d6ed, type: 2}
+  moveBehavior:
+  - {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
+  searchBehavior:
+  - {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
+  actionBehavior:
+  - {fileID: 11400000, guid: 19ad5a8d9173cf444abca8ace36fc24b, type: 2}
   animator: {fileID: 6427960794451628541}
   agent: {fileID: 6857201414751807619}
   soundObject: {fileID: 4209597050636819218, guid: 223ae9ae8c2f9a5409ae11e6cf6e886e, type: 3}
@@ -5508,7 +5513,9 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
-  bullet: {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
+  bulletTypes:
+  - {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
+  - {fileID: 6403615474198346355, guid: cba56707b8729c348bc15903cd9a2762, type: 3}
   attackPos: {fileID: 8470140459672816279}
   currentBehavior: 0
   seenPlayer: 0
@@ -5520,6 +5527,7 @@ MonoBehaviour:
   sightMask:
     serializedVersion: 2
     m_Bits: 3017
+  isTracker: 0
   actionOrigins:
   - {fileID: 8219387945460466876}
   actionRange: 15

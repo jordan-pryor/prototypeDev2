@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: SpikeTrap
   m_EditorClassIdentifier: 
   itemName: Spike Trap
-  prefab: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
-  emptyPickupPrefab: {fileID: 1140592108894035518, guid: 3d47e763d70ba794dbf76364ed483b24, type: 3}
+  prefab: {fileID: 5411539714991072618, guid: 85ab13855ba381340ab875eae4753f8a, type: 3}
+  emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}
   trapToSet: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
-  slowMultiplier: 0.5
-  trapDuration: 5
+  damageAmount: 20
+  stunDuration: 3
+  speedDecrease: 0.5
+  resetDelay: 3
+  persistent: 0
+  maxUses: 10

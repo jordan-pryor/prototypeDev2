@@ -14,4 +14,5 @@ public class GMSettings : ScriptableObject
     public GameObject menuPrefabInteract;    // Interact prompt
     public GameObject menuPrefabTrap;        // Trap UI element
     public GameObject menuPrefabLock;        // Lock UI
+    public GameObject menuPrefabInvUI;       // Inventory UI
 }

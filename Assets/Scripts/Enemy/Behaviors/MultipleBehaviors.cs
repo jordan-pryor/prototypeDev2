@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MultipleBehavios", menuName = "Enemy/Behaviors/MultipleBehavios")]
-public class MultipleBehavios : EnemyBehavior, IEnemy
+[CreateAssetMenu(fileName = "MultipleBehaviors", menuName = "Enemy/Behaviors/MultipleBehaviors")]
+public class MultipleBehaviors : EnemyBehavior, IEnemy
 {
 
     [SerializeField] private EnemyBehavior[] behaviorArray;

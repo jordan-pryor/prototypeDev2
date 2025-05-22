@@ -3,51 +3,48 @@ using System.Collections;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
-public class Trap : MonoBehaviour
+public class Trap : MonoBehaviour, IUse, IInteract
 {
-    float slowMulti;
-    float duration;
-    bool isArmed = false;
+    [SerializeField] int usesLeft;
+    [SerializeField] bool isArmed = false;
+    [SerializeField] float damageAmount = 0f;
+    [SerializeField] float stunDuration = 0f;
+    [SerializeField] float speedDecrease = 0f;
+    public void Interact()
+    {
+        if (isArmed){
 
+        }
+    }
     public void PullStat(TrapData data)
     {
-        slowMulti = data.slowMultiplier;
-        duration = data.trapDuration;
-    }
-
-    private void Awake()
-    {
-        //makes sure collider is set
-        var col = GetComponent<Collider>();
-        col.isTrigger = true;
-    }
-
-    private void OnEnable()
-    {
+        usesLeft = data.maxUses;
+        damageAmount = data.damageAmount;
+        stunDuration = data.stunDuration;
+        speedDecrease = data.speedDecrease;
         isArmed = true;
+    }
+
+    public void Use(bool primary)
+    {
+        GameManager.instance.playerInventory.PlaceTrap(0);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isArmed) return;
-
-        if(other.CompareTag("Enemy"))
+        if (!isArmed || usesLeft <= 0) return;
+        if (!(other.CompareTag("Enemy") || other.CompareTag("Player"))) return;
+        //Damage
+        if(damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
         {
-            isArmed = false;
-
-            if(other.TryGetComponent<NavMeshAgent>(out var agent))
-            {
-                StartCoroutine(HandleAgentSlow(agent));
-            }
+            damage.TakeDamage(damageAmount);
         }
-    }
-
-    IEnumerator HandleAgentSlow(NavMeshAgent agent)
-    {
-        float orginalSpeed = agent.speed;
-        agent.speed = orginalSpeed * slowMulti;
-        yield return new WaitForSeconds(duration);
-        agent.speed = orginalSpeed;
-        Destroy(gameObject, 0.1f);
+        //Stun/Slow
+        if(stunDuration > 0 && other.TryGetComponent<ITrap>(out var trapped))
+        {
+            StartCoroutine(trapped.trap(speedDecrease, stunDuration));
+        }
+        isArmed = false;
+        usesLeft--;
     }
 }

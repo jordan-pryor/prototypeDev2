@@ -5,5 +5,5 @@ public interface ITrap
 
 
     // Applies a trap effect: reduces speed for a set duration
-    IEnumerator trap(float speedDecrease, int duration);
+    IEnumerator trap(float speedDecrease, float duration);
 }

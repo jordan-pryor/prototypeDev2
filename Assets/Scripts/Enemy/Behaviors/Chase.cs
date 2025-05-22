@@ -16,9 +16,8 @@ public class Chase : EnemyBehavior, IEnemy
                 // Use last known sound location
                 target = controller.targetPoints[0];
             }
-            else
+            if (target == null)
             {
-                // No target, transition to search if memory runs out
                 if (controller.memoryTimer <= 0f)
                 {
                     controller.agent.isStopped = true;

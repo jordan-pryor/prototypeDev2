@@ -13,11 +13,10 @@ MonoBehaviour:
   m_Name: MedKit
   m_EditorClassIdentifier: 
   itemName: MedKit
-  prefab: {fileID: 4305361904774914942, guid: ee9df21938bd0f042ac25e7f9d022c42, type: 3}
+  prefab: {fileID: 6223596583665874545, guid: f480c9e3610dc9a42a4b52c9d76386f5, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
-  slot: 0
   dropSound: {fileID: 0}
+  defaultRotation: {x: 0, y: 0, z: 0, w: 0}
   instantAmt: 25
   hotAmt: 0
   sec: 1
-  healSound: {fileID: 0}

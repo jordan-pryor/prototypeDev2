@@ -211,7 +211,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 583cb2ca1ee637e49ab366ed7e5dcb86, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8417361359673230750, guid: 583cb2ca1ee637e49ab366ed7e5dcb86, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -277,10 +277,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultBehavior: {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
-  moveBehavior: {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
-  searchBehavior: {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
-  actionBehavior: {fileID: 11400000, guid: e03a314ad77026e45b683253c5481241, type: 2}
+  defaultBehavior:
+  - {fileID: 11400000, guid: b3f96f96a6247484aba19f92a39fe6d3, type: 2}
+  moveBehavior:
+  - {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
+  searchBehavior:
+  - {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
+  actionBehavior:
+  - {fileID: 11400000, guid: e03a314ad77026e45b683253c5481241, type: 2}
   animator: {fileID: 1749985964454703331}
   agent: {fileID: 9195562840211566796}
   soundObject: {fileID: 1521164592709516988, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
@@ -290,7 +294,7 @@ MonoBehaviour:
   wallMask:
     serializedVersion: 2
     m_Bits: 2048
-  bullet: {fileID: 0}
+  bulletTypes: []
   attackPos: {fileID: 0}
   currentBehavior: 0
   seenPlayer: 0
@@ -302,6 +306,7 @@ MonoBehaviour:
   sightMask:
     serializedVersion: 2
     m_Bits: 3017
+  isTracker: 0
   actionOrigins:
   - {fileID: 5837837497755359537}
   actionRange: 2

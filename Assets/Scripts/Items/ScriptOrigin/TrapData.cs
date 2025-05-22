@@ -5,6 +5,14 @@ using UnityEngine;
 public class TrapData : BaseData
 {
     public GameObject trapToSet;
-    public float slowMultiplier;
-    public int trapDuration;
+
+    [Header("Effects")]
+    public int damageAmount = 0;
+    public float stunDuration = 0f;
+    public float speedDecrease = 1f;
+
+    [Header("Reset/Pickup")]
+    public float resetDelay = 5f;   //Time before rearm's
+    public bool persistent = false; //Stays on ground or not
+    public int maxUses = 1;         //How many times it can trigger
 }

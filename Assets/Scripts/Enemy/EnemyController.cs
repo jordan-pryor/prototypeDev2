@@ -1,19 +1,21 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-public class EnemyController : MonoBehaviour, IDamage
+public class EnemyController : MonoBehaviour, IDamage, ITrap
 {
     // AI behavior states and patrol path types
     public enum Behavior { Default, Move, Search, Action }
     public enum PathMode { Cycle, PingPong, Random }
 
     [Header("References")]
-    [SerializeField] private EnemyBehavior defaultBehavior;     // Idle/guard behavior
-    [SerializeField] private EnemyBehavior moveBehavior;        // Chase behavior
-    [SerializeField] private EnemyBehavior searchBehavior;      // Search behavior
-    [SerializeField] private EnemyBehavior actionBehavior;      // Attack behavior
+    [SerializeField] private EnemyBehavior[] defaultBehavior;     // Idle/guard behavior
+    [SerializeField] private EnemyBehavior[] moveBehavior;        // Chase behavior
+    [SerializeField] private EnemyBehavior[] searchBehavior;      // Search behavior
+    [SerializeField] private EnemyBehavior[] actionBehavior;      // Attack behavior
     public Animator animator;
     public NavMeshAgent agent;
     [SerializeField] GameObject soundObject;                    // Used to alert others or make noise
@@ -35,6 +37,7 @@ public class EnemyController : MonoBehaviour, IDamage
     public float sightRange = 20f;
     public float sightFOV = 90f;
     public LayerMask sightMask;
+    public bool isTracker = false;
 
     [Header("Action Range")]
     public Transform[] actionOrigins;
@@ -58,10 +61,15 @@ public class EnemyController : MonoBehaviour, IDamage
     public float patrolWait = 1f;
     public float damage = 2;
 
+    //Stun Settings
+    float trapDecrease = 1f;
+
+
     private void Start()
     {
         agent.speed = speed;               // Set movement speed
         origin = transform.position;       // Save original spawn position
+        if (agent != null) agent.speed = speed;  //Set stun check.
     }
 
     void Update()
@@ -70,6 +78,7 @@ public class EnemyController : MonoBehaviour, IDamage
         memoryTimer -= seenPlayer ? 0f : Time.deltaTime;  // Countdown memory if player not seen
         currentScript = GetCurrentBehavior();              // Get behavior script
         currentScript.Execute(this);                       // Run behavior
+        if (isTracker) seenPlayer = true;
     }
 
     // Called by ray-based enemy vision
@@ -145,11 +154,17 @@ public class EnemyController : MonoBehaviour, IDamage
     {
         return currentBehavior switch
         {
-            Behavior.Move => moveBehavior as IEnemy,
-            Behavior.Search => searchBehavior as IEnemy,
-            Behavior.Action => actionBehavior as IEnemy,
-            _ => defaultBehavior as IEnemy
+            Behavior.Move => PickRandom(moveBehavior),
+            Behavior.Search => PickRandom(searchBehavior),
+            Behavior.Action => PickRandom(actionBehavior),
+            _ => PickRandom(defaultBehavior)
         };
+    }
+
+    private IEnemy PickRandom(EnemyBehavior[] list)
+    {
+        return (list == null || list.Length == 0) ? null
+               : list[Random.Range(0, list.Length)] as IEnemy;
     }
 
     // Apply damage and destroy enemy if HP is 0
@@ -193,13 +208,7 @@ public class EnemyController : MonoBehaviour, IDamage
 		if (GameManager.instance.playerController.isTrapped)
 		{
 			index = 1; // Use venom bullet
-			Debug.Log($"{name} is using **VENOM** projectile (player is trapped).");
 		}
-		else
-		{
-			Debug.Log($"{name} is using **NORMAL** projectile.");
-		}
-
 		GameObject selectedBullet = bulletTypes.Length > index ? bulletTypes[index] : null;
 
 		if (selectedBullet != null)
@@ -219,5 +228,11 @@ public class EnemyController : MonoBehaviour, IDamage
         {
             if (playerPos.TryGetComponent(out IDamage dmg)) dmg.TakeDamage(damage);
         }
+    }
+    public IEnumerator trap(float speedDecrease, float duration)
+    {
+        trapDecrease = speedDecrease;
+        yield return new WaitForSeconds(duration);
+        trapDecrease = 1f;
     }
 }

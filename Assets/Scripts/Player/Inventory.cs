@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -5,53 +6,86 @@ public class Inventory : MonoBehaviour
     [SerializeField] int capacity = 5;                   // Max number of items
     [SerializeField] Transform[] pocketSockets;          // Storage positions for inventory items
     [SerializeField] Transform handSocket;               // Socket for equipped item
+    [SerializeField] private float placementDistance = 2f;
 
     public GameObject[] slots;                           // Instantiated item objects
     BaseData[] slotData;                                 // ScriptableObject data for each slot
 
     const int None = -1;                                 // Constant representing no equipped item
     public int equipIndex = None;                        // Currently equipped slot index
+    public struct MaterialData
+    {
+        public string name;
+        public int amount;
+        public MaterialData(string name, int amount)
+        {
+            this.name = name;
+            this.amount = amount;
+        }
+    }
+    public List<MaterialData> materials;
 
     private void Start()
     {
         slots = new GameObject[capacity];
         slotData = new BaseData[capacity];
         equipIndex = None;
+        materials = new List<MaterialData>();
     }
     //Crafting System Update
     public bool HasMaterials(string itemID, int quantity)
     {
-	    int count = 0;
-	    for (int i = 0; i < slotData.Length; i++)
-	    {
-		    if (slotData[i] != null && slotData[i].itemName == itemID)
-		    {
-			    count++;
-			    if (count >= quantity) return true;
-		    }
-	    }
-	    return false;
+        foreach (var material in materials)
+        {
+            if (material.name == itemID && material.amount >= quantity)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     // Also Crafting System Update(will Come back and Comment What it do once I get it working)
     public bool ConsumeMaterials(string itemID, int quantity)
     {
-	    int count = 0;
-	    for (int i = 0; i < slotData.Length; i++)
-	    {
-		    if (slotData[i] != null && slotData[i].itemName == itemID)
-		    {
-			    Destroy(slots[i]);
-			    slots[i] = null;
-			    slotData[i] = null;
-			    count++;
-			    if (count >= quantity) return true;
-		    }
-	    }
-	    return false;
+        for (int i = 0; i < materials.Count; i++)
+        {
+            if (materials[i].name == itemID)
+            {
+                if (materials[i].amount >= quantity)
+                {
+                    materials[i] = new MaterialData(materials[i].name, materials[i].amount - quantity);
+                    return true;
+                }
+                else
+                {
+                    return false; // Not enough material to consume
+                }
+            }
+        }
+        return false; // Material not found
     }
-	// Tries to add a new item to the inventory
-	public bool TryAdd(BaseData data)
+    public void AddMaterial(string itemID, int quantity)
     {
+        for (int i = 0; i < materials.Count; i++)
+        {
+            if (materials[i].name == itemID)
+            {
+                // Add to existing stack
+                materials[i] = new MaterialData(itemID, materials[i].amount + quantity);
+                return;
+            }
+        }
+        // If material not found, add as new entry
+        materials.Add(new MaterialData(itemID, quantity));
+    }
+    // Tries to add a new item to the inventory
+    public bool TryAdd(BaseData data)
+    {
+        if( data is MatData)
+        {
+            AddMaterial(data.name, 1);
+            return true;
+        }
         for (int i = 0; i < capacity; i++)
         {
             if (slots[i] != null) continue;
@@ -140,12 +174,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-
-        if(equipIndex != None && slotData[equipIndex] is TrapData td && Input.GetButtonDown("Fire1"))
-        {
-            PlaceTrap(td);
-            return;
-        }
     }
 
     // Equips the item at the given index
@@ -205,19 +233,59 @@ public class Inventory : MonoBehaviour
     {
         return slotData[equipIndex] is WeaponData;
     }    
-
+    /*
     void PlaceTrap(TrapData trap)
     {
         Vector3 trapPos = GameManager.instance.player.transform.position;
         trapPos.y = 0.075f;
         GameObject trapObj = Instantiate(trap.trapToSet, trapPos, Quaternion.identity);
-
         if(trapObj.TryGetComponent<Trap>(out var trapcomp))
         {
             trapcomp.PullStat(trap);
         }
-
         Delete(equipIndex);
+    }
+    */
+    public void PlaceTrap(int index)
+    {
+        if (slots[index] == null || slotData[index] == null) return;
+
+        // Instantiate trap prefab
+        GameObject trap = Instantiate(slotData[index].emptyPickupPrefab);
+        trap.GetComponent<ItemPickup>().data = slotData[index];
+        if (slotData[index] is TrapData trapData)
+        {
+            if (trap.TryGetComponent<Trap>(out var trapComp))
+            {
+                trapComp.PullStat(trapData);
+            }
+        }
+        // Calculate placement position (in front of player, on the ground)
+        Vector3 forwardPosition = Camera.main.transform.position + Camera.main.transform.forward * placementDistance;
+        RaycastHit hit;
+
+        // Raycast downward to align with the ground
+        if (Physics.Raycast(forwardPosition + Vector3.up, Vector3.down, out hit, 5f))
+        {
+            trap.transform.position = hit.point;
+        }
+        else
+        {
+            // Fallback to forward position if ground not detected
+            trap.transform.position = forwardPosition;
+        }
+
+        // No rotation (aligned to world space)
+        trap.transform.rotation = Quaternion.identity;
+
+        // Remove rigidbody or make it static since it's a placed trap
+        Rigidbody rb = trap.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+        // Remove from inventory
+        Delete(index);
     }
 }
 

@@ -3,9 +3,11 @@ using System.Collections;
 
 public class FanSpin : MonoBehaviour
 {
+    public enum SpinAxis { X, Y, Z }
     [SerializeField] bool isOn;                  // Current power state
     [SerializeField] GameObject blades;          // Fan blade object to rotate
     [SerializeField] float fanSpeed = 10f;       // Rotation speed of blades
+    [SerializeField] private SpinAxis spinAxis = SpinAxis.Y;
 
     Coroutine spinRoutine;
 
@@ -40,8 +42,18 @@ public class FanSpin : MonoBehaviour
         // Continuously rotate blades while fan is on
         while (isOn)
         {
-            blades.transform.Rotate(Vector3.up, fanSpeed * Time.deltaTime, Space.Self);
+            Vector3 axis = GetAxisVector();
+            blades.transform.Rotate(axis, fanSpeed * Time.deltaTime, Space.Self);
             yield return null;
         }
+    }
+    private Vector3 GetAxisVector()
+    {
+        return spinAxis switch
+        {
+            SpinAxis.X => Vector3.right,
+            SpinAxis.Y => Vector3.up,
+            SpinAxis.Z => Vector3.forward,
+        };
     }
 }

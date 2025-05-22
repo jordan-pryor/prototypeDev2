@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SceneMac.unity
-    guid: 137372e4632964f459faa827e6f6b196
+    path: Assets/Scenes/Old_and_Testing/NewMac.unity
+    guid: b904ba2873c5dcf4c9d3d99ea9a70d55
+  - enabled: 1
+    path: Assets/Scenes/Levels/Barracks.unity
+    guid: 1cc0dd1b1a42429419e661f1fa42ace5
+  - enabled: 1
+    path: Assets/Scenes/Levels/Quarantine Block.unity
+    guid: 3d11850b94ed4e04585ffc2f93cbaf51
+  - enabled: 1
+    path: Assets/Scenes/Levels/SceneJordan.unity
+    guid: 14501aeb9f1ad244483e71838877f663
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

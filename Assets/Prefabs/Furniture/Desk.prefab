@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 2782289279531039232}
   - component: {fileID: 1114207195096895797}
   - component: {fileID: 1914733759733704854}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Desk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2880
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

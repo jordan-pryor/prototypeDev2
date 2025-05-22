@@ -55,6 +55,13 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
+      - time: 0.7493454
+        functionName: Melee
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 1
         functionName: OnAnimationEnd
         data: 

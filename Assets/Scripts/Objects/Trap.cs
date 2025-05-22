@@ -1,36 +1,50 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.AI;
 
-public class Trap : MonoBehaviour
+[RequireComponent(typeof(Collider))]
+public class Trap : MonoBehaviour, IUse, IInteract
 {
-    enum TrapType { NoReset, Auto, Manual }
-    enum TrapState { Active, Inactive, Reset };
-    [Header("Trap Options")]
-    [SerializeField] TrapType type = TrapType.Auto;
-    [SerializeField] float speedDecrease = 0.5f;
-    [SerializeField] int trapDurationSeconds = 5;
-    [SerializeField] int trapResetSeconds = 2;
+    [SerializeField] int usesLeft;
+    [SerializeField] bool isArmed = false;
+    [SerializeField] float damageAmount = 0f;
+    [SerializeField] float stunDuration = 0f;
+    [SerializeField] float speedDecrease = 0f;
+    public void Interact()
+    {
+        if (isArmed){
 
-    TrapState state = TrapState.Active;
-    WaitForSeconds resetWait;
-    private void Start()
-    {
-        resetWait = new WaitForSeconds(trapResetSeconds);
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.isTrigger || state != TrapState.Active) return;
-        if (other.TryGetComponent<ITrap>(out var victim)) StartCoroutine(victim.trap(speedDecrease, trapDurationSeconds));
-        if(type != TrapType.NoReset)
-        {
-            state = TrapState.Inactive;
-            if (type == TrapType.Auto) StartCoroutine(ResetTrap());
         }
     }
-    IEnumerator ResetTrap()
+    public void PullStat(TrapData data)
     {
-        state = TrapState.Reset; // reset
-        yield return resetWait;
-        state = TrapState.Active; // active
+        usesLeft = data.maxUses;
+        damageAmount = data.damageAmount;
+        stunDuration = data.stunDuration;
+        speedDecrease = data.speedDecrease;
+        isArmed = true;
+    }
+
+    public void Use(bool primary)
+    {
+        GameManager.instance.playerInventory.PlaceTrap(0);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isArmed || usesLeft <= 0) return;
+        if (!(other.CompareTag("Enemy") || other.CompareTag("Player"))) return;
+        //Damage
+        if(damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
+        {
+            damage.TakeDamage(damageAmount);
+        }
+        //Stun/Slow
+        if(stunDuration > 0 && other.TryGetComponent<ITrap>(out var trapped))
+        {
+            StartCoroutine(trapped.trap(speedDecrease, stunDuration));
+        }
+        isArmed = false;
+        usesLeft--;
     }
 }

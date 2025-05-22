@@ -149,7 +149,12 @@ MonoBehaviour:
   doorMin: {fileID: 7375260769302985981}
   doorMax: {fileID: 1301186264588647867}
   openSpeed: 1
+  doors: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
   isLocked: 0
+  isWin: 0
+  requiredKeyName: Key
+  isTransition: 0
+  sceneIndex: -1
 --- !u!23 &8409339111056356251
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -205,7 +210,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2880
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

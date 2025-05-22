@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01faa9197a6fa594ba30a64d2e1ca095, type: 3}
+  m_Name: StrongPistol
+  m_EditorClassIdentifier: 
+  itemName: Pistol
+  prefab: {fileID: 2463198526074631682, guid: 5b9a6e819c6745045a6936e0b6258b9c, type: 3}
+  emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
+  slot: 0
+  dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
+  defaultRotation: {x: 0, y: 0, z: 0.17364818, w: 0.9848077}
+  maxAmmo: 10
+  fireRate: 0.1
+  damage: 2
+  shotSound: {fileID: 8358248104247095852, guid: 223ae9ae8c2f9a5409ae11e6cf6e886e, type: 3}
+  reloadTime: 1.25
+  range: 60
+  hitFX: {fileID: 1000013355911406, guid: d32aa916f50cac94db11e6f19821a58f, type: 3}
+  reloadFX: {fileID: 8213874844554620015, guid: 3d83b8038d2467848bde6fee6f993861, type: 3}

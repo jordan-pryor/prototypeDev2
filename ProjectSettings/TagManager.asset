@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Weapon
+  - Pickup
+  - Volume
+  - Enemy
+  - Movebox
   layers:
   - Default
   - TransparentFX
@@ -18,9 +22,9 @@ TagManager:
   - Player
   - Camera
   - Wall
-  - 
-  - 
-  - 
+  - Object
+  - Volume
+  - Sound
   - 
   - 
   - 

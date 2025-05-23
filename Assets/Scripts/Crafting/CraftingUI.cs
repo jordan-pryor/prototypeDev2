@@ -160,7 +160,7 @@ namespace Crafting
     {
         if (selectedRecipe == null) return;
 
-        bool success = GameManager.instance.playerInventory.GetComponent<PlayerCrafting>().TryCraft(selectedRecipe);
+        bool success = GameManager.instance.playerInventory.GetComponent<CraftingSystem>().TryCraft(selectedRecipe);
 
         if (success)
         {

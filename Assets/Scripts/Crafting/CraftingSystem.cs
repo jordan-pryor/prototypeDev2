@@ -4,8 +4,8 @@ using static Inventory;
 
 public class CraftingSystem : MonoBehaviour
 {
-    [Header("Debug/Test Recipes")]
-    [SerializeField] private CraftingRecipe[] testRecipes; // Assign recipes in inspector for testing
+    [Header("Debug/Test Recipes")] [SerializeField]
+    private CraftingRecipe[] testRecipes; // Assign recipes in inspector for testing
 
     private void Update()
     {
@@ -26,27 +26,42 @@ public class CraftingSystem : MonoBehaviour
     /// <returns>True if crafting succeeds, false otherwise</returns>
     public bool TryCraft(CraftingRecipe recipe)
     {
-        Inventory playerInventory = GameManager.instance.playerInventory;
-
         // Check if all ingredients are available
         foreach (var ingredient in recipe.ingredients)
         {
-            if (!playerInventory.HasMaterials(ingredient.itemID, ingredient.quantity))
-            {
-                Debug.Log($"Missing: {ingredient.itemID} x{ingredient.quantity}");
+            if (!GameManager.instance.playerInventory.HasMaterials(ingredient.itemID, ingredient.quantity))
                 return false;
-            }
         }
 
         // Consume ingredients
         foreach (var ingredient in recipe.ingredients)
         {
-            playerInventory.ConsumeMaterials(ingredient.itemID, ingredient.quantity);
+            GameManager.instance.playerInventory.ConsumeMaterials(ingredient.itemID, ingredient.quantity);
         }
 
-        // Add result
-        playerInventory.TryAdd(recipe.result);
-        Debug.Log($"Crafted: {recipe.result.name}");
+        // Try to add crafted item
+        bool added = GameManager.instance.playerInventory.TryAdd(recipe.result);
+        if (!added)
+        {
+            // Inventory full — drop item in the world
+            DropItemInWorld(item: ItemPickup.Instantiate(recipe.result));
+        }
+
         return true;
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void DropItemInWorld(BaseData item)
+    {
+        GameObject droppedItemPrefab = item.prefab; // You must assign this prefab to the Item
+        if (droppedItemPrefab)
+        {
+            Vector3 dropPosition = transform.position + transform.forward * 1.5f;
+            Instantiate(droppedItemPrefab, dropPosition, Quaternion.identity);
+        }
+        else
+        {
+            Debug.LogWarning($"No world prefab assigned for item: {item.name}");
+        }
     }
 }

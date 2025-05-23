@@ -48,7 +48,8 @@ using TMPro;
 
                 // Optional: change amount text color based on hasEnough
                 materialAmountText.text = $"{requiredQuantity}";
-                materialAmountText.color = hasEnough ? Color.white : Color.red;
+                materialAmountText.color = hasEnough ? Color.white : new Color(0.5f, 0.5f, 0.5f); // Greyed Out when Not available 
+
             }
 
             /// <summary>

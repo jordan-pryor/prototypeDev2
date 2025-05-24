@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,9 +9,12 @@ public class Flashlight : MonoBehaviour, IInteract, IUse
     [SerializeField] Material emissiveMat;          // Emissive/glowing material
     [SerializeField] bool isOn = false;             // Current on/off state
     [SerializeField] int matIndex = 0;              // Index of material slot to change
-
+    [SerializeField] bool isInteractable = true;
+    [SerializeField] bool isFlicker = false;
+    [SerializeField] float flickerTime = 0f;
     [SerializeField] Renderer rendererRef;          // Renderer used to swap materials
     Material[] materials;
+    private Coroutine flickerRoutine;
 
     private void Start()
     {
@@ -20,6 +24,8 @@ public class Flashlight : MonoBehaviour, IInteract, IUse
             materials = rendererRef.sharedMaterials;
 
         ApplyLight();
+        if (isFlicker)
+            flickerRoutine = StartCoroutine(Flicker());
     }
 
     private void OnValidate()
@@ -51,7 +57,7 @@ public class Flashlight : MonoBehaviour, IInteract, IUse
     // Called when interacted with (e.g. pickup or activation)
     public void Interact()
     {
-        ToggleLight();
+        if(isInteractable) ToggleLight();
     }
 
     // Called via item usage system (e.g. equipped item usage)
@@ -60,6 +66,15 @@ public class Flashlight : MonoBehaviour, IInteract, IUse
         if (primary)
         {
             ToggleLight();
+        }
+    }
+
+    private IEnumerator Flicker()
+    {
+        while (isFlicker)
+        {
+            ToggleLight();
+            yield return new WaitForSeconds(Random.Range(flickerTime - 0.1f, flickerTime + 0.1f));
         }
     }
 }

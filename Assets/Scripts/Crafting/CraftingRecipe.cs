@@ -4,7 +4,7 @@ using UnityEngine;
 public class CraftingRecipe : ScriptableObject
 {
 	public string recipeName;
-	public Ingredient[] ingredients;
+	public Ingredient[] ingredients  ;
 	public BaseData result;
 }
 

@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Title Screen.unity.meta
 guid: bc0f9775737fa4e43b09c4d8c97b4f82
+========
+guid: 8b96e843b7241a441aae50b8c109e12d
+folderAsset: yes
+>>>>>>>> origin/jnpryor.new:Assets/Barracks.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

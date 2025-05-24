@@ -5496,21 +5496,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
+  - {fileID: 11400000, guid: ccf633bad6813a5488ed4b299a50d6ed, type: 2}
   moveBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
   actionBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 19ad5a8d9173cf444abca8ace36fc24b, type: 2}
   animator: {fileID: 6427960794451628541}
   agent: {fileID: 6857201414751807619}
   soundObject: {fileID: 4209597050636819218, guid: 223ae9ae8c2f9a5409ae11e6cf6e886e, type: 3}

@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3000ff2b4dc7c384c925693c44b7462c, type: 3}
-  m_Name: HoundDefaults
+  m_Script: {fileID: 11500000, guid: 7e51aed81bd5c034c931d988d7501a34, type: 3}
+  m_Name: RecGun
   m_EditorClassIdentifier: 
-  behaviorArray:
-  - {fileID: 11400000, guid: b3f96f96a6247484aba19f92a39fe6d3, type: 2}
-  - {fileID: 11400000, guid: 037a6c4979ee804459583a85e4a014a4, type: 2}
+  recipeName: Gun
+  ingredients:
+  - itemID: Scrap
+    quantity: 2
+  - itemID: iron
+    quantity: 2
+  result: {fileID: 11400000, guid: e33bc7c1948b479418ce17f4bd219113, type: 2}

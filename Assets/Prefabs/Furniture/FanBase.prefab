@@ -279,6 +279,7 @@ MonoBehaviour:
   isOn: 1
   blades: {fileID: 4836185240000223147}
   fanSpeed: 90
+  spinAxis: 1
 --- !u!33 &760501049647449190
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -278,21 +278,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: b3f96f96a6247484aba19f92a39fe6d3, type: 2}
   moveBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f1c4463170e92dc4ca528414fc7f4827, type: 2}
   searchBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6d87386e301d2294693e48a140c13947, type: 2}
   actionBehavior:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: e03a314ad77026e45b683253c5481241, type: 2}
   animator: {fileID: 1749985964454703331}
   agent: {fileID: 9195562840211566796}
   soundObject: {fileID: 1521164592709516988, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}

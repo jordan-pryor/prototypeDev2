@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5756830952051043932}
   - component: {fileID: 1868865142107592872}
   - component: {fileID: 2098251080698882764}
+  - component: {fileID: 4548581814088090303}
   m_Layer: 0
   m_Name: RugRoundSmall
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
-  - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
+  - {fileID: 2100000, guid: 9daf2e6be5fced84caa9a1b4f6c658fb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,3 +88,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4548581814088090303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544169337658196429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463b3620909de4f4880979f19ef0f66e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onStart: 0
+  onVal: 1
+  mats:
+  - {fileID: 2100000, guid: 336dd8efcb84cff4abf984896b884888, type: 2}
+  - {fileID: 2100000, guid: 81538093581d8364399764453aaa7ba6, type: 2}
+  - {fileID: 2100000, guid: 0cb0ee5ce2e52af4fb92d6b492eea16f, type: 2}
+  - {fileID: 2100000, guid: ef770d80f46fdc6418f6894abd2911ab, type: 2}
+  - {fileID: 2100000, guid: 95f8d73949f2e3f449928be16c3d4257, type: 2}
+  - {fileID: 2100000, guid: 83a120a72bc10d44c903e672e86351cb, type: 2}
+  - {fileID: 2100000, guid: 649fb2db59267f140b4f589f57295752, type: 2}
+  - {fileID: 2100000, guid: 9daf2e6be5fced84caa9a1b4f6c658fb, type: 2}
+  - {fileID: 2100000, guid: f786dca15c039c9439ed20ef40458743, type: 2}
+  - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
+  - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
+  ignoreSlots: 
+  rend: {fileID: 2098251080698882764}

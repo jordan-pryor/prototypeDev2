@@ -183,6 +183,9 @@ MonoBehaviour:
   emissiveMat: {fileID: 2100000, guid: 6d5756d96894f4448a87974f6a0797b0, type: 2}
   isOn: 1
   matIndex: 2
+  isInteractable: 1
+  isFlicker: 0
+  flickerTime: 0
   rendererRef: {fileID: 3752069715260397006}
 --- !u!23 &3752069715260397006
 MeshRenderer:

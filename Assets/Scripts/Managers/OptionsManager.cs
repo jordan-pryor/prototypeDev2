@@ -17,6 +17,8 @@ public class OptionsManager : MonoBehaviour
     //Graphcs
     public TMP_Dropdown resolutionDropdown;
     public Toggle fullscreenToggle;
+    private int pendingResolutionIndex;
+    private bool pendingFullscreen;
 
     //Controls
 
@@ -45,7 +47,7 @@ public class OptionsManager : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             var r = resolutions[i];
-            options.Add($"{r.width}×{r.height}@{r.refreshRateRatio}hz");
+            options.Add($"{r.width}×{r.height}");
             if (r.width == Screen.width && r.height == Screen.height)
                 currentIndex = i;
         }
@@ -56,6 +58,18 @@ public class OptionsManager : MonoBehaviour
 
         fullscreenToggle.isOn = PlayerPrefs.GetInt("fullscreen", Screen.fullScreen ? 1 : 0) == 1;
         fullscreenToggle.onValueChanged.AddListener(SetFullScreen);
+        pendingResolutionIndex = resolutionDropdown.value;
+        pendingFullscreen = fullscreenToggle.isOn;
+
+        resolutionDropdown.onValueChanged.AddListener((index) =>
+        {
+            pendingResolutionIndex = index;
+        });
+
+        fullscreenToggle.onValueChanged.AddListener((isFull) =>
+        {
+            pendingFullscreen = isFull;
+        });
 
         //Controls
         foreach (var row in rebindRows)
@@ -100,6 +114,11 @@ public class OptionsManager : MonoBehaviour
     {
         Screen.fullScreen = full;
         PlayerPrefs.SetInt("fullscreen", full ? 1 : 0);
+    }
+    public void ApplyGraphicsSettings()
+    {
+        SetResolution(pendingResolutionIndex);
+        SetFullScreen(pendingFullscreen);
     }
 
     //Controls Rebinding
@@ -160,5 +179,16 @@ public class OptionsManager : MonoBehaviour
             case "Fire1": return KeyCode.Mouse0;
             default: return KeyCode.None;
         }
+    }
+
+    public void ResetToDefaultKeys()
+    {
+        foreach (var row in rebindRows)
+        {
+            KeyCode defKey = GetDefaultKey(row.actionName);
+            PlayerPrefs.SetString(row.actionName, defKey.ToString());
+            row.keyText.text = defKey.ToString();
+        }
+        PlayerPrefs.Save();
     }
 }

@@ -5,28 +5,27 @@ public class TitleSceneManager : MonoBehaviour
 {
 
     public string gameSceneStart = "Quarantine Block";
+    public GameObject startPanel;
     public GameObject optionsPanel;
-    public GameObject player;
-    public MonoBehaviour movementScript;  //were playerController goes.
 
 
-    private void Awake()
-    {
-        if (movementScript != null)
-            movementScript.enabled = false;
-    }
+    
 
     public void OnStartPressed()
-    {
-        if (movementScript != null)
-            movementScript.enabled = true;
-
+    {    
         SceneManager.LoadScene(gameSceneStart);
     }
     
     public void OnOptionsPressed()
     {
+        startPanel.SetActive(false);
         optionsPanel.SetActive(true);
+    }
+
+    public void OnBackfromOptions()
+    {
+        optionsPanel.SetActive(false);
+        startPanel.SetActive(true);
     }
 
     public void OnQuitPressed()

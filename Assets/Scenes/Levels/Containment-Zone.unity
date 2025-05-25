@@ -28190,6 +28190,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: shadowColor.b
       value: 0.18039216
       objectReference: {fileID: 0}
@@ -28210,6 +28214,10 @@ PrefabInstance:
       value: 0.40784317
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: shadowIntensity
+      value: -0.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: highlightColor.b
       value: 0.27450982
       objectReference: {fileID: 0}
@@ -28220,6 +28228,14 @@ PrefabInstance:
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: highlightColor.r
       value: 0.627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: midtoneIntensity
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: highlightIntensity
+      value: 0.27
       objectReference: {fileID: 0}
     - target: {fileID: 2345110203705543335, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: m_Enabled

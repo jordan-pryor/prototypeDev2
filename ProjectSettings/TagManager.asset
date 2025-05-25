@@ -9,6 +9,7 @@ TagManager:
   - Volume
   - Enemy
   - Movebox
+  - Sound
   layers:
   - Default
   - TransparentFX

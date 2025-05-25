@@ -24405,6 +24405,10 @@ PrefabInstance:
       value: 0.40784317
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: shadowIntensity
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: highlightColor.b
       value: 0.27450982
       objectReference: {fileID: 0}

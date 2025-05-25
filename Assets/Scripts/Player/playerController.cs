@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private float stealthAmount = 100f;
     private bool isCrouching;
     public float currentStealth;
+    public float smell;
 
     [Header("Stats")]
     public float maxHP = 100f;

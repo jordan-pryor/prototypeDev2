@@ -54,6 +54,7 @@ public class FanSpin : MonoBehaviour
             SpinAxis.X => Vector3.right,
             SpinAxis.Y => Vector3.up,
             SpinAxis.Z => Vector3.forward,
+            _ => Vector3.up,
         };
     }
 }

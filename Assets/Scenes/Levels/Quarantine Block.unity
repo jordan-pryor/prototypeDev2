@@ -5896,6 +5896,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
+      propertyPath: roomIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: shadowColor.b
       value: 0.18039216
       objectReference: {fileID: 0}
@@ -5917,7 +5925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: shadowIntensity
-      value: -0.75
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: highlightColor.b
@@ -5933,11 +5941,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: midtoneIntensity
-      value: 0.5
+      value: -0.26
       objectReference: {fileID: 0}
     - target: {fileID: 678279487665459717, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: highlightIntensity
-      value: 1
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 6722094381784038436, guid: 3d2ba00e0ecf7624783f02f373b04995, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9390,21 +9398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a01b9fa6f94b7b9a7f961ae0cf1199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  craftingPanel: {fileID: 2011025280}
-  recipeListParent: {fileID: 1871250900}
-  recipeItemPrefab: {fileID: 1820098566404842833, guid: e19b75a17cbc6e3499de6fd718204c42, type: 3}
-  closeButton: {fileID: 0}
-  recipeDetailsPanel: {fileID: 483781242}
-  recipeNameText: {fileID: 1875540956}
-  ingredientsListParent: {fileID: 852841274}
-  ingredientItemPrefab: {fileID: 6880940854156971868, guid: b0e26e8ae9d3f3c4aa20e16ce99398b9, type: 3}
-  craftButton: {fileID: 1437909874}
-  resultItemIcon: {fileID: 1533072455}
-  resultItemNameText: {fileID: 1872823525}
-  materialsPanel: {fileID: 1520843270}
-  materialsListParent: {fileID: 1899135964}
-  materialItemPrefab: {fileID: 4963530023493409022, guid: 2335dc99afec7174480bfd7e5d8a8fe5, type: 3}
-  toggleMaterialsButton: {fileID: 129394796}
 --- !u!1001 &1866965737
 PrefabInstance:
   m_ObjectHideFlags: 0

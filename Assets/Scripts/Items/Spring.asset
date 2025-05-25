@@ -9,18 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 020271e3b8b072142803b9ff8d1248d4, type: 3}
-  m_Name: SpikeTrap
+  m_Script: {fileID: 11500000, guid: 9a1edddaf80415244a7124f35f762ca4, type: 3}
+  m_Name: Spring
   m_EditorClassIdentifier: 
-  itemName: Spike Trap
-  prefab: {fileID: 8492143456800276339, guid: 91b0f0ea3a8feb4489be66cece3ec126, type: 3}
+  itemName: Spring
+  prefab: {fileID: 4620544947703611493, guid: 7f1051a6e60fb23418cdab9d2fc04c75, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}
-  trapToSet: {fileID: 4603568895872865645, guid: a756332a3d29f804082293d02e1e5a14, type: 3}
-  damageAmount: 20
-  stunDuration: 3
-  speedDecrease: 0.5
-  resetDelay: 3
-  persistent: 0
-  maxUses: 10

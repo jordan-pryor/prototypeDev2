@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e51aed81bd5c034c931d988d7501a34, type: 3}
-  m_Name: RecGun
+  m_Name: RecipeHandCannon
   m_EditorClassIdentifier: 
-  recipeName: Gun
+  recipeName: HandCannon
   ingredients:
+  - itemID: Spring
+    quantity: 1
+  - itemID: Pipe
+    quantity: 2
   - itemID: Scrap
-    quantity: 2
-  - itemID: iron
-    quantity: 2
-  result: {fileID: 11400000, guid: e33bc7c1948b479418ce17f4bd219113, type: 2}
+    quantity: 3
+  result: {fileID: 11400000, guid: 850612858158756409b542a3f0989433, type: 2}

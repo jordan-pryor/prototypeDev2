@@ -32,7 +32,6 @@ public class Inventory : MonoBehaviour
         equipIndex = None;
         materials = new List<MaterialData>();
     }
-    //Crafting System Update
     public bool HasMaterials(string itemID, int quantity)
     {
         foreach (var material in materials)
@@ -44,7 +43,6 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
-    // Also Crafting System Update(will Come back and Comment What it do once I get it working)
     public bool ConsumeMaterials(string itemID, int quantity)
     {
         for (int i = 0; i < materials.Count; i++)
@@ -56,13 +54,9 @@ public class Inventory : MonoBehaviour
                     materials[i] = new MaterialData(materials[i].name, materials[i].amount - quantity);
                     return true;
                 }
-                else
-                {
-                    return false; // Not enough material to consume
-                }
             }
         }
-        return false; // Material not found
+        return false;
     }
     public void AddMaterial(string itemID, int quantity)
     {

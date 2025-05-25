@@ -27,7 +27,7 @@ public class Trap : MonoBehaviour, IUse, IInteract
 
     public void Use(bool primary)
     {
-        GameManager.instance.playerInventory.PlaceTrap(0);
+        GameManager.instance.playerInventory.PlaceTrap(GameManager.instance.playerInventory.equipIndex);
     }
 
     private void OnTriggerEnter(Collider other)

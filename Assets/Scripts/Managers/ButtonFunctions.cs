@@ -15,6 +15,10 @@ public class ButtonFunction : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameManager.instance.stateUnpause();
     }
+    public void exitCraft()
+    {
+        GameManager.instance.stateUnpause();
+    }
 
     // Quit the game (works in both editor and build)
     public void quit()

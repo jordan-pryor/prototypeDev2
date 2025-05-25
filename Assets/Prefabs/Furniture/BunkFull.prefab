@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3540049895266815509}
   - component: {fileID: 9047136720216442048}
   - component: {fileID: 5330969160967389325}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BunkFull
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220996679909025352}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 5322659056672989793}
   - {fileID: 947015965848796576}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &3540049895266815509
 MeshFilter:
   m_ObjectHideFlags: 0

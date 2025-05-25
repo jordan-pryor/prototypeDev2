@@ -20,4 +20,5 @@ MonoBehaviour:
   menuPrefabInteract: {fileID: 3005676512936858766, guid: 81ef721ec3d938344be27f3dd4300076, type: 3}
   menuPrefabTrap: {fileID: 7000384052966432390, guid: f8f2481549c7a414f983cde041e718af, type: 3}
   menuPrefabLock: {fileID: 5756125342876376623, guid: 82dfa851aaaa47342b5a9e8cca24e7ee, type: 3}
-  menuPrefabInvUI: {fileID: 6688820396204690541, guid: 756d84977dde98c4d80d6f35eebdf624, type: 3}
+  menuPrefabInventory: {fileID: 6688820396204690541, guid: 756d84977dde98c4d80d6f35eebdf624, type: 3}
+  menuPrefabCrafting: {fileID: 5387299965821982078, guid: d856a0c0592f98a45a93b47b4d001026, type: 3}

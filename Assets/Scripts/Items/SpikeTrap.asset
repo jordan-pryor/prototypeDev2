@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpikeTrap
   m_EditorClassIdentifier: 
   itemName: Spike Trap
-  prefab: {fileID: 5411539714991072618, guid: 85ab13855ba381340ab875eae4753f8a, type: 3}
+  prefab: {fileID: 8492143456800276339, guid: 91b0f0ea3a8feb4489be66cece3ec126, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}

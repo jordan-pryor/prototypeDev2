@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66854b4c6a497b74fb950855ea4bd02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trap: {fileID: 5411539714991072618, guid: 6196d6dc80d5e894db6815e402c89336, type: 3}
+  trap: {fileID: 2344919386280330800, guid: f43747d5b70418a4eb17cda1e444906f, type: 3}
   timerStart: 3
   damage: 5
 --- !u!135 &8548765912932914080

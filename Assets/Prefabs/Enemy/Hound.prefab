@@ -1522,7 +1522,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 1408803179318841181}
-  defBehavior: 1
+  defBehavior: 0
   currentState: 0
   patrolPoints: []
   wanderRadius: 10

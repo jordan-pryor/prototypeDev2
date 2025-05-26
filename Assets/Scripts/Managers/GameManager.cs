@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using System.Collections;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     private bool inventoryOpen = false;
     float timeScaleOrig;                      // Used to restore time scale on unpause
     int gameGoalCount;                        // Tracks how many goals remain
-
+    public Volume vol;
     void Awake()
     {
         instance = this;

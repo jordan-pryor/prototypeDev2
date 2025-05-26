@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Movebox
   - Sound
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -26,9 +27,9 @@ TagManager:
   - Object
   - Volume
   - Sound
-  - 
-  - 
-  - 
+  - ImmovableObject
+  - Ceiling
+  - Door
   - 
   - 
   - 

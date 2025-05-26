@@ -55,10 +55,10 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 1
-        functionName: OnAlertEnd
+      - time: 0.7260826
+        functionName: SpawnSound
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 45707380fe074df47881c2449e8a1bf2, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

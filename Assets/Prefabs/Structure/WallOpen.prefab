@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2279267796889778919}
   - component: {fileID: 3210454663342898950}
   - component: {fileID: 4582545131153430712}
-  m_Layer: 11
+  m_Layer: 17
   m_Name: WallOpen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,8 +177,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2, y: 0.3, z: 0.2644444}
-  m_Center: {x: 0, y: -0.05, z: 0}
+  m_Size: {x: 1.2, y: 0.2, z: 0.2644444}
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!1 &5944277812051384569
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,7 +279,8 @@ GameObject:
   - component: {fileID: 1765700495239586317}
   - component: {fileID: 3287979613064331851}
   - component: {fileID: 67098729507740330}
-  m_Layer: 3
+  - component: {fileID: 1158124046287829420}
+  m_Layer: 12
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5962784526220211835}
   serializedVersion: 2
-  m_LocalRotation: {x: -2.5753557e-17, y: 0.88540596, z: 8.267739e-17, w: 0.46481866}
+  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
   m_LocalPosition: {x: -0.60255545, y: -0.0000000055879354, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -389,16 +390,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 5962784526220211835}
-  openPercent: 0.5
+  openPercent: 0
   doorMin: {fileID: 7201922750383082733}
   doorMax: {fileID: 5944277812051384569}
-  openSpeed: 1
+  openSpeed: 5
   doors: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
   isLocked: 0
   isWin: 0
   requiredKeyName: Key
   isTransition: 0
   sceneIndex: -1
+  obstacle: {fileID: 1158124046287829420}
+--- !u!208 &1158124046287829420
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5962784526220211835}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.59300005, y: 1.0250001, z: 0.095000006}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: -0.59300005, y: 1.125, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7201922750383082733
 GameObject:
   m_ObjectHideFlags: 0

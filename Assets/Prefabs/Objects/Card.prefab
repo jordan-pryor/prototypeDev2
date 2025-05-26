@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4556281467019573387}
   - component: {fileID: 1307569182486921349}
   - component: {fileID: 6343519074694517294}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90901370847275550}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 14.799944, y: 0.2325, z: 0.5917802}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -67,8 +67,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1114c4aa4d7dc61448fc5d71baf0957d, type: 2}
-  - {fileID: 2100000, guid: f786dca15c039c9439ed20ef40458743, type: 2}
+  - {fileID: 2100000, guid: a9ccc1d28026006418436266413a1a00, type: 2}
+  - {fileID: 2100000, guid: 649fb2db59267f140b4f589f57295752, type: 2}
   - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

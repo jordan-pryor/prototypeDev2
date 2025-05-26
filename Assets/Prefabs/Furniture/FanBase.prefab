@@ -137,13 +137,13 @@ Light:
   m_InnerSpotAngle: 75
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05
     m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_NearPlane: 0.39
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 760501049647449190}
   - component: {fileID: 778787760957359912}
   - component: {fileID: 513186557978479727}
-  m_Layer: 3
+  m_Layer: 15
   m_Name: FanBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,15 +237,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7651853956047633629}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -2.444, y: -0.182, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4538393457301171325}
   - {fileID: 5901403709721764239}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4492329504647115489
 MonoBehaviour:
   m_ObjectHideFlags: 0

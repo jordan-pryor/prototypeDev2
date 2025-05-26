@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3340736165436031363}
   - component: {fileID: 7168799080588995857}
   - component: {fileID: 786916819458214890}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: BookStack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595138638595574644}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 1.864, y: 0, z: 1.018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65,11 +65,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1114c4aa4d7dc61448fc5d71baf0957d, type: 2}
+  - {fileID: 2100000, guid: 25dd397508001204d8f32e044d0199f7, type: 2}
   - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
-  - {fileID: 2100000, guid: 95f8d73949f2e3f449928be16c3d4257, type: 2}
-  - {fileID: 2100000, guid: 9daf2e6be5fced84caa9a1b4f6c658fb, type: 2}
-  - {fileID: 2100000, guid: bb0f93c75d4a9c344a449e43b5645cae, type: 2}
+  - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
+  - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
+  - {fileID: 2100000, guid: 81538093581d8364399764453aaa7ba6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

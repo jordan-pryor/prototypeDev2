@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 740134159783761733}
   - component: {fileID: 5516768738521337549}
   - component: {fileID: -5403952914963147090}
-  m_Layer: 3
+  m_Layer: 15
   m_Name: Console
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6069961807103373453}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 11.973533, y: 0, z: 1.1115408}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

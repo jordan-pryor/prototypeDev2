@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3365920730167186546
+--- !u!114 &-6458588650534228806
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,13 +15,13 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.8299693, y: 0.70754707, z: 1, w: 0}
+    m_Value: {x: 0.14901961, y: 0.16078432, z: 0.19215688, w: 0}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.6487663, z: 0.6194968, w: 0.5}
+    m_Value: {x: 0.40784317, y: 0.4156863, z: 0.34509805, w: 0.1}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.6640316, z: 0, w: 1}
+    m_Value: {x: 0.6117647, y: 0.61960787, z: 0.45098042, w: 0.5}
   shadowsStart:
     m_OverrideState: 1
     m_Value: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: GVP_TitleScreen
+  m_Name: GVP_RelayHub
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -3365920730167186546}
+  - {fileID: -6458588650534228806}

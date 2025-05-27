@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: GVP_QuarantineBlock
+  m_Name: GVP_ReactorCore
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 7306831363786373687}
---- !u!114 &7306831363786373687
+  - {fileID: 5321953128262993334}
+--- !u!114 &5321953128262993334
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -29,22 +29,22 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.65217394, y: 0.86956525, z: 1, w: 0}
+    m_Value: {x: 1, y: 0.6530612, z: 0.61224484, w: 0}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.7184466, y: 0.8640777, z: 1, w: 0.1}
+    m_Value: {x: 1, y: 0.554054, z: 0.4054054, w: 0.2}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.89017344, z: 0.7109827, w: 1}
+    m_Value: {x: 1, y: 0.5485437, z: 0.43689317, w: 0.5}
   shadowsStart:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   shadowsEnd:
-    m_OverrideState: 1
-    m_Value: 0.33
+    m_OverrideState: 0
+    m_Value: 0.3
   highlightsStart:
-    m_OverrideState: 1
-    m_Value: 0.66
+    m_OverrideState: 0
+    m_Value: 0.55
   highlightsEnd:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1

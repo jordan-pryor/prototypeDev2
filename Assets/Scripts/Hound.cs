@@ -56,15 +56,18 @@ public class Hound : MonoBehaviour
     bool heardSound;
     bool chasingPlayer;          // true = chase player, false = chase sound
     public bool isInSpawn = false;
+    public bool inTitle = false;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        player = GameObject.FindWithTag("Player").transform;
         origin = transform.position;
-
+        if (!inTitle)
+        {
+            player = GameObject.FindWithTag("Player").transform;
+        }
         UpdateStats();
-        if (!isInSpawn) GameManager.instance.updateGameGoal(1);
+        if (!isInSpawn && !inTitle) GameManager.instance.updateGameGoal(1);
     }
     void Update()
     {
@@ -89,10 +92,12 @@ public class Hound : MonoBehaviour
             lostSightTimer = 0f;
             currentState = AIState.Chasing;
         }
-        if (currentState != AIState.Chasing &&
-            GameManager.instance.playerController.smell >= sensitivity)
+        if(!inTitle)
         {
-            currentState = AIState.Searching;
+            if (currentState != AIState.Chasing && GameManager.instance.playerController.smell >= sensitivity)
+            {
+                currentState = AIState.Searching;
+            }
         }
         if (currentState == AIState.Chasing &&
             agent.pathStatus != NavMeshPathStatus.PathComplete)
@@ -108,7 +113,11 @@ public class Hound : MonoBehaviour
         Vector3 dir = (player.position - eyes.position).normalized;
         float dist = Vector3.Distance(eyes.position, player.position);
         bool clear = !Physics.Raycast(eyes.position, dir, dist, visionBlockMask);
-        bool stealthOK = GameManager.instance.playerController.currentStealth <= vision;
+        bool stealthOK = false;
+        if (!inTitle)
+        {
+            stealthOK = GameManager.instance.playerController.currentStealth <= vision;
+        }
         return clear && stealthOK;
     }
 

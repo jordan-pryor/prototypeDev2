@@ -2034,14 +2034,14 @@ MonoBehaviour:
   maxHP: 100
   HP: 100
   isFPS: 0
-  sensX: 75
+  sensX: 100
   sensY: 75
   pitchClamp: 60
   yawClamp: 80
-  turnThreshold: 0.45
+  turnThreshold: 0.25
   stationaryThreshold: 0.9
-  turnSpeed: 90
-  sprintTurnMod: 45
+  turnSpeed: 145
+  sprintTurnMod: 20
   isTrapped: 0
   isJumping: 0
 --- !u!114 &3172164751331034456
@@ -3514,7 +3514,7 @@ Transform:
   m_GameObject: {fileID: 8611031612482310684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.003056, y: 1.3999022, z: 0.19090271}
+  m_LocalPosition: {x: 0.0030555725, y: 1.3999022, z: 0.19090176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

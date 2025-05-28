@@ -323,14 +323,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.22453451
+      - time: 0.25168568
         functionName: Step
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.52234846
+      - time: 0.75037587
         functionName: Step
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -366,14 +366,14 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.25739327
+      - time: 0.24923834
         functionName: Step
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3a536a3524e289f4489f7f53e915e51c, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5276515
+      - time: 0.7513825
         functionName: Step
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 3a536a3524e289f4489f7f53e915e51c, type: 3}

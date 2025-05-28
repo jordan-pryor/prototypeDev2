@@ -41,24 +41,20 @@ public class playerInteract : MonoBehaviour
     void CheckInteractable()
     {
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-
         // Check if hit an interactable target
-        if (Physics.Raycast(ray, out RaycastHit hit, range, mask))
+        if (Physics.Raycast(ray, out RaycastHit hit, range, ~0, QueryTriggerInteraction.Collide))
         {
-            // Cast from camera to that hit point, and see if it's blocked
-            float distance = Vector3.Distance(ray.origin, hit.point);
-            // If we hit something on the blockMask before reaching the interactable, it's blocked
-            Vector3 blockRayOrigin = ray.origin - ray.direction * buffer;
-            if (Physics.Raycast(blockRayOrigin, ray.direction, distance, blockMask))
-            {
-                target = null;
-                GameManager.instance.promptInteract.SetActive(false);
-                return;
-            }
-            // Can interact
             IInteract interactable = hit.collider.GetComponent<IInteract>();
             if (interactable != null)
             {
+                float distance = Vector3.Distance(ray.origin, hit.point);
+                Vector3 blockRayOrigin = ray.origin - ray.direction * buffer;
+                if (Physics.Raycast(blockRayOrigin, ray.direction, distance, blockMask))
+                {
+                    target = null;
+                    GameManager.instance.promptInteract.SetActive(false);
+                    return;
+                }
                 if (target != interactable)
                 {
                     target = interactable;

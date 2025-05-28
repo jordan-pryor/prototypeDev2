@@ -10,12 +10,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2967207463795101063, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
       propertyPath: audios.Array.size
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2967207463795101063, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
       propertyPath: 'audios.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: fc1c78a7973046c4faa4e560261c9bfd, type: 3}
+      objectReference: {fileID: 8300000, guid: 88924799536280941b4fdbf2f084c9d6, type: 3}
     - target: {fileID: 2967207463795101063, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
       propertyPath: 'audios.Array.data[1]'
       value: 

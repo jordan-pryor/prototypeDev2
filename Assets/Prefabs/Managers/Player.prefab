@@ -149,7 +149,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -2128,10 +2128,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490a5083c7017d74ab9924ee033f227c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
+  range: 2
   mask:
     serializedVersion: 2
-    m_Bits: 36864
+    m_Bits: 36872
+  buffer: 0.5
+  blockMask:
+    serializedVersion: 2
+    m_Bits: 198912
 --- !u!95 &3402925272930957694
 Animator:
   serializedVersion: 7
@@ -3514,7 +3518,7 @@ Transform:
   m_GameObject: {fileID: 8611031612482310684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0030555725, y: 1.3999022, z: 0.19090176}
+  m_LocalPosition: {x: 0.0030556247, y: 1.3999023, z: 0.19090283}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

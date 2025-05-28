@@ -45,7 +45,7 @@ public class Hound : MonoBehaviour
     Vector3 targetPoint;          // sound destination
     Vector3 lastHeardPos;
 
-    float sightRange, smellRange, vision, sensitivity;
+    float sightRange, smellRange, vision, sensitivity, hearRange;
     float damage, speed;
 
     float lostSightTimer;
@@ -107,7 +107,6 @@ public class Hound : MonoBehaviour
             currentState = AIState.Alert;
         }
     }
-
     bool CanSeePlayer()
     {
         Vector3 dir = (player.position - eyes.position).normalized;
@@ -120,7 +119,6 @@ public class Hound : MonoBehaviour
         }
         return clear && stealthOK;
     }
-
     void UpdateStateLogic()
     {
         switch (currentState)
@@ -132,7 +130,6 @@ public class Hound : MonoBehaviour
             case AIState.Alert: Bark(); break;
         }
     }
-
     void RunDefault()
     {
         switch (defBehavior)
@@ -142,7 +139,6 @@ public class Hound : MonoBehaviour
             case DefaultBehavior.WanderUnfixed: Wander(transform.position); break;
         }
     }
-
     void Patrol()
     {
         agent.speed = speed / 2;
@@ -176,7 +172,6 @@ public class Hound : MonoBehaviour
             }
         }
     }
-
     void AddPatrolPoints(int count, Vector3 center)
     {
         for (int i = 0; i < count; i++)
@@ -189,7 +184,6 @@ public class Hound : MonoBehaviour
                 patrolPoints.Add(hit.position);
         }
     }
-
     void Chase()
     {
         agent.speed = speed;
@@ -222,14 +216,12 @@ public class Hound : MonoBehaviour
                 currentState = AIState.Searching;
         }
     }
-
     void HandleSearch()
     {
         origin = transform.position;
         AddPatrolPoints(1, origin);
         currentState = AIState.Default;
     }
-
     void Bark()
     {
         agent.speed = 0f;
@@ -268,13 +260,13 @@ public class Hound : MonoBehaviour
         float r = sphere.radius;
         sightRange = GetStat(sightRangeScore, r);
         smellRange = GetStat(smellRangeScore, r);
+        hearRange = GetStat(hearingRangeScore, r);
         vision = GetStat(visionScore, 100f);
         sensitivity = GetStat(sensitivityScore, 100f);
         damage = GetStat(damageScore, 50f);
         speed = GetStat(speedScore, 10f);
         agent.speed = speed;
     }
-
     static float GetStat(StatScore s, float baseVal) => s switch
     {
         StatScore.S => baseVal * 1.0f,

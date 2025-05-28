@@ -2026,7 +2026,7 @@ MonoBehaviour:
   groundCheckRadius: 0.3
   groundMask:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 37256
   isGrounded: 0
   stealthAmount: 100
   currentStealth: 0
@@ -2128,7 +2128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490a5083c7017d74ab9924ee033f227c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
+  range: 3
   mask:
     serializedVersion: 2
     m_Bits: 36872
@@ -2969,7 +2969,7 @@ Transform:
   m_GameObject: {fileID: 7351254534811226228}
   serializedVersion: 2
   m_LocalRotation: {x: -0.18301277, y: 0.6830127, z: -0.06162843, w: 0.70441604}
-  m_LocalPosition: {x: 0.218, y: -0.119, z: 0.357}
+  m_LocalPosition: {x: 0.419, y: -0.393, z: 0.709}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3518,7 +3518,7 @@ Transform:
   m_GameObject: {fileID: 8611031612482310684}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0030556247, y: 1.3999023, z: 0.19090283}
+  m_LocalPosition: {x: 0.0030555725, y: 1.3999022, z: 0.19090223}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

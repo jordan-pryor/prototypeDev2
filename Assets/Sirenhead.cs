@@ -2,17 +2,17 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Sirenhead : MonoBehaviour
+public class Sirenhead : MonoBehaviour, IDamage
 {
-    enum DefaultBehavior { Patrol, WanderFixed, WanderUnfixed }
-    enum AIState { Default, Chasing, Searching, Melee, Alert }
+    enum DefaultBehavior { Patrol, WanderFixed, WanderUnfixed, Guard }
+    enum AIState { Default, Chasing, Searching, Alert }
     enum StatScore { S, A, B, C, D, E, F }
 
     [Header("Scene refs")]
     public SphereCollider sphere;            // detection trigger
     [SerializeField] Transform eyes;         // raycast origin
     [SerializeField] LayerMask visionBlockMask;
-    [SerializeField] GameObject barkSoundObject;
+    [SerializeField] GameObject hornSoundObject;
 
     [Header("AI Settings")]
     [SerializeField] DefaultBehavior defBehavior;
@@ -24,7 +24,7 @@ public class Sirenhead : MonoBehaviour
     public float waitTimeAtPoint = 2f;
 
     [Header("Ranges / Scores")]
-    [SerializeField] float meleeRange = 0.5f;
+    [SerializeField] float screamRange = 5f;
     [SerializeField] StatScore HPScore = StatScore.D;
     [SerializeField] StatScore damageScore = StatScore.C;
     [SerializeField] StatScore speedScore = StatScore.S;
@@ -33,7 +33,9 @@ public class Sirenhead : MonoBehaviour
     [SerializeField] StatScore smellRangeScore = StatScore.S;
     [SerializeField] StatScore sensitivityScore = StatScore.S;
     [SerializeField] StatScore hearingRangeScore = StatScore.C;
-
+    float viewAngle = 180f;
+    float maxHP = 100;
+    float HP = 10;
     [Header("Timers")]
     [SerializeField] float giveUpTime = 2f;   // chase grace period
 
@@ -45,7 +47,7 @@ public class Sirenhead : MonoBehaviour
     Vector3 targetPoint;          // sound destination
     Vector3 lastHeardPos;
 
-    float sightRange, smellRange, vision, sensitivity;
+    float sightRange, smellRange, vision, sensitivity, hearRange;
     float damage, speed;
 
     float lostSightTimer;
@@ -102,16 +104,20 @@ public class Sirenhead : MonoBehaviour
             currentState = AIState.Alert;
         }
     }
-
     bool CanSeePlayer()
     {
-        Vector3 dir = (player.position - eyes.position).normalized;
-        float dist = Vector3.Distance(eyes.position, player.position);
-        bool clear = !Physics.Raycast(eyes.position, dir, dist, visionBlockMask);
-        bool stealthOK = GameManager.instance.playerController.currentStealth <= vision;
-        return clear && stealthOK;
+        Vector3 toPlayer = player.position - eyes.position;
+        float dist = toPlayer.magnitude;
+        Vector3 dir = toPlayer / dist;
+        float halfFOV = viewAngle * 0.5f;
+        if (Vector3.Angle(eyes.forward, dir) > halfFOV)
+            return false;
+        if (Physics.Raycast(eyes.position, dir, dist, visionBlockMask))
+            return false;
+        if (GameManager.instance.playerController.currentStealth > vision)
+            return false;
+        return true;
     }
-
     void UpdateStateLogic()
     {
         switch (currentState)
@@ -119,11 +125,9 @@ public class Sirenhead : MonoBehaviour
             case AIState.Default: RunDefault(); break;
             case AIState.Chasing: Chase(); break;
             case AIState.Searching: HandleSearch(); break;
-            case AIState.Melee: Melee(); break;
-            case AIState.Alert: Bark(); break;
+            case AIState.Alert: Scream(); break;
         }
     }
-
     void RunDefault()
     {
         switch (defBehavior)
@@ -131,12 +135,29 @@ public class Sirenhead : MonoBehaviour
             case DefaultBehavior.Patrol: Patrol(); break;
             case DefaultBehavior.WanderFixed: Wander(origin); break;
             case DefaultBehavior.WanderUnfixed: Wander(transform.position); break;
+            case DefaultBehavior.Guard: Guard(); break;
         }
     }
-
+    void Guard()
+    {
+        agent.speed = 0f;
+        // Ensure we have a guard point
+        if (patrolPoints.Count == 0) AddPatrolPoints(1, origin);
+        Vector3 guardPoint = patrolPoints[0];
+        float distance = Vector3.Distance(transform.position, guardPoint);
+        // If too far from guard point, walk back to it
+        if (distance > 1f)
+        {
+            agent.speed = speed;
+            agent.SetDestination(guardPoint);
+            return;
+        }
+        // At position just idle here, wait for stimuli
+        agent.ResetPath();
+    }
     void Patrol()
     {
-        agent.speed = speed / 2;
+        agent.speed = speed;
         if (patrolPoints.Count == 0) { AddPatrolPoints(2, origin); return; }
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -156,7 +177,7 @@ public class Sirenhead : MonoBehaviour
     }
     void Wander(Vector3 center)
     {
-        agent.speed = speed / 2;
+        agent.speed = speed;
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             if (patrolPoints.Count == 0) AddPatrolPoints(1, center);
@@ -167,28 +188,29 @@ public class Sirenhead : MonoBehaviour
             }
         }
     }
-
     void AddPatrolPoints(int count, Vector3 center)
     {
         for (int i = 0; i < count; i++)
         {
-            Vector3 rnd = center + new Vector3(
-                Random.Range(-wanderRadius, wanderRadius), 0f,
-                Random.Range(-wanderRadius, wanderRadius));
-
-            if (NavMesh.SamplePosition(rnd, out NavMeshHit hit, 2f, NavMesh.AllAreas))
-                patrolPoints.Add(hit.position);
+            Vector2 rnd2D = Random.insideUnitCircle.normalized;
+            Vector3 dir = new Vector3(rnd2D.x, 0f, rnd2D.y);
+            if (Physics.Raycast(center, dir, out RaycastHit wallHit, wanderRadius, visionBlockMask))
+            {
+                float t = Random.Range(0f, wallHit.distance);
+                Vector3 samplePoint = center + dir * t;
+                if (NavMesh.SamplePosition(samplePoint, out NavMeshHit navHit, 2f, NavMesh.AllAreas))
+                {
+                    patrolPoints.Add(navHit.position);
+                }
+            }
         }
     }
-
     void Chase()
     {
         agent.speed = speed;
-
         if (chasingPlayer)                  // chasing the player
         {
             agent.SetDestination(player.position);
-
             if (!CanSeePlayer())             // lost LOS
             {
                 lostSightTimer += Time.deltaTime;
@@ -201,38 +223,27 @@ public class Sirenhead : MonoBehaviour
                 }
             }
             else lostSightTimer = 0f;
-
-            if (Vector3.Distance(transform.position, player.position) <= meleeRange)
-                currentState = AIState.Melee;
+            if (Vector3.Distance(transform.position, player.position) <= screamRange)
+                currentState = AIState.Alert;
         }
         else                                 // chasing a sound
         {
             agent.SetDestination(targetPoint);
-
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 currentState = AIState.Searching;
         }
     }
-
     void HandleSearch()
     {
         origin = transform.position;
         AddPatrolPoints(1, origin);
         currentState = AIState.Default;
     }
-
-    void Bark()
+    void Scream()
     {
         agent.speed = 0f;
+        agent.ResetPath();
     }
-    public void MeleeAttack()                // called by anim event
-    {
-        if (Vector3.Distance(transform.position, player.position) <= meleeRange)
-            player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Chasing;
-    }
-    void Melee() { /**/ }
     void FaceTarget(Vector3 dest)
     {
         Vector3 dir = (dest - transform.position).normalized; dir.y = 0f;
@@ -257,13 +268,16 @@ public class Sirenhead : MonoBehaviour
         float r = sphere.radius;
         sightRange = GetStat(sightRangeScore, r);
         smellRange = GetStat(smellRangeScore, r);
-        vision = GetStat(visionScore, 100f);
-        sensitivity = GetStat(sensitivityScore, 100f);
+        hearRange = GetStat(hearingRangeScore, r);
+        vision = GetStat(visionScore, 150f);
+        sensitivity = (1f / GetStat(sensitivityScore, 1f)) * 10f;
         damage = GetStat(damageScore, 50f);
         speed = GetStat(speedScore, 10f);
         agent.speed = speed;
+        viewAngle = GetStat(sightRangeScore, 180f);
+        maxHP = GetStat(HPScore, 100);
+        HP = maxHP;
     }
-
     static float GetStat(StatScore s, float baseVal) => s switch
     {
         StatScore.S => baseVal * 1.0f,
@@ -276,21 +290,34 @@ public class Sirenhead : MonoBehaviour
     };
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) playerInTrigger = true;
         if (other.CompareTag("Sound"))
         {
-            heardSound = true;
-            lastHeardPos = other.transform.position;
+            Vector3 soundPos = other.transform.position;
+            if (Vector3.Distance(transform.position, soundPos) <= hearRange)
+            {
+                heardSound = true;
+                lastHeardPos = soundPos;
+            }
         }
+        if (other.CompareTag("Player"))
+            playerInTrigger = true;
     }
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player")) playerInTrigger = false;
     }
-    public void SpawnSound()                 // called by bark anim event
+    public void SpawnSound()                 // called by scream anim event
     {
-        if (barkSoundObject) Instantiate(barkSoundObject, transform.position, Quaternion.identity);
+        if (hornSoundObject) Instantiate(hornSoundObject, transform.position, Quaternion.identity);
         currentState = AIState.Searching;
     }
-
+    public void TakeDamage(float amount)
+    {
+        HP -= amount;
+        if (HP <= 0)
+        {
+            GameManager.instance.updateGameGoal(-1);
+            Destroy(gameObject);
+        }
+    }
 }

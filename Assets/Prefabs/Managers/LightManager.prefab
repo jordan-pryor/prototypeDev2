@@ -46,6 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mask:
     serializedVersion: 2
-    m_Bits: 2304
+    m_Bits: 198912
   auto: 0
   updateTime: 60

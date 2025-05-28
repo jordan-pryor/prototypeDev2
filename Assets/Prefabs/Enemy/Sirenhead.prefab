@@ -219,21 +219,21 @@ MonoBehaviour:
   visionBlockMask:
     serializedVersion: 2
     m_Bits: 198912
-  barkSoundObject: {fileID: 8324907387892166886, guid: 92f81ce28dfae0f449a965758e18911f, type: 3}
-  defBehavior: 2
+  hornSoundObject: {fileID: 8324907387892166886, guid: 92f81ce28dfae0f449a965758e18911f, type: 3}
+  defBehavior: 3
   currentState: 0
   patrolPoints: []
   wanderRadius: 10
   waitTimeAtPoint: 2
-  meleeRange: 0.5
+  screamRange: 5
   HPScore: 3
-  damageScore: 3
-  speedScore: 3
+  damageScore: 6
+  speedScore: 6
   sightRangeScore: 4
   visionScore: 3
-  smellRangeScore: 0
-  sensitivityScore: 0
-  hearingRangeScore: 3
+  smellRangeScore: 6
+  sensitivityScore: 6
+  hearingRangeScore: 4
   giveUpTime: 2
   isInSpawn: 0
 --- !u!65 &5814153401380319131

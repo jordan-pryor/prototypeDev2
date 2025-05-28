@@ -40,28 +40,31 @@ public class LightLevelManager : MonoBehaviour
         {
             if (!light.enabled || light.intensity <= 0f) continue;
 
-            if (light.type == LightType.Directional)
-            {
-                // Cast ray opposite the direction to check for obstruction
-                if (!Physics.Raycast(position, -light.transform.forward, Mathf.Infinity, mask))
-                {
-                    total += light.intensity;
-                }
-            }
-            else if (light.type == LightType.Point || light.type == LightType.Spot)
+            if (light.type == LightType.Point || light.type == LightType.Spot)
             {
                 Vector3 toLight = light.transform.position - position;
-                float dist = toLight.magnitude;
+                float sqrDist = toLight.sqrMagnitude;
+                float range = light.range;
+                if (sqrDist > range * range) continue;
+
+                Vector3 dir = toLight / Mathf.Sqrt(sqrDist);
+
+                if (light.type == LightType.Spot)
+                {
+                    float cosHalfAngle = Mathf.Cos(light.spotAngle * 0.5f * Mathf.Deg2Rad);
+                    if (Vector3.Dot(light.transform.forward, -dir) < cosHalfAngle)
+                        continue;
+                }
 
                 // If not blocked, contribute based on inverse square falloff
-                if (!Physics.Raycast(position, toLight.normalized, dist, mask))
+                if (!Physics.Raycast(position, dir, out RaycastHit hit, Mathf.Sqrt(sqrDist), mask))
                 {
-                    total += light.intensity / (dist * dist);
+                    total += light.intensity / sqrDist;
                 }
             }
         }
 
         // Normalize result to 0–1
-        return Mathf.Clamp01(total);
+        return Mathf.Clamp(total, 0, 100);
     }
 }

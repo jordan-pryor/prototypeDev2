@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Hound : MonoBehaviour
+public class Hound : MonoBehaviour, IDamage
 {
     enum DefaultBehavior { Patrol, WanderFixed, WanderUnfixed }
     enum AIState { Default, Chasing, Searching, Melee, Alert }
@@ -33,7 +33,9 @@ public class Hound : MonoBehaviour
     [SerializeField] StatScore smellRangeScore = StatScore.S;
     [SerializeField] StatScore sensitivityScore = StatScore.S;
     [SerializeField] StatScore hearingRangeScore = StatScore.C;
-
+    float viewAngle = 180f;
+    float maxHP = 100;
+    float HP = 10;
     [Header("Timers")]
     [SerializeField] float giveUpTime = 2f;   // chase grace period
 
@@ -109,15 +111,18 @@ public class Hound : MonoBehaviour
     }
     bool CanSeePlayer()
     {
-        Vector3 dir = (player.position - eyes.position).normalized;
-        float dist = Vector3.Distance(eyes.position, player.position);
-        bool clear = !Physics.Raycast(eyes.position, dir, dist, visionBlockMask);
-        bool stealthOK = false;
-        if (!inTitle)
-        {
-            stealthOK = GameManager.instance.playerController.currentStealth <= vision;
-        }
-        return clear && stealthOK;
+        Vector3 toPlayer = player.position - eyes.position;
+        float dist = toPlayer.magnitude;
+        Vector3 dir = toPlayer / dist;
+        float halfFOV = viewAngle * 0.5f;
+        if (Vector3.Angle(eyes.forward, dir) > halfFOV)
+            return false;
+        if (Physics.Raycast(eyes.position, dir, dist, visionBlockMask))
+            return false;
+        if (GameManager.instance.playerController.currentStealth > vision)
+            return false;
+
+        return true;
     }
     void UpdateStateLogic()
     {
@@ -176,12 +181,17 @@ public class Hound : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            Vector3 rnd = center + new Vector3(
-                Random.Range(-wanderRadius, wanderRadius), 0f,
-                Random.Range(-wanderRadius, wanderRadius));
-
-            if (NavMesh.SamplePosition(rnd, out NavMeshHit hit, 2f, NavMesh.AllAreas))
-                patrolPoints.Add(hit.position);
+            Vector2 rnd2D = Random.insideUnitCircle.normalized;
+            Vector3 dir = new Vector3(rnd2D.x, 0f, rnd2D.y);
+            if (Physics.Raycast(center, dir, out RaycastHit wallHit, wanderRadius, visionBlockMask))
+            {
+                float t = Random.Range(0f, wallHit.distance);
+                Vector3 samplePoint = center + dir * t;
+                if (NavMesh.SamplePosition(samplePoint, out NavMeshHit navHit, 2f, NavMesh.AllAreas))
+                {
+                    patrolPoints.Add(navHit.position);
+                }
+            }
         }
     }
     void Chase()
@@ -261,11 +271,14 @@ public class Hound : MonoBehaviour
         sightRange = GetStat(sightRangeScore, r);
         smellRange = GetStat(smellRangeScore, r);
         hearRange = GetStat(hearingRangeScore, r);
-        vision = GetStat(visionScore, 100f);
-        sensitivity = GetStat(sensitivityScore, 100f);
+        vision = GetStat(visionScore, 150f);
+        sensitivity = (1f / GetStat(sensitivityScore, 1f)) * 10f;
         damage = GetStat(damageScore, 50f);
         speed = GetStat(speedScore, 10f);
         agent.speed = speed;
+        viewAngle = GetStat(sightRangeScore, 180f);
+        maxHP = GetStat(HPScore, 100);
+        HP = maxHP;
     }
     static float GetStat(StatScore s, float baseVal) => s switch
     {
@@ -279,12 +292,17 @@ public class Hound : MonoBehaviour
     };
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) playerInTrigger = true;
         if (other.CompareTag("Sound"))
         {
-            heardSound = true;
-            lastHeardPos = other.transform.position;
+            Vector3 soundPos = other.transform.position;
+            if (Vector3.Distance(transform.position, soundPos) <= hearRange)
+            {
+                heardSound = true;
+                lastHeardPos = soundPos;
+            }
         }
+        if (other.CompareTag("Player"))
+            playerInTrigger = true;
     }
     void OnTriggerExit(Collider other)
     {
@@ -295,5 +313,14 @@ public class Hound : MonoBehaviour
         if (barkSoundObject) Instantiate(barkSoundObject, transform.position, Quaternion.identity);
         currentState = AIState.Searching;
     }
-               
+
+    public void TakeDamage(float amount)
+    {
+        HP -= amount;
+        if (HP <= 0)
+        {
+            GameManager.instance.updateGameGoal(-1);
+            Destroy(gameObject);
+        }
+    }
 }

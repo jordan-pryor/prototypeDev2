@@ -6,9 +6,10 @@ public class playerInteract : MonoBehaviour
     [SerializeField] LayerMask mask;            // Which layers to consider for interaction
 
     private GameObject promptInteract;          // UI prompt (from GameManager)
-
+    [SerializeField]  float buffer = 0.1f;
     IInteract target;                           // Current interactable in sight
     IInteract grabTarget;                       // Target being interacted with after animation
+    [SerializeField] LayerMask blockMask;
 
     void Update()
     {
@@ -40,22 +41,34 @@ public class playerInteract : MonoBehaviour
     void CheckInteractable()
     {
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        // Check if hit an interactable target
         if (Physics.Raycast(ray, out RaycastHit hit, range, mask))
         {
+            // Cast from camera to that hit point, and see if it's blocked
+            float distance = Vector3.Distance(ray.origin, hit.point);
+            // If we hit something on the blockMask before reaching the interactable, it's blocked
+            Vector3 blockRayOrigin = ray.origin - ray.direction * buffer;
+            if (Physics.Raycast(blockRayOrigin, ray.direction, distance, blockMask))
+            {
+                target = null;
+                GameManager.instance.promptInteract.SetActive(false);
+                return;
+            }
+            // Can interact
             IInteract interactable = hit.collider.GetComponent<IInteract>();
             if (interactable != null)
             {
                 if (target != interactable)
                 {
                     target = interactable;
-                    GameManager.instance.promptInteract.SetActive(true); // Show UI prompt
+                    GameManager.instance.promptInteract.SetActive(true);
                 }
                 return;
             }
         }
-
-        // No valid target found
+        // No valid target
         target = null;
-        GameManager.instance.promptInteract.SetActive(false); // Hide UI prompt
+        GameManager.instance.promptInteract.SetActive(false);
     }
 }

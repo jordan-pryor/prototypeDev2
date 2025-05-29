@@ -3,19 +3,13 @@ using System.Collections;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
-public class Trap : MonoBehaviour, IUse, IInteract
+public class Trap : MonoBehaviour, IUse
 {
     [SerializeField] int usesLeft;
     [SerializeField] bool isArmed = false;
     [SerializeField] float damageAmount = 0f;
     [SerializeField] float stunDuration = 0f;
     [SerializeField] float speedDecrease = 0f;
-    public void Interact()
-    {
-        if (isArmed){
-
-        }
-    }
     public void PullStat(TrapData data)
     {
         usesLeft = data.maxUses;

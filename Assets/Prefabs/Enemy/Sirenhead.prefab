@@ -114,9 +114,9 @@ GameObject:
   - component: {fileID: 5778556258207233479}
   - component: {fileID: 5814153401380319131}
   - component: {fileID: 7131614822680848176}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sirenhead
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,7 +200,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5778556258207233479
 MonoBehaviour:

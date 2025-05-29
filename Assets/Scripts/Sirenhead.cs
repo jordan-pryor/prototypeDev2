@@ -1,18 +1,18 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Hound : MonoBehaviour, IDamage
+public class Sirenhead : MonoBehaviour, IDamage
 {
-    enum DefaultBehavior { Patrol, WanderFixed, WanderUnfixed }
-    enum AIState { Default, Chasing, Searching, Melee, Alert }
+    enum DefaultBehavior { Patrol, WanderFixed, WanderUnfixed, Guard }
+    enum AIState { Default, Chasing, Searching, Alert }
     enum StatScore { S, A, B, C, D, E, F }
 
     [Header("Scene refs")]
     public SphereCollider sphere;            // detection trigger
     [SerializeField] Transform eyes;         // raycast origin
     [SerializeField] LayerMask visionBlockMask;
-    [SerializeField] GameObject barkSoundObject;
+    [SerializeField] GameObject hornSoundObject;
 
     [Header("AI Settings")]
     [SerializeField] DefaultBehavior defBehavior;
@@ -24,7 +24,7 @@ public class Hound : MonoBehaviour, IDamage
     public float waitTimeAtPoint = 2f;
 
     [Header("Ranges / Scores")]
-    [SerializeField] float meleeRange = 0.5f;
+    [SerializeField] float screamRange = 5f;
     [SerializeField] StatScore HPScore = StatScore.D;
     [SerializeField] StatScore damageScore = StatScore.C;
     [SerializeField] StatScore speedScore = StatScore.S;
@@ -58,18 +58,15 @@ public class Hound : MonoBehaviour, IDamage
     bool heardSound;
     bool chasingPlayer;          // true = chase player, false = chase sound
     public bool isInSpawn = false;
-    public bool inTitle = false;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player").transform;
         origin = transform.position;
-        if (!inTitle)
-        {
-            player = GameObject.FindWithTag("Player").transform;
-        }
+
         UpdateStats();
-        if (!isInSpawn && !inTitle) GameManager.instance.updateGameGoal(1);
+        if (!isInSpawn) GameManager.instance.updateGameGoal(1);
     }
     void Update()
     {
@@ -94,12 +91,10 @@ public class Hound : MonoBehaviour, IDamage
             lostSightTimer = 0f;
             currentState = AIState.Chasing;
         }
-        if(!inTitle)
+        if (currentState != AIState.Chasing &&
+            GameManager.instance.playerController.smell >= sensitivity)
         {
-            if (currentState != AIState.Chasing && GameManager.instance.playerController.smell >= sensitivity)
-            {
-                currentState = AIState.Searching;
-            }
+            currentState = AIState.Searching;
         }
         if (currentState == AIState.Chasing &&
             agent.pathStatus != NavMeshPathStatus.PathComplete)
@@ -121,7 +116,6 @@ public class Hound : MonoBehaviour, IDamage
             return false;
         if (GameManager.instance.playerController.currentStealth > vision)
             return false;
-
         return true;
     }
     void UpdateStateLogic()
@@ -131,8 +125,7 @@ public class Hound : MonoBehaviour, IDamage
             case AIState.Default: RunDefault(); break;
             case AIState.Chasing: Chase(); break;
             case AIState.Searching: HandleSearch(); break;
-            case AIState.Melee: Melee(); break;
-            case AIState.Alert: Bark(); break;
+            case AIState.Alert: Scream(); break;
         }
     }
     void RunDefault()
@@ -142,11 +135,29 @@ public class Hound : MonoBehaviour, IDamage
             case DefaultBehavior.Patrol: Patrol(); break;
             case DefaultBehavior.WanderFixed: Wander(origin); break;
             case DefaultBehavior.WanderUnfixed: Wander(transform.position); break;
+            case DefaultBehavior.Guard: Guard(); break;
         }
+    }
+    void Guard()
+    {
+        agent.speed = 0f;
+        // Ensure we have a guard point
+        if (patrolPoints.Count == 0) AddPatrolPoints(1, origin);
+        Vector3 guardPoint = patrolPoints[0];
+        float distance = Vector3.Distance(transform.position, guardPoint);
+        // If too far from guard point, walk back to it
+        if (distance > 1f)
+        {
+            agent.speed = speed;
+            agent.SetDestination(guardPoint);
+            return;
+        }
+        // At position just idle here, wait for stimuli
+        agent.ResetPath();
     }
     void Patrol()
     {
-        agent.speed = speed / 2;
+        agent.speed = speed;
         if (patrolPoints.Count == 0) { AddPatrolPoints(2, origin); return; }
 
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
@@ -166,7 +177,7 @@ public class Hound : MonoBehaviour, IDamage
     }
     void Wander(Vector3 center)
     {
-        agent.speed = speed / 2;
+        agent.speed = speed;
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             if (patrolPoints.Count == 0) AddPatrolPoints(1, center);
@@ -197,11 +208,9 @@ public class Hound : MonoBehaviour, IDamage
     void Chase()
     {
         agent.speed = speed;
-
         if (chasingPlayer)                  // chasing the player
         {
             agent.SetDestination(player.position);
-
             if (!CanSeePlayer())             // lost LOS
             {
                 lostSightTimer += Time.deltaTime;
@@ -214,14 +223,12 @@ public class Hound : MonoBehaviour, IDamage
                 }
             }
             else lostSightTimer = 0f;
-
-            if (Vector3.Distance(transform.position, player.position) <= meleeRange)
-                currentState = AIState.Melee;
+            if (Vector3.Distance(transform.position, player.position) <= screamRange)
+                currentState = AIState.Alert;
         }
         else                                 // chasing a sound
         {
             agent.SetDestination(targetPoint);
-
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 currentState = AIState.Searching;
         }
@@ -233,18 +240,11 @@ public class Hound : MonoBehaviour, IDamage
         AddPatrolPoints(1, origin);
         currentState = AIState.Default;
     }
-    void Bark()
+    void Scream()
     {
         agent.speed = 0f;
+        agent.ResetPath();
     }
-    public void MeleeAttack()                // called by anim event
-    {
-        if (Vector3.Distance(transform.position, player.position) <= meleeRange)
-            player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Chasing;
-    }
-    void Melee() { /**/ }
     void FaceTarget(Vector3 dest)
     {
         Vector3 dir = (dest - transform.position).normalized; dir.y = 0f;
@@ -260,11 +260,9 @@ public class Hound : MonoBehaviour, IDamage
     void UpdateAnimator()
     {
         float v = agent.velocity.magnitude;
-        anim.SetBool("isMoving", v > 0.1f);
-        anim.SetFloat("Speed", currentState == AIState.Chasing ? 1f : 0f);
+        anim.SetBool("isWalking", v > 0.1f);
         anim.SetBool("isSearching", currentState == AIState.Searching);
-        anim.SetBool("isAlerting", currentState == AIState.Alert);
-        anim.SetBool("isAttacking", currentState == AIState.Melee);
+        anim.SetBool("isActing", currentState == AIState.Alert);
     }
     void UpdateStats()
     {
@@ -309,12 +307,11 @@ public class Hound : MonoBehaviour, IDamage
     {
         if (other.CompareTag("Player")) playerInTrigger = false;
     }
-    public void SpawnSound()                 // called by bark anim event
+    public void SpawnSound()                 // called by scream anim event
     {
-        if (barkSoundObject) Instantiate(barkSoundObject, transform.position, Quaternion.identity);
+        if (hornSoundObject) Instantiate(hornSoundObject, transform.position, Quaternion.identity);
         currentState = AIState.Searching;
     }
-
     public void TakeDamage(float amount)
     {
         HP -= amount;

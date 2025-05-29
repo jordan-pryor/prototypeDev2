@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2381262877745305800}
   - component: {fileID: 3547285349358402798}
   - component: {fileID: -7870254125273622649}
+  - component: {fileID: 7095862658025392269}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -156,3 +157,24 @@ MonoBehaviour:
   damageAmount: 25
   stunDuration: 2
   speedDecrease: 0.5
+--- !u!65 &7095862658025392269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8492143456800276339}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.9393363, y: 0.4, z: 0.9393363}
+  m_Center: {x: 0, y: 0.2, z: 0}

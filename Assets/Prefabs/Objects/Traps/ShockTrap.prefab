@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1091892878215651390}
   - component: {fileID: 4991568631361245674}
   - component: {fileID: 6403332580493076098}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShockTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 576
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3547285349358402798}
   - component: {fileID: -7870254125273622649}
   - component: {fileID: 7095862658025392269}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpikeTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usesLeft: 0
-  isArmed: 0
+  usesLeft: 1
+  isArmed: 1
   damageAmount: 25
   stunDuration: 2
   speedDecrease: 0.5
@@ -167,7 +167,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 576
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

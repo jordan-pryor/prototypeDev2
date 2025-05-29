@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Collider))]
 public class Trap : MonoBehaviour, IUse
 {
     [SerializeField] int usesLeft;
@@ -10,6 +9,7 @@ public class Trap : MonoBehaviour, IUse
     [SerializeField] float damageAmount = 0f;
     [SerializeField] float stunDuration = 0f;
     [SerializeField] float speedDecrease = 0f;
+    [SerializeField] Collider col;
     public void PullStat(TrapData data)
     {
         usesLeft = data.maxUses;
@@ -27,17 +27,8 @@ public class Trap : MonoBehaviour, IUse
     private void OnTriggerEnter(Collider other)
     {
         if (!isArmed || usesLeft <= 0) return;
-        if (!(other.CompareTag("Enemy") || other.CompareTag("Player"))) return;
-        //Damage
-        if(damageAmount > 0 && other.TryGetComponent<IDamage>(out var damage))
-        {
-            damage.TakeDamage(damageAmount);
-        }
-        //Stun/Slow
-        if(stunDuration > 0 && other.TryGetComponent<ITrap>(out var trapped))
-        {
-            StartCoroutine(trapped.trap(speedDecrease, stunDuration));
-        }
+        other.GetComponent<IDamage>()?.TakeDamage(damageAmount);
+        other.GetComponent<ITrap>().trap(speedDecrease, stunDuration);
         isArmed = false;
         usesLeft--;
     }

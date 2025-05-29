@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 7486625178718794115}
   - component: {fileID: 167506819264141677}
   - component: {fileID: 4217480257196910172}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BladeTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 576
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

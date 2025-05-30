@@ -9,7 +9,6 @@ public class Trap : MonoBehaviour, IUse
     [SerializeField] float damageAmount = 0f;
     [SerializeField] float stunDuration = 0f;
     [SerializeField] float speedDecrease = 0f;
-    [SerializeField] Collider col;
     public void PullStat(TrapData data)
     {
         usesLeft = data.maxUses;
@@ -26,9 +25,10 @@ public class Trap : MonoBehaviour, IUse
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trap OnTriggerEnter hit " + other.name);
         if (!isArmed || usesLeft <= 0) return;
         other.GetComponent<IDamage>()?.TakeDamage(damageAmount);
-        other.GetComponent<ITrap>().trap(speedDecrease, stunDuration);
+        other.GetComponent<ITrap>()?.trapTrigger(speedDecrease, stunDuration);
         isArmed = false;
         usesLeft--;
     }

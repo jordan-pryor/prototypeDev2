@@ -235,4 +235,9 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
         yield return new WaitForSeconds(duration);
         trapDecrease = 1f;
     }
+
+    public void trapTrigger(float speedDecrease, float duration)
+    {
+        throw new System.NotImplementedException();
+    }
 }

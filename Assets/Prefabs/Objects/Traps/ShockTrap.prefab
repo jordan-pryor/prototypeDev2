@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 2427662749036628828}
   - component: {fileID: 3258103974663765371}
   - component: {fileID: 1091892878215651390}
-  - component: {fileID: 4991568631361245674}
-  - component: {fileID: 6403332580493076098}
+  - component: {fileID: 8940903643700260764}
+  - component: {fileID: 2531302775537719985}
   m_Layer: 7
   m_Name: ShockTrap
   m_TagString: Untagged
@@ -30,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5796645477696102162}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &6333508406375021175
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -141,24 +141,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4991568631361245674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5796645477696102162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usesLeft: 4
-  isArmed: 1
-  damageAmount: 5
-  stunDuration: 5
-  speedDecrease: 0
---- !u!65 &6403332580493076098
+--- !u!65 &8940903643700260764
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,9 +156,24 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.0798349, y: 0.22, z: 1.1033798}
-  m_Center: {x: -0.07024929, y: 0.1, z: 0.08202177}
+  m_Size: {x: 1.0798349, y: 1, z: 1.1033798}
+  m_Center: {x: -0.07024929, y: 0.5, z: 0.08202177}
+--- !u!114 &2531302775537719985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5796645477696102162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506bdaf8c70d06343a6eb933f197ee71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedMultiplier: 0
+  duration: 3
+  damageAmount: 0

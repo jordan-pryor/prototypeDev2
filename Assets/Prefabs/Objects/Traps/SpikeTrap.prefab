@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3560680836062998999}
   - component: {fileID: 2381262877745305800}
   - component: {fileID: 3547285349358402798}
-  - component: {fileID: -7870254125273622649}
-  - component: {fileID: 7095862658025392269}
+  - component: {fileID: 3506493841749573254}
+  - component: {fileID: 344230666130115674}
   m_Layer: 7
   m_Name: SpikeTrap
   m_TagString: Untagged
@@ -30,13 +30,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8492143456800276339}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &2539683879243116923
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -140,7 +140,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9393363, y: 0.19934665, z: 0.9393363}
   m_Center: {x: 0, y: 0.09967332, z: 0}
---- !u!114 &-7870254125273622649
+--- !u!114 &3506493841749573254
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,15 +149,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8492143456800276339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e66a8f136b8a0c42abcebac56924802, type: 3}
+  m_Script: {fileID: 11500000, guid: 506bdaf8c70d06343a6eb933f197ee71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usesLeft: 1
-  isArmed: 1
-  damageAmount: 25
-  stunDuration: 2
-  speedDecrease: 0.5
---- !u!65 &7095862658025392269
+  speedMultiplier: 0.5
+  duration: 3
+  damageAmount: 15
+--- !u!65 &344230666130115674
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,5 +174,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9393363, y: 0.4, z: 0.9393363}
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Size: {x: 0.9393363, y: 1, z: 0.9393363}
+  m_Center: {x: 0, y: 0.5, z: 0}

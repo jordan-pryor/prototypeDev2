@@ -175,10 +175,12 @@ public class Swarm : MonoBehaviour, IDamage
     void Swarms() {
         if (enemyNear)
         {
+            chasingPlayer = true;
             Chase();
         }
         else
         {
+            chasingPlayer = false;
             Retreat();
         }
     }
@@ -294,11 +296,16 @@ public class Swarm : MonoBehaviour, IDamage
         }
         if (other.CompareTag("Player"))
             playerInTrigger = true;
+        
+    }
+    void OnTriggerStay(Collider other)
+    {
         if (other.CompareTag("Enemy"))
         {
             if (other.GetComponent<Swarm>())
             {
-                enemyNear = true;
+                float dist = Vector3.Distance(transform.position, other.transform.position);
+                enemyNear = dist < 5f;
             }
         }
     }
@@ -309,7 +316,7 @@ public class Swarm : MonoBehaviour, IDamage
         {
             if (other.GetComponent<Swarm>())
             {
-                enemyNear = false;
+                enemyNear = false;           
             }
         }
     }

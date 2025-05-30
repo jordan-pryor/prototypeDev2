@@ -180,13 +180,22 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         isFPS = newisFPS;
         camControl.ToggleCam();
     }
-    IEnumerator ITrap.trap(float speedDecrease, float duration)
+    public void trapTrigger(float speedDecrease, float duration)
     {
+        // start the coroutine with the arguments
+        StartCoroutine(TrapRoutine(speedDecrease, duration));
+    }
+    IEnumerator TrapRoutine(float speedDecrease, float duration)
+    {
+        Debug.Log("trapped");
         if (isTrapped) yield break;
         isTrapped = true;
+
         GameManager.instance.promptTrap.SetActive(true);
         trapDecrease = speedDecrease;
+
         yield return new WaitForSeconds(duration);
+
         GameManager.instance.promptTrap.SetActive(false);
         isTrapped = false;
     }

@@ -52,6 +52,7 @@ public class Flashlight : MonoBehaviour, IInteract, IUse
     {
         isOn = !isOn;
         ApplyLight();
+        LightManager.instance.UpdateLights();
     }
 
     // Called when interacted with (e.g. pickup or activation)

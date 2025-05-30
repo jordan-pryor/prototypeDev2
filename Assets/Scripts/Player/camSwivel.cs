@@ -7,7 +7,14 @@ public class camSwivel : MonoBehaviour
     private float pitch = 0f;                 // Vertical look angle
     private float yaw = 0f;                   // Horizontal look offset
     private Transform body;                   // Player's body transform
-
+    public float Pitch => pitch;
+    public float Yaw => yaw;
+    public void SetPitchYaw(float newPitch, float newYaw)
+    {
+        pitch = newPitch;
+        yaw = newYaw;
+        transform.localRotation = Quaternion.Euler(pitch, yaw, 0f);
+    }
     private void Start()
     {
         body = player.transform;              // Cache player body reference

@@ -2,27 +2,39 @@ using UnityEngine;
 
 public class camFPS : MonoBehaviour
 {
-    [SerializeField] PlayerController player; // Reference to player for sensitivity and turning
+    [SerializeField] private PlayerController player;  // Reference to player for input/sensitivity
 
-    private float pitch = 0f;                 // Vertical camera angle (up/down)
+    private float pitch = 0f;                           // Vertical look angle (up/down)
 
     void Update()
     {
-        // Ignore input if cursor is not locked
+        // Ignore input if mouse cursor isn't locked
         if (Cursor.lockState != CursorLockMode.Locked) return;
 
-        // Get mouse movement input
-        float mouseX = Input.GetAxis("Mouse X") * player.sensX * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * player.sensY * Time.deltaTime;
+        // Get scaled mouse input
+        float mouseX = Input.GetAxis("Mouse X") * player.sensX * 0.01f;
+        float mouseY = Input.GetAxis("Mouse Y") * player.sensY * 0.01f;
 
-        // Adjust vertical pitch based on mouse Y
+        // Update vertical angle (pitch)
         pitch -= mouseY;
         pitch = Mathf.Clamp(pitch, -player.pitchClamp, player.pitchClamp);
 
-        // Apply pitch to camera's local rotation
-        transform.localRotation = Quaternion.Euler(pitch, 0, 0);
+        // Apply pitch to the camera (local)
+        transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
 
-        // Rotate entire player body left/right on Y-axis using mouse X
+        // Apply horizontal rotation (yaw) to the player root
         player.transform.Rotate(Vector3.up * mouseX);
+    }
+
+    // Sync pitch from another system (e.g. swivel/explore cam)
+    public void SyncFrom(float srcPitch)
+    {
+        pitch = srcPitch;
+    }
+
+    // Retrieve current pitch (for syncing to another cam)
+    public float GetPitch()
+    {
+        return pitch;
     }
 }

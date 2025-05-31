@@ -16,4 +16,5 @@ public class GMSettings : ScriptableObject
     public GameObject menuPrefabLock;        // Lock UI
     public GameObject menuPrefabInventory;       // Inventory UI
     public GameObject menuPrefabCrafting;       // Crafting UI
+    public GameObject menuCrosshair;
 }

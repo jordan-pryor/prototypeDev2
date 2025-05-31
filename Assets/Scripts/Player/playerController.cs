@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     private float LitCheck()
     {
-        float lightLevel = LightLevelManager.instance.GetLightLevel(transform.position);
+        float lightLevel = LightManager.instance.GetLightLevel(transform.position);
         return Mathf.Clamp01(1f - lightLevel); // Invert to represent how hidden you are
     }
     private void Crouch(bool state)

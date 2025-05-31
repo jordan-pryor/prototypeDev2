@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject promptLock;             // UI: locked interaction
     public GameObject inventory;            // UI: Inventory
     public GameObject crafting;            // UI: crafting
+    public GameObject crosshair;
 
     public TMP_Text gameGoalCountText;        // Text to display goal progress
     public GameObject playerDamageScreen;     // Red flash or feedback when damaged
@@ -62,12 +63,14 @@ public class GameManager : MonoBehaviour
         promptLock = Instantiate(settings.menuPrefabLock, UICanvas.transform);
         inventory = Instantiate(settings.menuPrefabInventory, UICanvas.transform);
         crafting = Instantiate(settings.menuPrefabCrafting, UICanvas.transform);
+        crosshair = Instantiate(settings.menuCrosshair, UICanvas.transform);
         // Disable menus initially
         menuPause.SetActive(false);
         menuWin.SetActive(false);
         menuLose.SetActive(false);
         inventory.SetActive(false);
         crafting.SetActive(false);
+        crosshair.SetActive(true);
         HidePrompts();
 
         timeScaleOrig = Time.timeScale;
@@ -94,6 +97,7 @@ public class GameManager : MonoBehaviour
         {
             inventoryOpen = !inventoryOpen;
         }
+        crosshair.GetComponent<Image>().fillAmount = 1 - (playerController.currentStealth * 0.01f);
     }
 
     // Hides all in-game interaction prompts
@@ -109,6 +113,7 @@ public class GameManager : MonoBehaviour
     public void statePause()
     {
         HidePrompts();
+        crosshair.SetActive(false);
         isPaused = !isPaused;
         Time.timeScale = 0;
         Cursor.visible = true;
@@ -119,6 +124,7 @@ public class GameManager : MonoBehaviour
     public void stateUnpause()
     {
         isPaused = !isPaused;
+        crosshair.SetActive(true);
         Time.timeScale = timeScaleOrig;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;

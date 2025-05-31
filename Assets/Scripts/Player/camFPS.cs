@@ -5,7 +5,12 @@ public class camFPS : MonoBehaviour
     [SerializeField] PlayerController player; // Reference to player for sensitivity and turning
 
     private float pitch = 0f;                 // Vertical camera angle (up/down)
-
+    public float Pitch => pitch;
+    public void SetPitch(float newPitch)
+    {
+        pitch = newPitch;
+        transform.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+    }
     void Update()
     {
         // Ignore input if cursor is not locked

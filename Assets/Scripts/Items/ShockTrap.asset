@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShockTrap
   m_EditorClassIdentifier: 
   itemName: Shock Trap
-  prefab: {fileID: 5411539714991072618, guid: db753dfcc4101674fa10dd5cb7b47b77, type: 3}
+  prefab: {fileID: 5796645477696102162, guid: 0da75aeeddbe93749bb77dc311d5186d, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
   dropSound: {fileID: 0}
   defaultRotation: {x: 0, y: 0, z: 0, w: 0}

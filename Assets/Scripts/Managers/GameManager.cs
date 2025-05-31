@@ -22,18 +22,18 @@ public class GameManager : MonoBehaviour
     public GameObject promptInteract;         // UI: interact prompt
     public GameObject promptReload;           // UI: reload prompt
     public GameObject promptLock;             // UI: locked interaction
-    public GameObject inventoryUI;            // UI: Inventory
-    bool isInventoryOpen = false;             // Sets if inventory open or not
+    public GameObject inventory;            // UI: Inventory
+    public GameObject crafting;            // UI: crafting
 
     public TMP_Text gameGoalCountText;        // Text to display goal progress
     public GameObject playerDamageScreen;     // Red flash or feedback when damaged
     public GameObject player;                 // Player reference
     public PlayerController playerController; // Reference to player controller script
     public Inventory playerInventory;         // Reference to Inventory
-
+    
     public bool killEnemies = true;           // Enables win condition check
     public bool isPaused;                     // Pause state flag
-
+    private bool inventoryOpen = false;
     float timeScaleOrig;                      // Used to restore time scale on unpause
     int gameGoalCount;                        // Tracks how many goals remain
 
@@ -59,11 +59,14 @@ public class GameManager : MonoBehaviour
         promptReload = Instantiate(settings.menuPrefabReload, UICanvas.transform);
         promptTrap = Instantiate(settings.menuPrefabTrap, UICanvas.transform);
         promptLock = Instantiate(settings.menuPrefabLock, UICanvas.transform);
-
+        inventory = Instantiate(settings.menuPrefabInventory, UICanvas.transform);
+        crafting = Instantiate(settings.menuPrefabCrafting, UICanvas.transform);
         // Disable menus initially
         menuPause.SetActive(false);
         menuWin.SetActive(false);
         menuLose.SetActive(false);
+        inventory.SetActive(false);
+        crafting.SetActive(false);
         HidePrompts();
 
         timeScaleOrig = Time.timeScale;
@@ -88,7 +91,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Inventory"))
         {
-            ToggleInventory();
+            inventoryOpen = !inventoryOpen;
         }
     }
 
@@ -167,17 +170,23 @@ public class GameManager : MonoBehaviour
     // Turn inventory on and off.
     public void ToggleInventory()
     {
-        isInventoryOpen = !isInventoryOpen;
-        inventoryUI.SetActive(isInventoryOpen);
-
-        if(isInventoryOpen)
+        if(inventoryOpen)
         {
             statePause();
-            menuActive = inventoryUI;
+            inventory.SetActive(true);
         }
         else
         {
             stateUnpause();
+            inventory.SetActive(false);
         }
+    }
+
+    public void OpenCrafting(CraftingTable craftingTable)
+    {
+        statePause();
+        menuActive = crafting;
+        crafting.GetComponent<CraftingList>().StoreRecipes(craftingTable.availableRecipes);
+        menuActive.SetActive(true);
     }
 }

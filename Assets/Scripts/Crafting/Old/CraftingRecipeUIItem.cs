@@ -1,4 +1,5 @@
-﻿namespace Crafting
+﻿/*
+namespace Crafting
 {
     using UnityEngine;
     using UnityEngine.UI;
@@ -17,3 +18,4 @@
         }
     }
 }
+*/

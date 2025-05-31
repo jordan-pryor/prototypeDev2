@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01faa9197a6fa594ba30a64d2e1ca095, type: 3}
-  m_Name: Pistol
+  m_Name: Igniter
   m_EditorClassIdentifier: 
-  itemName: Pistol
-  prefab: {fileID: 2463198526074631682, guid: 5b9a6e819c6745045a6936e0b6258b9c, type: 3}
+  itemName: Igniter
+  prefab: {fileID: 5945464923539264460, guid: b6bb24254fe000744b1d4356a1396017, type: 3}
   emptyPickupPrefab: {fileID: 1407857318312178551, guid: 09a7db156212d6a43971033522f674ae, type: 3}
-  slot: 0
   dropSound: {fileID: 4471648424596276863, guid: 7bedadc04824a6c46944fbf5ff540bf7, type: 3}
-  defaultRotation: {x: 0, y: 0, z: 0.17364818, w: 0.9848077}
+  defaultRotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
   maxAmmo: 6
   fireRate: 1
   damage: 1

@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 5413105150156001701, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c4bd557f92c6b9439cb1aac33ec5d49, type: 3}
+    - target: {fileID: 5413105150156001701, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c4bd557f92c6b9439cb1aac33ec5d49, type: 3}
     - target: {fileID: 6408868082257793976, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.763037

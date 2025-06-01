@@ -100,6 +100,14 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.276
       objectReference: {fileID: 0}
+    - target: {fileID: 4520451068548238240, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2cdc8a8e56049394892203befbcd7221, type: 3}
+    - target: {fileID: 4520451068548238240, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2cdc8a8e56049394892203befbcd7221, type: 3}
     - target: {fileID: 6969508562701821113, guid: a2a027951a1ef1e40a8d2da5e44267b9, type: 3}
       propertyPath: m_Name
       value: FootSteps

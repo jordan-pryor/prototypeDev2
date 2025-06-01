@@ -12,8 +12,8 @@ public class TitleSceneManager : MonoBehaviour
     
 
     public void OnStartPressed()
-    {    
-        SceneManager.LoadScene(gameSceneStart);
+    {
+        SceneManager.LoadScene(1);
     }
     
     public void OnOptionsPressed()

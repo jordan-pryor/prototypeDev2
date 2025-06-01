@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class Door : MonoBehaviour, IInteract
 {
@@ -21,12 +22,16 @@ public class Door : MonoBehaviour, IInteract
 
     Coroutine currentRoutine;
 
+    [Header("Navigation")]
+    [SerializeField] NavMeshObstacle obstacle; // Obstacle that blocks path when door is closed
+
     void Start()
     {
         // Hide rotation references and apply initial door state
         doorMin.SetActive(false);
         doorMax.SetActive(false);
         ApplyRotation();
+        UpdateObstacle();
     }
 
     void OnValidate()
@@ -34,6 +39,13 @@ public class Door : MonoBehaviour, IInteract
         // Live update in editor when modifying openPercent
         ApplyRotation();
     }
+    private void UpdateObstacle()
+    {
+        if (obstacle == null) return;
+
+        bool shouldBlock = openPercent < 0.1f;
+    }
+
 
     // Applies door rotation based on openPercent
     void ApplyRotation()
@@ -62,6 +74,7 @@ public class Door : MonoBehaviour, IInteract
         if (currentRoutine != null) StopCoroutine(currentRoutine);
         currentRoutine = StartCoroutine(AnimateDoor(1f));
         Instantiate(doors, transform.position, transform.rotation);
+        obstacle.size = new Vector3(1.186f, obstacle.size.y, obstacle.size.z);
     }
 
     // Closes the door and plays sound
@@ -70,6 +83,7 @@ public class Door : MonoBehaviour, IInteract
         if (currentRoutine != null) StopCoroutine(currentRoutine);
         currentRoutine = StartCoroutine(AnimateDoor(0f));
         Instantiate(doors, transform.position, transform.rotation);
+        obstacle.size = new Vector3(4f, obstacle.size.y, obstacle.size.z);
     }
 
     // Main interact method (player use)

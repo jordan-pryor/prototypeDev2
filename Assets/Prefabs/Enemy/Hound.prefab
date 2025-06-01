@@ -474,7 +474,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: 1114c4aa4d7dc61448fc5d71baf0957d, type: 2}
   - {fileID: -49951149183250538, guid: 0c8a878dbe758c94f9ad399f6619b7f1, type: 3}
   - {fileID: 2100000, guid: 35b3108af13d845499fa5aa09712e033, type: 2}
-  - {fileID: 2100000, guid: 649fb2db59267f140b4f589f57295752, type: 2}
+  - {fileID: 2100000, guid: 0cb0ee5ce2e52af4fb92d6b492eea16f, type: 2}
   - {fileID: 2100000, guid: 1dfabbc89c92c8748977958642daa365, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1463,9 +1463,9 @@ GameObject:
   - component: {fileID: 5270059151969746865}
   - component: {fileID: 692938424452349658}
   - component: {fileID: 3555103921761790914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hound
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1522,18 +1522,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphere: {fileID: 1408803179318841181}
-  defBehavior: 1
+  eyes: {fileID: 3918634612794090233}
+  visionBlockMask:
+    serializedVersion: 2
+    m_Bits: 198912
+  barkSoundObject: {fileID: 8324907387892166886, guid: 92f81ce28dfae0f449a965758e18911f, type: 3}
+  defBehavior: 2
   currentState: 0
   patrolPoints: []
   wanderRadius: 10
   waitTimeAtPoint: 2
   meleeRange: 3
-  terrainMask:
-    serializedVersion: 2
-    m_Bits: 2304
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 512
   HPScore: 4
   damageScore: 3
   speedScore: 0
@@ -1542,8 +1541,9 @@ MonoBehaviour:
   smellRangeScore: 0
   sensitivityScore: 0
   hearingRangeScore: 3
-  barkSoundObject: {fileID: 0}
+  giveUpTime: 2
   isInSpawn: 0
+  inTitle: 0
 --- !u!135 &1408803179318841181
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1554,7 +1554,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 16896
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1563,7 +1563,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &5270059151969746865
 NavMeshAgent:
@@ -1595,7 +1595,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4341504777740979294}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1603,7 +1603,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1611,9 +1611,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!135 &3555103921761790914
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1681,7 +1681,7 @@ SphereCollider:
     m_Bits: 512
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0

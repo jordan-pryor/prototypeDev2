@@ -22,3 +22,4 @@ MonoBehaviour:
   menuPrefabLock: {fileID: 5756125342876376623, guid: 82dfa851aaaa47342b5a9e8cca24e7ee, type: 3}
   menuPrefabInventory: {fileID: 6688820396204690541, guid: 756d84977dde98c4d80d6f35eebdf624, type: 3}
   menuPrefabCrafting: {fileID: 5387299965821982078, guid: d856a0c0592f98a45a93b47b4d001026, type: 3}
+  menuCrosshair: {fileID: 1177283123546573204, guid: 1ed08948d3526cc48b534062f10de137, type: 3}

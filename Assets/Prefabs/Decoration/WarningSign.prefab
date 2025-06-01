@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5264155903333636038}
   - component: {fileID: 749611533380652826}
   - component: {fileID: 4475554519363474474}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: WarningSign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2968403868662767214}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: 17.72534, y: 0.502, z: -0.18193865}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65,9 +65,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c6ba8efd24f61ac468b224e3fe19d845, type: 2}
+  - {fileID: 2100000, guid: 35b3108af13d845499fa5aa09712e033, type: 2}
   - {fileID: 2100000, guid: 1dfabbc89c92c8748977958642daa365, type: 2}
-  - {fileID: 2100000, guid: 1114c4aa4d7dc61448fc5d71baf0957d, type: 2}
+  - {fileID: 2100000, guid: 336dd8efcb84cff4abf984896b884888, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

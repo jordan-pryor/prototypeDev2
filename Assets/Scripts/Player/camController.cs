@@ -27,6 +27,25 @@ public class camController : MonoBehaviour
     // Enables appropriate camera script based on isFPS
     public void ToggleCam()
     {
+        if (player.isFPS)
+        {
+            var swivel = camSwivel as camSwivel;
+            float spitch = swivel.Pitch;
+            float syaw = swivel.Yaw;
+            player.transform.Rotate(Vector3.up * syaw);
+            var fps = camFPS as camFPS;
+            fps.SetPitch(spitch);
+        }
+        else
+        {
+            var fps = camFPS as camFPS;
+            float fpitch = fps.Pitch;
+            float bodyYaw = player.transform.eulerAngles.y;
+            float camYaw = camFPS.transform.rotation.eulerAngles.y;
+            float deltaYaw = Mathf.DeltaAngle(bodyYaw, camYaw);
+            var swivel = camSwivel as camSwivel;
+            swivel.SetPitchYaw(fpitch, deltaYaw);
+        }
         camSwivel.enabled = !player.isFPS;
         camFPS.enabled = player.isFPS;
     }

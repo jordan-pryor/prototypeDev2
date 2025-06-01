@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     [SerializeField] private float stealthAmount = 100f;
     private bool isCrouching;
     public float currentStealth;
-    public float smell;
+    public float smell = 0f;
 
     [Header("Stats")]
     public float maxHP = 100f;
@@ -66,11 +66,14 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private float trapDecrease = 0f;
     public bool isJumping;
 
+    public void UpdateSmell(float amt)
+    {
+        smell += amt;
+    }
     private void Update()
     {
         CheckInput(); // Handle player input
     }
-
     private void FixedUpdate()
     {
         GroundCheck();        // Detect if grounded
@@ -78,7 +81,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         CheckAnimation();     // Update animation booleans
         currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f); // Stealth based on lighting
     }
-
     private void CheckInput()
     {
         moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
@@ -104,32 +106,28 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             }
         }
     }
-
     public void Step()
     {
+        UpdateSmell(1f);
         Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
-
     private void CheckAnimation()
     {
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isCrouching", isCrouching);
         anim.SetBool("isGrounded", isGrounded);
     }
-
     private void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheckPoint.position, groundCheckRadius, groundMask);
         rb.linearDamping = isGrounded ? drag : 0f;
         if (isGrounded) isJumping = false;
     }
-
     private IEnumerator ResetJump(float duration)
     {
         yield return new WaitForSeconds(duration);
         canJump = true;
     }
-
     private void Movement()
     {
         Vector3 moveDir = Camera.main.transform.forward * moveInput.y + Camera.main.transform.right * moveInput.x;
@@ -155,24 +153,21 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             Jump();
         }
     }
-
     private float LitCheck()
     {
-        float lightLevel = LightLevelManager.instance.GetLightLevel(transform.position);
+        float lightLevel = LightManager.instance.GetLightLevel(transform.position);
         return Mathf.Clamp01(1f - lightLevel); // Invert to represent how hidden you are
     }
-
     private void Crouch(bool state)
     {
         isCrouching = state;
     }
-
     private void Jump()
     {
         isJumping = true;
         anim.SetTrigger("isJumping");
         canJump = false;
-
+        UpdateSmell(5f);
         Instantiate(jump, transform.position, transform.rotation);
 
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
@@ -180,24 +175,30 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
         StartCoroutine(ResetJump(jumpCooldown));
     }
-
     public void SwitchCam(bool newisFPS)
     {
         isFPS = newisFPS;
         camControl.ToggleCam();
     }
-
-    IEnumerator ITrap.trap(float speedDecrease, float duration)
+    public void trapTrigger(float speedDecrease, float duration)
     {
+        // start the coroutine with the arguments
+        StartCoroutine(TrapRoutine(speedDecrease, duration));
+    }
+    IEnumerator TrapRoutine(float speedDecrease, float duration)
+    {
+        Debug.Log("trapped");
         if (isTrapped) yield break;
         isTrapped = true;
+
         GameManager.instance.promptTrap.SetActive(true);
         trapDecrease = speedDecrease;
+
         yield return new WaitForSeconds(duration);
+
         GameManager.instance.promptTrap.SetActive(false);
         isTrapped = false;
     }
-
     public void TakeDamage(float amount)
     {
         HP -= amount;
@@ -208,7 +209,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             GameManager.instance.youLose();
         }
     }
-
     public void StartHealing(float healAmt, int healCount, float healInterval)
     {
         if (healRoutine != null)
@@ -216,7 +216,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
         healRoutine = StartCoroutine(HealOverTime(healAmt, healCount, healInterval));
     }
-
     private IEnumerator HealOverTime(float healAmt, int healCount, float healInterval)
     {
         while (healCount > 0 && HP < maxHP)
@@ -236,7 +235,6 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
         healRoutine = null;
     }
-
     public void UpdatePlayerUI()
     {
         playerHPBar.fillAmount = HP / maxHP;

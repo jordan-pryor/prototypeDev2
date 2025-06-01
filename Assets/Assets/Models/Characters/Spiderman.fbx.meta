@@ -56,16 +56,9 @@ ModelImporter:
       curves: []
       events:
       - time: 0.631783
-        functionName: Fire
+        functionName: Shot
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 1
-        functionName: OnAnimationEnd
-        data: 
-        objectReferenceParameter: {fileID: 11500000, guid: ebc1e078efa30de4382b74d2d80b1ec9, type: 3}
+        objectReferenceParameter: {fileID: 11500000, guid: 64f102719d6f26747b05e095dcc0924e, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

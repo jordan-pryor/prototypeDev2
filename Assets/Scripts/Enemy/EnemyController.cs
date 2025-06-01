@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
 
     [Header("Vision")]
     public Transform[] eyes;
-    public float sightRange = 20f;
+    public float sightRange = 10f;
     public float sightFOV = 90f;
     public LayerMask sightMask;
     public bool isTracker = false;
@@ -234,5 +234,10 @@ public class EnemyController : MonoBehaviour, IDamage, ITrap
         trapDecrease = speedDecrease;
         yield return new WaitForSeconds(duration);
         trapDecrease = 1f;
+    }
+
+    public void trapTrigger(float speedDecrease, float duration)
+    {
+        throw new System.NotImplementedException();
     }
 }

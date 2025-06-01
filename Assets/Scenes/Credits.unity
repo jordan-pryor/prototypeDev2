@@ -613,18 +613,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Photophobia\r\n\r\n\nDevelopment Team:\nJason Hayward\nTeam Lead\nUI &
-    Inventory Programming\nLevel Design \u2013 Barracks, Relay Hub, Quarantine Block\n\nTyson
-    Grant\nGameplay Systems & Integration\nAsset Implementation\nGeneral Code Support
-    & Bug Fixes\nLevel Design \u2013 Vehicle Depot, The Lab\n\nJordan Pryor\nCrafting
-    & AI Support\nCredits Programming\nLevel Design \u2013 Containment Zone, Reactor
-    Core\n\nRoxanne Kilgannon\nAI Programming\nLevel Design \u2013 Engineering Bay,
-    Maintenance Shafts, Security Checkpoint\n\nLevel Design Showcase:\nEngineering
-    Bay \u2013 Roxanne Kilgannon\n\nMaintenance Shafts \u2013 Roxanne Kilgannon\n\nContainment
-    Zone \u2013 Jordan Pryor\n\nSecurity Checkpoint \u2013 Roxanne Kilgannon\n\nReactor
-    Core \u2013 Jordan Pryor\n\nVehicle Depot \u2013 Tyson Grant\n\nThe Lab \u2013
-    Tyson Grant\n\nBarracks \u2013 Jason Hayward\n\nRelay Hub \u2013 Jason Hayward\n\nQuarantine
-    Block \u2013 Jason Hayward\n\nPLACEHOLDER\n"
+  m_text: "Photophobia\r\n\r\n\nJason Hayward\nUI & Material Inventory Programming\n\nTyson
+    Grant\nTeam Lead\nSystems & Integration\nAsset Creation\nCode Support & Bug Fixes\n\nJordan
+    Pryor\nCrafting & AI Support\nCredits Programming\n\nRoxanne Kilgannon\nAI Programming\n\nLevel
+    Design Showcase:\nEngineering Bay \u2013 Roxanne Kilgannon\n\nMaintenance Shafts
+    \u2013 Roxanne Kilgannon\n\nContainment Zone \u2013 Jordan Pryor\n\nSecurity
+    Checkpoint \u2013 Roxanne Kilgannon\n\nReactor Core \u2013 Jordan Pryor\n\nVehicle
+    Depot \u2013 Tyson Grant\n\nThe Lab \u2013 Tyson Grant\n\nBarracks \u2013 Jason
+    Hayward\n\nRelay Hub \u2013 Jason Hayward\n\nQuarantine Block \u2013 Jason Hayward\n\nPLACEHOLDER\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

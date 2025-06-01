@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 367928066694310958}
   - component: {fileID: 8409339111056356251}
   - component: {fileID: 3762781250809668370}
-  m_Layer: 3
+  m_Layer: 15
   m_Name: Locker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,8 +114,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3518952641886467088}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.123234e-17, y: 1, z: 6.123234e-17, w: -3.7493994e-33}
-  m_LocalPosition: {x: -0, y: 0, z: 2.555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 3617011542502926881}
-  openPercent: 0.5
+  openPercent: 0.206
   doorMin: {fileID: 7375260769302985981}
   doorMax: {fileID: 1301186264588647867}
   openSpeed: 1
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 3195780899658745987}
   - component: {fileID: 6087218677226001026}
   - component: {fileID: 4827865701066319457}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3617011542502926881}
   serializedVersion: 2
-  m_LocalRotation: {x: -3.308723e-24, y: -0.46016023, z: -6.617446e-24, w: 0.8878359}
+  m_LocalRotation: {x: 7.3436053e-25, y: -0.1813513, z: -7.3436053e-25, w: 0.9834184}
   m_LocalPosition: {x: -0.38332, y: 0, z: -0.3362}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

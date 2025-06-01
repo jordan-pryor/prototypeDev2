@@ -64,6 +64,14 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2004336447787850685, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: ba4ede8dc1eb112489f474103e0d2e7e, type: 3}
+    - target: {fileID: 2004336447787850685, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ba4ede8dc1eb112489f474103e0d2e7e, type: 3}
     - target: {fileID: 5031541363623834788, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
       propertyPath: m_Name
       value: Horn

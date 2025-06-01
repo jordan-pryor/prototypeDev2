@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reload
       objectReference: {fileID: 0}
+    - target: {fileID: 7425946318879775881, guid: 870f1578509ebaa439b1339179b94993, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c294b597736bbe4e8d56698f23c6c50, type: 3}
+    - target: {fileID: 7425946318879775881, guid: 870f1578509ebaa439b1339179b94993, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c294b597736bbe4e8d56698f23c6c50, type: 3}
     - target: {fileID: 8113305000459737774, guid: 870f1578509ebaa439b1339179b94993, type: 3}
       propertyPath: 'audios.Array.data[0]'
       value: 

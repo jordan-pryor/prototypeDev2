@@ -38,6 +38,7 @@ public class RollingCredits : MonoBehaviour
 	// Kick 'em to the Main Menu
 	void ExitCredits()
 	{
-		SceneManager.LoadScene("Title Screen");
+        Cursor.lockState = CursorLockMode.None;
+        SceneManager.LoadScene("Title Screen");
 	}
 }

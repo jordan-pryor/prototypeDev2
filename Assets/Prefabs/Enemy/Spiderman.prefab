@@ -4784,7 +4784,7 @@ MonoBehaviour:
   defBehavior: 1
   currentState: 0
   bullet: {fileID: 8673234353259398999, guid: 70830e31cad275947b8a45e3863fc382, type: 3}
-  web: {fileID: 8966662302171762367, guid: 90dfac11afe9409428c3382b732d4b9e, type: 3}
+  web: {fileID: 1888269008031647260, guid: 35155047d84c04d4f9a2f52fa68a79a2, type: 3}
   patrolPoints: []
   wanderRadius: 10
   waitTimeAtPoint: 2

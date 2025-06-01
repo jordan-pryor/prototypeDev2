@@ -66,6 +66,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private float trapDecrease = 0f;
     public bool isJumping;
 
+    public bool isCrouch = false;
+    public bool lockJump = false;
     public void UpdateSmell(float amt)
     {
         smell += amt;
@@ -76,10 +78,13 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isPaused)
+        {
+            Movement();           // Apply movement force
+            CheckAnimation();     // Update animation booleans
+            currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f); // Stealth based on lighting
+        }
         GroundCheck();        // Detect if grounded
-        Movement();           // Apply movement force
-        CheckAnimation();     // Update animation booleans
-        currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f); // Stealth based on lighting
     }
     private void CheckInput()
     {
@@ -148,7 +153,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         float animBlend = horizontalVelocity.magnitude / speedSprint;
         anim.SetFloat("Speed", animBlend);
 
-        if (jumpInput && isGrounded && canJump)
+        if (jumpInput && isGrounded && canJump && !lockJump)
         {
             Jump();
         }
@@ -158,9 +163,16 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
         float lightLevel = LightManager.instance.GetLightLevel(transform.position);
         return Mathf.Clamp01(1f - lightLevel); // Invert to represent how hidden you are
     }
-    private void Crouch(bool state)
+    public void Crouch(bool state)
     {
-        isCrouching = state;
+        if ( isCrouch )
+        {
+            isCrouching = true;
+        }
+        else
+        {
+            isCrouching = state;
+        }
     }
     private void Jump()
     {

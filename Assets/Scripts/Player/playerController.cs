@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
     public bool isCrouch = false;
     public bool lockJump = false;
+    internal int ventCount;
+
     public void UpdateSmell(float amt)
     {
         smell += amt;
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private void Update()
     {
         CheckInput(); // Handle player input
+        ventCheck();
     }
     private void FixedUpdate()
     {
@@ -85,6 +88,19 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f); // Stealth based on lighting
         }
         GroundCheck();        // Detect if grounded
+    }
+    private void ventCheck()
+    {
+        if (ventCount >= 1) 
+        {
+            lockJump = true;
+            isCrouch = true;
+        }
+        else
+        {
+            lockJump = false;
+            isCrouch = false;
+        }
     }
     private void CheckInput()
     {

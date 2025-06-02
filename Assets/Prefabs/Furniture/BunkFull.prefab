@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9047136720216442048}
   - component: {fileID: 5330969160967389325}
   - component: {fileID: -232135216885627415}
-  m_Layer: 15
+  m_Layer: 12
   m_Name: BunkFull
   m_TagString: Untagged
   m_Icon: {fileID: 0}

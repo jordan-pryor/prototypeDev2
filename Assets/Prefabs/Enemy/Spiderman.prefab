@@ -4793,7 +4793,7 @@ MonoBehaviour:
   damageScore: 2
   speedScore: 5
   sightRangeScore: 0
-  visionScore: 3
+  visionScore: 2
   smellRangeScore: 5
   sensitivityScore: 5
   hearingRangeScore: 6

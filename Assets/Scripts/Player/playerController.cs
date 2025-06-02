@@ -2,6 +2,7 @@ using NUnit;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamage, ITrap
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public TMP_Text goalText;                                      // Text showing goal progress
     public Sound footsteps;                                        // Footstep sound prefab
     public Sound jump;                                             // Jump sound prefab
+    public Sound hurt;                                             // Jump sound prefab
     public Image playerHPBar;                                      // HP bar UI image
 
     [Header("Movement Options")]
@@ -68,6 +70,30 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
     public bool isCrouch = false;
     public bool lockJump = false;
+    internal int ventCount;
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject spawn = GameObject.Find("PlayerSpawn");
+        if (spawn != null)
+        {
+            transform.position = spawn.transform.position;
+            transform.rotation = spawn.transform.rotation;
+        }
+    }
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     public void UpdateSmell(float amt)
     {
         smell += amt;
@@ -75,6 +101,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     private void Update()
     {
         CheckInput(); // Handle player input
+        ventCheck();
     }
     private void FixedUpdate()
     {
@@ -85,6 +112,23 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
             currentStealth = LitCheck() * (isCrouching ? stealthAmount : 50f); // Stealth based on lighting
         }
         GroundCheck();        // Detect if grounded
+    }
+    private void ventCheck()
+    {
+        if (ventCount >= 1) 
+        {
+            lockJump = true;
+            isCrouch = true;
+            if (isCrouching != true)
+            {
+                Crouch(true);
+            }
+        }
+        else
+        {
+            lockJump = false;
+            isCrouch = false;
+        }
     }
     private void CheckInput()
     {
@@ -189,8 +233,11 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     public void SwitchCam(bool newisFPS)
     {
-        isFPS = newisFPS;
-        camControl.ToggleCam();
+        if(isFPS != newisFPS)
+        {
+            isFPS = newisFPS;
+            camControl.ToggleCam();
+        }
     }
     public void trapTrigger(float speedDecrease, float duration)
     {
@@ -214,6 +261,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public void TakeDamage(float amount)
     {
         HP -= amount;
+        Instantiate(hurt, transform.position, transform.rotation);
         UpdatePlayerUI();
 
         if (HP <= 0)

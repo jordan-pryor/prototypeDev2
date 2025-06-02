@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 760501049647449190}
   - component: {fileID: 778787760957359912}
   - component: {fileID: 513186557978479727}
-  m_Layer: 15
+  m_Layer: 12
   m_Name: FanBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}

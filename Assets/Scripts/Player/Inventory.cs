@@ -75,7 +75,8 @@ public class Inventory : MonoBehaviour
     // Tries to add a new item to the inventory
     public bool TryAdd(BaseData data)
     {
-        if( data is MatData)
+        LightManager.instance.UpdateLights();
+        if ( data is MatData)
         {
             AddMaterial(data.name, 1);
             return true;
@@ -139,12 +140,21 @@ public class Inventory : MonoBehaviour
 
         GameObject pickup = Instantiate(slotData[index].emptyPickupPrefab);
         pickup.GetComponent<ItemPickup>().data = slotData[index];
+
+        // Place the whole prefab
         pickup.transform.position = slots[index].transform.position;
         pickup.transform.rotation = slots[index].transform.rotation;
 
-        Rigidbody rb = pickup.GetComponent<Rigidbody>() ?? pickup.AddComponent<Rigidbody>();
-        rb.isKinematic = false;
-        rb.AddForce(transform.forward * 2f + Vector3.up, ForceMode.Impulse);
+        // Get the Rigidbody from the child
+        Rigidbody rb = pickup.GetComponentInChildren<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+
+            // Use the Rigidbody’s transform to align force
+            Vector3 forceDir = rb.transform.forward * 2f + Vector3.up;
+            rb.AddForce(forceDir, ForceMode.Impulse);
+        }
 
         Delete(index);
     }

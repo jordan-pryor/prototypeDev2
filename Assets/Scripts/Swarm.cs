@@ -25,6 +25,7 @@ public class Swarm : MonoBehaviour, IDamage
 
     [Header("Ranges / Scores")]
     [SerializeField] float meleeRange = 0.5f;
+    [SerializeField] float enemyRange = 5f;
     [SerializeField] StatScore HPScore = StatScore.F;
     [SerializeField] StatScore damageScore = StatScore.D;
     [SerializeField] StatScore speedScore = StatScore.C;
@@ -50,6 +51,7 @@ public class Swarm : MonoBehaviour, IDamage
 
     float sightRange, smellRange, vision, sensitivity, hearRange;
     float damage, speed;
+    List<Collider> nearbyEnemies = new List<Collider>();
 
     float lostSightTimer;
     int patrolIndex;
@@ -60,11 +62,13 @@ public class Swarm : MonoBehaviour, IDamage
     bool chasingPlayer;          // true = chase player, false = chase sound
     public bool isInSpawn = false;
     public bool inTitle = false;
+    public Sound footsteps;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         origin = transform.position;
+        if (patrolPoints.Count < 1) patrolPoints.Add(origin);
         if (!inTitle)
         {
             player = GameObject.FindWithTag("Player").transform;
@@ -108,6 +112,10 @@ public class Swarm : MonoBehaviour, IDamage
             agent.ResetPath();
             chasingPlayer = false;
         }
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
     bool CanSeePlayer()
     {
@@ -235,8 +243,19 @@ public class Swarm : MonoBehaviour, IDamage
     {
         if (Vector3.Distance(transform.position, player.position) <= meleeRange)
             player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Moving;
+        if (playerInTrigger)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= meleeRange)
+                currentState = AIState.Melee;
+            else
+            {
+                currentState = AIState.Moving;
+            }
+        }
+        else
+        {
+            currentState = AIState.Searching;
+        }
     }
     void Melee() { /**/ }
     void FaceTarget(Vector3 dest)
@@ -296,28 +315,39 @@ public class Swarm : MonoBehaviour, IDamage
         }
         if (other.CompareTag("Player"))
             playerInTrigger = true;
-        
+        if (other.CompareTag("Enemy"))
+        {
+            if (!nearbyEnemies.Contains(other))
+                nearbyEnemies.Add(other);
+        }
     }
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            if (other.GetComponent<Swarm>())
+            float dist = Vector3.Distance(transform.position, other.transform.position);
+            if (dist <= enemyRange)
             {
-                float dist = Vector3.Distance(transform.position, other.transform.position);
-                enemyNear = dist < 5f;
+                if (!nearbyEnemies.Contains(other))
+                    nearbyEnemies.Add(other);
             }
+            else
+            {
+                if (nearbyEnemies.Contains(other))
+                    nearbyEnemies.Remove(other);
+            }
+            enemyNear = nearbyEnemies.Count > 0;
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player")) playerInTrigger = false;
+        if (other.CompareTag("Player"))
+            playerInTrigger = false;
         if (other.CompareTag("Enemy"))
         {
-            if (other.GetComponent<Swarm>())
-            {
-                enemyNear = false;           
-            }
+            if (nearbyEnemies.Contains(other))
+                nearbyEnemies.Remove(other);
+            enemyNear = nearbyEnemies.Count > 0;
         }
     }
     public void SpawnSound()                 // called by bark anim event

@@ -49,7 +49,7 @@ public class Hound : MonoBehaviour, IDamage
 
     float sightRange, smellRange, vision, sensitivity, hearRange;
     float damage, speed;
-
+    public Sound footsteps;
     float lostSightTimer;
     int patrolIndex;
     float waitTimer;
@@ -59,11 +59,16 @@ public class Hound : MonoBehaviour, IDamage
     bool chasingPlayer;          // true = chase player, false = chase sound
     public bool isInSpawn = false;
     public bool inTitle = false;
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
+    }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         origin = transform.position;
+        if (patrolPoints.Count < 1) patrolPoints.Add(origin);
         if (!inTitle)
         {
             player = GameObject.FindWithTag("Player").transform;
@@ -241,8 +246,19 @@ public class Hound : MonoBehaviour, IDamage
     {
         if (Vector3.Distance(transform.position, player.position) <= meleeRange)
             player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Chasing;
+        if (playerInTrigger)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= meleeRange)
+                currentState = AIState.Melee;
+            else
+            {
+                currentState = AIState.Chasing;
+            }
+        }
+        else
+        {
+            currentState = AIState.Searching;
+        }
     }
     void Melee() { /**/ }
     void FaceTarget(Vector3 dest)

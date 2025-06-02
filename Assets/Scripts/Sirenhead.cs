@@ -49,7 +49,7 @@ public class Sirenhead : MonoBehaviour, IDamage
 
     float sightRange, smellRange, vision, sensitivity, hearRange;
     float damage, speed;
-
+    public Sound footsteps;
     float lostSightTimer;
     int patrolIndex;
     float waitTimer;
@@ -64,7 +64,7 @@ public class Sirenhead : MonoBehaviour, IDamage
         anim = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").transform;
         origin = transform.position;
-
+        if (patrolPoints.Count < 1) patrolPoints.Add(origin);
         UpdateStats();
         if (!isInSpawn) GameManager.instance.updateGameGoal(1);
     }
@@ -74,6 +74,10 @@ public class Sirenhead : MonoBehaviour, IDamage
         UpdateStateLogic();    // per-state behaviour
         UpdateFacing();
         UpdateAnimator();
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
     void CheckSensors()
     {
@@ -310,7 +314,19 @@ public class Sirenhead : MonoBehaviour, IDamage
     public void SpawnSound()                 // called by scream anim event
     {
         if (hornSoundObject) Instantiate(hornSoundObject, transform.position, Quaternion.identity);
-        currentState = AIState.Searching;
+        if (playerInTrigger)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= screamRange)
+                currentState = AIState.Alert;
+            else
+            {
+                currentState = AIState.Chasing;
+            }
+        }
+        else
+        {
+            currentState = AIState.Searching;
+        }
     }
     public void TakeDamage(float amount)
     {

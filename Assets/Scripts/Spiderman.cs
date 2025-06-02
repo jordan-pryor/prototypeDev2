@@ -28,6 +28,7 @@ public class Spiderman : MonoBehaviour, IDamage
 
     [Header("Ranges / Scores")]
     [SerializeField] float shootRange = 0.5f;
+    [SerializeField] float shootPower = 5f;
     [SerializeField] StatScore HPScore = StatScore.B;
     [SerializeField] StatScore damageScore = StatScore.B;
     [SerializeField] StatScore speedScore = StatScore.E;
@@ -67,6 +68,7 @@ public class Spiderman : MonoBehaviour, IDamage
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         origin = transform.position;
+        if (patrolPoints.Count < 1) patrolPoints.Add(origin);
         if (!inTitle)
         {
             player = GameObject.FindWithTag("Player").transform;
@@ -136,6 +138,7 @@ public class Spiderman : MonoBehaviour, IDamage
             case AIState.Shoot: Shoot(); break;
         }
     }
+    public Sound footsteps;
     void RunDefault()
     {
         switch (defBehavior)
@@ -143,6 +146,10 @@ public class Spiderman : MonoBehaviour, IDamage
             case DefaultBehavior.Patrol: Patrol(); break;
             case DefaultBehavior.Guard: Guard(); break;
         }
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
     void Patrol()
     {
@@ -240,22 +247,35 @@ public class Spiderman : MonoBehaviour, IDamage
     public void Shot()                // called by anim event
     {
         GameObject bull;
+        float mod = 1;
         if (GameManager.instance.playerController.isTrapped)
         {
             bull = Instantiate(bullet, attackPos.position, attackPos.rotation);
+            mod = 2;
         }
         else
         {
             bull = Instantiate(web, attackPos.position, attackPos.rotation);
+            mod = 1;
         }
         if (bull.TryGetComponent(out Rigidbody rb))
         {
-            rb.AddForce(attackPos.forward * 5, ForceMode.Impulse);
+            rb.AddForce(attackPos.forward * shootPower * mod, ForceMode.Impulse);
         }
         if (Vector3.Distance(transform.position, player.position) <= shootRange)
             player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Chasing;
+        if (playerInTrigger) {
+            if (Vector3.Distance(transform.position, player.position) <= shootRange)
+                currentState = AIState.Shoot;
+            else
+            {
+                currentState = AIState.Chasing;
+            }
+        }
+        else
+        {
+            currentState = AIState.Searching;
+        }
     }
     void Shoot() { agent.speed = 0; }
     void FaceTarget(Vector3 dest)

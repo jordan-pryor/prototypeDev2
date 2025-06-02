@@ -559,8 +559,8 @@ MonoBehaviour:
   HPScore: 6
   damageScore: 4
   speedScore: 3
-  sightRangeScore: 6
-  visionScore: 6
+  sightRangeScore: 4
+  visionScore: 2
   smellRangeScore: 5
   sensitivityScore: 5
   hearingRangeScore: 4

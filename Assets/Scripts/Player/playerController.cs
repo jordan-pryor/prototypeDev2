@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     public bool isCrouch = false;
     public bool lockJump = false;
     internal int ventCount;
+    public static PlayerController instance;
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -83,6 +84,10 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (scene.name == "MainMenu" || scene.name == "Credits")
+        {
+            Destroy(gameObject);
+        }
         GameObject spawn = GameObject.Find("PlayerSpawn");
         if (spawn != null)
         {
@@ -92,6 +97,21 @@ public class PlayerController : MonoBehaviour, IDamage, ITrap
     }
     void Awake()
     {
+        string scene = SceneManager.GetActiveScene().name;
+
+        if (scene == "MainMenu" || scene == "Credits")
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        if (PlayerController.instance != null && PlayerController.instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        PlayerController.instance = this;
         DontDestroyOnLoad(gameObject);
     }
     public void UpdateSmell(float amt)

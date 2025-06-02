@@ -62,11 +62,13 @@ public class Swarm : MonoBehaviour, IDamage
     bool chasingPlayer;          // true = chase player, false = chase sound
     public bool isInSpawn = false;
     public bool inTitle = false;
+    public Sound footsteps;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         origin = transform.position;
+        if (patrolPoints.Count < 1) patrolPoints.Add(origin);
         if (!inTitle)
         {
             player = GameObject.FindWithTag("Player").transform;
@@ -110,6 +112,10 @@ public class Swarm : MonoBehaviour, IDamage
             agent.ResetPath();
             chasingPlayer = false;
         }
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
     bool CanSeePlayer()
     {
@@ -237,8 +243,19 @@ public class Swarm : MonoBehaviour, IDamage
     {
         if (Vector3.Distance(transform.position, player.position) <= meleeRange)
             player.GetComponent<IDamage>()?.TakeDamage(damage);
-
-        currentState = AIState.Moving;
+        if (playerInTrigger)
+        {
+            if (Vector3.Distance(transform.position, player.position) <= meleeRange)
+                currentState = AIState.Melee;
+            else
+            {
+                currentState = AIState.Moving;
+            }
+        }
+        else
+        {
+            currentState = AIState.Searching;
+        }
     }
     void Melee() { /**/ }
     void FaceTarget(Vector3 dest)

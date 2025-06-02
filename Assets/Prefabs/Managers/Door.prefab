@@ -61,7 +61,23 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6667943496006866818, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: audios.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667943496006866818, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
       propertyPath: 'audios.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ad39390fdcbdb4f44a8d03a0f4a1ac01, type: 3}
+    - target: {fileID: 6667943496006866818, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: 'audios.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b12b03a8521e29438c29c0d655e0fd0, type: 3}
+    - target: {fileID: 6667943496006866818, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: 'audios.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: fe08f4e36444bae48860281cc98648ec, type: 3}
+    - target: {fileID: 6667943496006866818, guid: 3d7f6851cdfdb10438f6558e480a145d, type: 3}
+      propertyPath: 'audios.Array.data[3]'
       value: 
       objectReference: {fileID: 8300000, guid: f36e3ae6e67e509438bd6bb981ffb5c8, type: 3}
     m_RemovedComponents: []

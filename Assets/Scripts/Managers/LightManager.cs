@@ -31,7 +31,7 @@ public class LightManager : MonoBehaviour
 
         foreach (var light in lights)
         {
-            if (!light.enabled || light.intensity <= 0f)
+            if (light == null || !light.enabled || light.intensity <= 0f)
                 continue;
             if (light.type == LightType.Point || light.type == LightType.Spot)
             {

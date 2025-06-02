@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: Igniter
   ingredients:
-  - itemID: Canister
+  - itemID: Scrap
     quantity: 1
   - itemID: Pipe
     quantity: 2

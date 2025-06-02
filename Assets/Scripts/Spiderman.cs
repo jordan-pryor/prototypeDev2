@@ -138,6 +138,7 @@ public class Spiderman : MonoBehaviour, IDamage
             case AIState.Shoot: Shoot(); break;
         }
     }
+    public Sound footsteps;
     void RunDefault()
     {
         switch (defBehavior)
@@ -145,6 +146,10 @@ public class Spiderman : MonoBehaviour, IDamage
             case DefaultBehavior.Patrol: Patrol(); break;
             case DefaultBehavior.Guard: Guard(); break;
         }
+    }
+    public void Step()
+    {
+        Instantiate(footsteps, transform.position, transform.rotation); // Play footstep sound
     }
     void Patrol()
     {
@@ -266,6 +271,10 @@ public class Spiderman : MonoBehaviour, IDamage
             {
                 currentState = AIState.Chasing;
             }
+        }
+        else
+        {
+            currentState = AIState.Searching;
         }
     }
     void Shoot() { agent.speed = 0; }

@@ -50,12 +50,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 884579496357535130, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
       propertyPath: audios.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 884579496357535130, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
       propertyPath: 'audios.Array.data[0]'
       value: 
-      objectReference: {fileID: 8300000, guid: dcb93ad3a357bf447b02c52feaa48416, type: 3}
+      objectReference: {fileID: 8300000, guid: 76554a019ca322447888d26baa62c37a, type: 3}
+    - target: {fileID: 884579496357535130, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
+      propertyPath: 'audios.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7030edebb1e648e48aa57ac27760168b, type: 3}
     - target: {fileID: 1111180202432589482, guid: 5a359c8a9a231f34d91dc839451dd883, type: 3}
       propertyPath: m_IsTrigger
       value: 1
